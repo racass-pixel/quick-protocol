@@ -1,0 +1,48 @@
+syntax = "proto3";
+package quick.v1;
+
+import "google/protobuf/timestamp.proto";
+import "quick/v1/users.proto";
+
+service Friends {
+  rpc ListFriends(ListFriendsRequest)   returns (ListFriendsResponse)   {}
+  rpc ListRequests(ListRequestsRequest) returns (ListRequestsResponse)  {}
+  rpc SendRequest(SendRequestRequest)   returns (SendRequestResponse)   {}
+  rpc Accept(AcceptRequest)             returns (AcceptResponse)        {}
+  rpc Decline(DeclineRequest)           returns (DeclineResponse)       {}
+  rpc Remove(RemoveRequest)             returns (RemoveResponse)        {}
+  rpc Block(BlockRequest)               returns (BlockResponse)         {}
+  rpc Unblock(UnblockRequest)           returns (UnblockResponse)       {}
+}
+
+message Friendship {
+  string id           = 1;
+  User   peer         = 2;
+  string status       = 3;
+  bool   is_incoming  = 4;
+  google.protobuf.Timestamp created_at = 5;
+}
+
+message ListFriendsRequest  {}
+message ListFriendsResponse { repeated Friendship friends = 1; }
+
+message ListRequestsRequest  {}
+message ListRequestsResponse { repeated Friendship requests = 1; }
+
+message SendRequestRequest  { string handle = 1; }
+message SendRequestResponse { Friendship request = 1; }
+
+message AcceptRequest   { string friendship_id = 1; }
+message AcceptResponse  { Friendship friendship = 1; }
+
+message DeclineRequest  { string friendship_id = 1; }
+message DeclineResponse {}
+
+message RemoveRequest   { string user_id = 1; }
+message RemoveResponse  {}
+
+message BlockRequest    { string user_id = 1; }
+message BlockResponse   {}
+
+message UnblockRequest  { string user_id = 1; }
+message UnblockResponse {}

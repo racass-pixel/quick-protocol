@@ -1,0 +1,30 @@
+syntax = "proto3";
+package quick.v1;
+
+import "google/protobuf/timestamp.proto";
+
+service Users {
+  rpc Me(MeRequest)                       returns (MeResponse)            {}
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse) {}
+  rpc Search(SearchRequest)               returns (SearchResponse)        {}
+}
+
+message User {
+  string id            = 1;
+  string handle        = 2;
+  string display_name  = 3;
+  string avatar_color  = 4;
+  google.protobuf.Timestamp last_seen_at = 5;
+}
+
+message MeRequest {}
+message MeResponse { User user = 1; }
+
+message UpdateProfileRequest {
+  optional string display_name = 1;
+  optional string handle       = 2;
+}
+message UpdateProfileResponse { User user = 1; }
+
+message SearchRequest  { string handle = 1; }
+message SearchResponse { User   user   = 1; }

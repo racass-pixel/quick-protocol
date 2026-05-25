@@ -1,0 +1,27 @@
+syntax = "proto3";
+package quick.v1;
+
+import "google/protobuf/timestamp.proto";
+import "quick/v1/users.proto";
+
+service Auth {
+  rpc RequestCode(RequestCodeRequest) returns (RequestCodeResponse) {}
+  rpc VerifyCode(VerifyCodeRequest)  returns (VerifyCodeResponse)  {}
+  rpc Logout(LogoutRequest)          returns (LogoutResponse)      {}
+}
+
+message RequestCodeRequest { string email = 1; }
+message RequestCodeResponse {
+  google.protobuf.Timestamp expires_at  = 1;
+  google.protobuf.Timestamp retry_after = 2;
+}
+
+message VerifyCodeRequest { string email = 1; string code = 2; }
+message VerifyCodeResponse {
+  string token          = 1;
+  User   user           = 2;
+  bool   is_new_account = 3;
+}
+
+message LogoutRequest {}
+message LogoutResponse {}
