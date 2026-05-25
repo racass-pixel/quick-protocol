@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file quick/v1/users.proto.
  */
 export const file_quick_v1_users: GenFile = /*@__PURE__*/
-  fileDesc("ChRxdWljay92MS91c2Vycy5wcm90bxIIcXVpY2sudjEigAEKBFVzZXISCgoCaWQYASABKAkSDgoGaGFuZGxlGAIgASgJEhQKDGRpc3BsYXlfbmFtZRgDIAEoCRIUCgxhdmF0YXJfY29sb3IYBCABKAkSMAoMbGFzdF9zZWVuX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCILCglNZVJlcXVlc3QiKgoKTWVSZXNwb25zZRIcCgR1c2VyGAEgASgLMg4ucXVpY2sudjEuVXNlciJiChRVcGRhdGVQcm9maWxlUmVxdWVzdBIZCgxkaXNwbGF5X25hbWUYASABKAlIAIgBARITCgZoYW5kbGUYAiABKAlIAYgBAUIPCg1fZGlzcGxheV9uYW1lQgkKB19oYW5kbGUiNQoVVXBkYXRlUHJvZmlsZVJlc3BvbnNlEhwKBHVzZXIYASABKAsyDi5xdWljay52MS5Vc2VyIjUKDVNlYXJjaFJlcXVlc3QSFQoNaGFuZGxlX3ByZWZpeBgBIAEoCRINCgVsaW1pdBgCIAEoBSIvCg5TZWFyY2hSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIiHwoMQmxvY2tSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkiDwoNQmxvY2tSZXNwb25zZSIhCg5VbmJsb2NrUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgJIhEKD1VuYmxvY2tSZXNwb25zZSIUChJMaXN0QmxvY2tlZFJlcXVlc3QiNAoTTGlzdEJsb2NrZWRSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIymQMKBVVzZXJzEjEKAk1lEhMucXVpY2sudjEuTWVSZXF1ZXN0GhQucXVpY2sudjEuTWVSZXNwb25zZSIAElIKDVVwZGF0ZVByb2ZpbGUSHi5xdWljay52MS5VcGRhdGVQcm9maWxlUmVxdWVzdBofLnF1aWNrLnYxLlVwZGF0ZVByb2ZpbGVSZXNwb25zZSIAEj0KBlNlYXJjaBIXLnF1aWNrLnYxLlNlYXJjaFJlcXVlc3QaGC5xdWljay52MS5TZWFyY2hSZXNwb25zZSIAEjoKBUJsb2NrEhYucXVpY2sudjEuQmxvY2tSZXF1ZXN0GhcucXVpY2sudjEuQmxvY2tSZXNwb25zZSIAEkAKB1VuYmxvY2sSGC5xdWljay52MS5VbmJsb2NrUmVxdWVzdBoZLnF1aWNrLnYxLlVuYmxvY2tSZXNwb25zZSIAEkwKC0xpc3RCbG9ja2VkEhwucXVpY2sudjEuTGlzdEJsb2NrZWRSZXF1ZXN0Gh0ucXVpY2sudjEuTGlzdEJsb2NrZWRSZXNwb25zZSIAQpsBCgxjb20ucXVpY2sudjFCClVzZXJzUHJvdG9QAVo+Z2l0aHViLmNvbS9yYWNhc3MtcGl4ZWwvcXVpY2stcHJvdG9jb2wvZ2VuL2dvL3F1aWNrL3YxO3F1aWNrdjGiAgNRWFiqAghRdWljay5WMcoCCFF1aWNrXFYx4gIUUXVpY2tcVjFcR1BCTWV0YWRhdGHqAglRdWljazo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp]);
+  fileDesc("ChRxdWljay92MS91c2Vycy5wcm90bxIIcXVpY2sudjEigAEKBFVzZXISCgoCaWQYASABKAkSDgoGaGFuZGxlGAIgASgJEhQKDGRpc3BsYXlfbmFtZRgDIAEoCRIUCgxhdmF0YXJfY29sb3IYBCABKAkSMAoMbGFzdF9zZWVuX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCILCglNZVJlcXVlc3QiKgoKTWVSZXNwb25zZRIcCgR1c2VyGAEgASgLMg4ucXVpY2sudjEuVXNlciJiChRVcGRhdGVQcm9maWxlUmVxdWVzdBIZCgxkaXNwbGF5X25hbWUYASABKAlIAIgBARITCgZoYW5kbGUYAiABKAlIAYgBAUIPCg1fZGlzcGxheV9uYW1lQgkKB19oYW5kbGUiNQoVVXBkYXRlUHJvZmlsZVJlc3BvbnNlEhwKBHVzZXIYASABKAsyDi5xdWljay52MS5Vc2VyIjUKDVNlYXJjaFJlcXVlc3QSFQoNaGFuZGxlX3ByZWZpeBgBIAEoCRINCgVsaW1pdBgCIAEoBSIvCg5TZWFyY2hSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIiHwoMQmxvY2tSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkiDwoNQmxvY2tSZXNwb25zZSIhCg5VbmJsb2NrUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgJIhEKD1VuYmxvY2tSZXNwb25zZSIUChJMaXN0QmxvY2tlZFJlcXVlc3QiNAoTTGlzdEJsb2NrZWRSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIiXQoIUHJlc2VuY2USDwoHdXNlcl9pZBgBIAEoCRIOCgZvbmxpbmUYAiABKAgSMAoMbGFzdF9zZWVuX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCImChJHZXRQcmVzZW5jZVJlcXVlc3QSEAoIdXNlcl9pZHMYASADKAkiOwoTR2V0UHJlc2VuY2VSZXNwb25zZRIkCghwcmVzZW5jZRgBIAMoCzISLnF1aWNrLnYxLlByZXNlbmNlMucDCgVVc2VycxIxCgJNZRITLnF1aWNrLnYxLk1lUmVxdWVzdBoULnF1aWNrLnYxLk1lUmVzcG9uc2UiABJSCg1VcGRhdGVQcm9maWxlEh4ucXVpY2sudjEuVXBkYXRlUHJvZmlsZVJlcXVlc3QaHy5xdWljay52MS5VcGRhdGVQcm9maWxlUmVzcG9uc2UiABI9CgZTZWFyY2gSFy5xdWljay52MS5TZWFyY2hSZXF1ZXN0GhgucXVpY2sudjEuU2VhcmNoUmVzcG9uc2UiABI6CgVCbG9jaxIWLnF1aWNrLnYxLkJsb2NrUmVxdWVzdBoXLnF1aWNrLnYxLkJsb2NrUmVzcG9uc2UiABJACgdVbmJsb2NrEhgucXVpY2sudjEuVW5ibG9ja1JlcXVlc3QaGS5xdWljay52MS5VbmJsb2NrUmVzcG9uc2UiABJMCgtMaXN0QmxvY2tlZBIcLnF1aWNrLnYxLkxpc3RCbG9ja2VkUmVxdWVzdBodLnF1aWNrLnYxLkxpc3RCbG9ja2VkUmVzcG9uc2UiABJMCgtHZXRQcmVzZW5jZRIcLnF1aWNrLnYxLkdldFByZXNlbmNlUmVxdWVzdBodLnF1aWNrLnYxLkdldFByZXNlbmNlUmVzcG9uc2UiAEKbAQoMY29tLnF1aWNrLnYxQgpVc2Vyc1Byb3RvUAFaPmdpdGh1Yi5jb20vcmFjYXNzLXBpeGVsL3F1aWNrLXByb3RvY29sL2dlbi9nby9xdWljay92MTtxdWlja3YxogIDUVhYqgIIUXVpY2suVjHKAghRdWlja1xWMeICFFF1aWNrXFYxXEdQQk1ldGFkYXRh6gIJUXVpY2s6OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message quick.v1.User
@@ -250,6 +250,67 @@ export const ListBlockedResponseSchema: GenMessage<ListBlockedResponse> = /*@__P
   messageDesc(file_quick_v1_users, 12);
 
 /**
+ * @generated from message quick.v1.Presence
+ */
+export type Presence = Message<"quick.v1.Presence"> & {
+  /**
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+
+  /**
+   * @generated from field: bool online = 2;
+   */
+  online: boolean;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp last_seen_at = 3;
+   */
+  lastSeenAt?: Timestamp | undefined;
+};
+
+/**
+ * Describes the message quick.v1.Presence.
+ * Use `create(PresenceSchema)` to create a new message.
+ */
+export const PresenceSchema: GenMessage<Presence> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 13);
+
+/**
+ * @generated from message quick.v1.GetPresenceRequest
+ */
+export type GetPresenceRequest = Message<"quick.v1.GetPresenceRequest"> & {
+  /**
+   * @generated from field: repeated string user_ids = 1;
+   */
+  userIds: string[];
+};
+
+/**
+ * Describes the message quick.v1.GetPresenceRequest.
+ * Use `create(GetPresenceRequestSchema)` to create a new message.
+ */
+export const GetPresenceRequestSchema: GenMessage<GetPresenceRequest> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 14);
+
+/**
+ * @generated from message quick.v1.GetPresenceResponse
+ */
+export type GetPresenceResponse = Message<"quick.v1.GetPresenceResponse"> & {
+  /**
+   * @generated from field: repeated quick.v1.Presence presence = 1;
+   */
+  presence: Presence[];
+};
+
+/**
+ * Describes the message quick.v1.GetPresenceResponse.
+ * Use `create(GetPresenceResponseSchema)` to create a new message.
+ */
+export const GetPresenceResponseSchema: GenMessage<GetPresenceResponse> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 15);
+
+/**
  * @generated from service quick.v1.Users
  */
 export const Users: GenService<{
@@ -300,6 +361,14 @@ export const Users: GenService<{
     methodKind: "unary";
     input: typeof ListBlockedRequestSchema;
     output: typeof ListBlockedResponseSchema;
+  },
+  /**
+   * @generated from rpc quick.v1.Users.GetPresence
+   */
+  getPresence: {
+    methodKind: "unary";
+    input: typeof GetPresenceRequestSchema;
+    output: typeof GetPresenceResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_quick_v1_users, 0);

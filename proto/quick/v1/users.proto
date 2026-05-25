@@ -10,6 +10,7 @@ service Users {
   rpc Block(BlockRequest)                 returns (BlockResponse)         {}
   rpc Unblock(UnblockRequest)             returns (UnblockResponse)       {}
   rpc ListBlocked(ListBlockedRequest)     returns (ListBlockedResponse)   {}
+  rpc GetPresence(GetPresenceRequest)     returns (GetPresenceResponse)   {}
 }
 
 message User {
@@ -38,3 +39,12 @@ message UnblockRequest  { string user_id = 1; }
 message UnblockResponse {}
 message ListBlockedRequest  {}
 message ListBlockedResponse { repeated User users = 1; }
+
+message Presence {
+  string user_id = 1;
+  bool   online  = 2;
+  google.protobuf.Timestamp last_seen_at = 3;
+}
+
+message GetPresenceRequest  { repeated string user_ids = 1; }
+message GetPresenceResponse { repeated Presence presence = 1; }

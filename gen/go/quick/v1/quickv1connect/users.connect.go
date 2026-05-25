@@ -45,6 +45,8 @@ const (
 	UsersUnblockProcedure = "/quick.v1.Users/Unblock"
 	// UsersListBlockedProcedure is the fully-qualified name of the Users's ListBlocked RPC.
 	UsersListBlockedProcedure = "/quick.v1.Users/ListBlocked"
+	// UsersGetPresenceProcedure is the fully-qualified name of the Users's GetPresence RPC.
+	UsersGetPresenceProcedure = "/quick.v1.Users/GetPresence"
 )
 
 // UsersClient is a client for the quick.v1.Users service.
@@ -55,6 +57,7 @@ type UsersClient interface {
 	Block(context.Context, *connect.Request[v1.BlockRequest]) (*connect.Response[v1.BlockResponse], error)
 	Unblock(context.Context, *connect.Request[v1.UnblockRequest]) (*connect.Response[v1.UnblockResponse], error)
 	ListBlocked(context.Context, *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error)
+	GetPresence(context.Context, *connect.Request[v1.GetPresenceRequest]) (*connect.Response[v1.GetPresenceResponse], error)
 }
 
 // NewUsersClient constructs a client for the quick.v1.Users service. By default, it uses the
@@ -104,6 +107,12 @@ func NewUsersClient(httpClient connect.HTTPClient, baseURL string, opts ...conne
 			connect.WithSchema(usersMethods.ByName("ListBlocked")),
 			connect.WithClientOptions(opts...),
 		),
+		getPresence: connect.NewClient[v1.GetPresenceRequest, v1.GetPresenceResponse](
+			httpClient,
+			baseURL+UsersGetPresenceProcedure,
+			connect.WithSchema(usersMethods.ByName("GetPresence")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -115,6 +124,7 @@ type usersClient struct {
 	block         *connect.Client[v1.BlockRequest, v1.BlockResponse]
 	unblock       *connect.Client[v1.UnblockRequest, v1.UnblockResponse]
 	listBlocked   *connect.Client[v1.ListBlockedRequest, v1.ListBlockedResponse]
+	getPresence   *connect.Client[v1.GetPresenceRequest, v1.GetPresenceResponse]
 }
 
 // Me calls quick.v1.Users.Me.
@@ -147,6 +157,11 @@ func (c *usersClient) ListBlocked(ctx context.Context, req *connect.Request[v1.L
 	return c.listBlocked.CallUnary(ctx, req)
 }
 
+// GetPresence calls quick.v1.Users.GetPresence.
+func (c *usersClient) GetPresence(ctx context.Context, req *connect.Request[v1.GetPresenceRequest]) (*connect.Response[v1.GetPresenceResponse], error) {
+	return c.getPresence.CallUnary(ctx, req)
+}
+
 // UsersHandler is an implementation of the quick.v1.Users service.
 type UsersHandler interface {
 	Me(context.Context, *connect.Request[v1.MeRequest]) (*connect.Response[v1.MeResponse], error)
@@ -155,6 +170,7 @@ type UsersHandler interface {
 	Block(context.Context, *connect.Request[v1.BlockRequest]) (*connect.Response[v1.BlockResponse], error)
 	Unblock(context.Context, *connect.Request[v1.UnblockRequest]) (*connect.Response[v1.UnblockResponse], error)
 	ListBlocked(context.Context, *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error)
+	GetPresence(context.Context, *connect.Request[v1.GetPresenceRequest]) (*connect.Response[v1.GetPresenceResponse], error)
 }
 
 // NewUsersHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -200,6 +216,12 @@ func NewUsersHandler(svc UsersHandler, opts ...connect.HandlerOption) (string, h
 		connect.WithSchema(usersMethods.ByName("ListBlocked")),
 		connect.WithHandlerOptions(opts...),
 	)
+	usersGetPresenceHandler := connect.NewUnaryHandler(
+		UsersGetPresenceProcedure,
+		svc.GetPresence,
+		connect.WithSchema(usersMethods.ByName("GetPresence")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Users/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case UsersMeProcedure:
@@ -214,6 +236,8 @@ func NewUsersHandler(svc UsersHandler, opts ...connect.HandlerOption) (string, h
 			usersUnblockHandler.ServeHTTP(w, r)
 		case UsersListBlockedProcedure:
 			usersListBlockedHandler.ServeHTTP(w, r)
+		case UsersGetPresenceProcedure:
+			usersGetPresenceHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -245,4 +269,8 @@ func (UnimplementedUsersHandler) Unblock(context.Context, *connect.Request[v1.Un
 
 func (UnimplementedUsersHandler) ListBlocked(context.Context, *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.ListBlocked is not implemented"))
+}
+
+func (UnimplementedUsersHandler) GetPresence(context.Context, *connect.Request[v1.GetPresenceRequest]) (*connect.Response[v1.GetPresenceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.GetPresence is not implemented"))
 }

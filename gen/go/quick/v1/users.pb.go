@@ -610,6 +610,154 @@ func (x *ListBlockedResponse) GetUsers() []*User {
 	return nil
 }
 
+type Presence struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Online        bool                   `protobuf:"varint,2,opt,name=online,proto3" json:"online,omitempty"`
+	LastSeenAt    *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_seen_at,json=lastSeenAt,proto3" json:"last_seen_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Presence) Reset() {
+	*x = Presence{}
+	mi := &file_quick_v1_users_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Presence) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Presence) ProtoMessage() {}
+
+func (x *Presence) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Presence.ProtoReflect.Descriptor instead.
+func (*Presence) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *Presence) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *Presence) GetOnline() bool {
+	if x != nil {
+		return x.Online
+	}
+	return false
+}
+
+func (x *Presence) GetLastSeenAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastSeenAt
+	}
+	return nil
+}
+
+type GetPresenceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserIds       []string               `protobuf:"bytes,1,rep,name=user_ids,json=userIds,proto3" json:"user_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPresenceRequest) Reset() {
+	*x = GetPresenceRequest{}
+	mi := &file_quick_v1_users_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPresenceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPresenceRequest) ProtoMessage() {}
+
+func (x *GetPresenceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPresenceRequest.ProtoReflect.Descriptor instead.
+func (*GetPresenceRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetPresenceRequest) GetUserIds() []string {
+	if x != nil {
+		return x.UserIds
+	}
+	return nil
+}
+
+type GetPresenceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Presence      []*Presence            `protobuf:"bytes,1,rep,name=presence,proto3" json:"presence,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPresenceResponse) Reset() {
+	*x = GetPresenceResponse{}
+	mi := &file_quick_v1_users_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPresenceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPresenceResponse) ProtoMessage() {}
+
+func (x *GetPresenceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPresenceResponse.ProtoReflect.Descriptor instead.
+func (*GetPresenceResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetPresenceResponse) GetPresence() []*Presence {
+	if x != nil {
+		return x.Presence
+	}
+	return nil
+}
+
 var File_quick_v1_users_proto protoreflect.FileDescriptor
 
 const file_quick_v1_users_proto_rawDesc = "" +
@@ -646,14 +794,24 @@ const file_quick_v1_users_proto_rawDesc = "" +
 	"\x0fUnblockResponse\"\x14\n" +
 	"\x12ListBlockedRequest\";\n" +
 	"\x13ListBlockedResponse\x12$\n" +
-	"\x05users\x18\x01 \x03(\v2\x0e.quick.v1.UserR\x05users2\x99\x03\n" +
+	"\x05users\x18\x01 \x03(\v2\x0e.quick.v1.UserR\x05users\"y\n" +
+	"\bPresence\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x16\n" +
+	"\x06online\x18\x02 \x01(\bR\x06online\x12<\n" +
+	"\flast_seen_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastSeenAt\"/\n" +
+	"\x12GetPresenceRequest\x12\x19\n" +
+	"\buser_ids\x18\x01 \x03(\tR\auserIds\"E\n" +
+	"\x13GetPresenceResponse\x12.\n" +
+	"\bpresence\x18\x01 \x03(\v2\x12.quick.v1.PresenceR\bpresence2\xe7\x03\n" +
 	"\x05Users\x121\n" +
 	"\x02Me\x12\x13.quick.v1.MeRequest\x1a\x14.quick.v1.MeResponse\"\x00\x12R\n" +
 	"\rUpdateProfile\x12\x1e.quick.v1.UpdateProfileRequest\x1a\x1f.quick.v1.UpdateProfileResponse\"\x00\x12=\n" +
 	"\x06Search\x12\x17.quick.v1.SearchRequest\x1a\x18.quick.v1.SearchResponse\"\x00\x12:\n" +
 	"\x05Block\x12\x16.quick.v1.BlockRequest\x1a\x17.quick.v1.BlockResponse\"\x00\x12@\n" +
 	"\aUnblock\x12\x18.quick.v1.UnblockRequest\x1a\x19.quick.v1.UnblockResponse\"\x00\x12L\n" +
-	"\vListBlocked\x12\x1c.quick.v1.ListBlockedRequest\x1a\x1d.quick.v1.ListBlockedResponse\"\x00B\x9b\x01\n" +
+	"\vListBlocked\x12\x1c.quick.v1.ListBlockedRequest\x1a\x1d.quick.v1.ListBlockedResponse\"\x00\x12L\n" +
+	"\vGetPresence\x12\x1c.quick.v1.GetPresenceRequest\x1a\x1d.quick.v1.GetPresenceResponse\"\x00B\x9b\x01\n" +
 	"\fcom.quick.v1B\n" +
 	"UsersProtoP\x01Z>github.com/racass-pixel/quick-protocol/gen/go/quick/v1;quickv1\xa2\x02\x03QXX\xaa\x02\bQuick.V1\xca\x02\bQuick\\V1\xe2\x02\x14Quick\\V1\\GPBMetadata\xea\x02\tQuick::V1b\x06proto3"
 
@@ -669,7 +827,7 @@ func file_quick_v1_users_proto_rawDescGZIP() []byte {
 	return file_quick_v1_users_proto_rawDescData
 }
 
-var file_quick_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_quick_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_quick_v1_users_proto_goTypes = []any{
 	(*User)(nil),                  // 0: quick.v1.User
 	(*MeRequest)(nil),             // 1: quick.v1.MeRequest
@@ -684,31 +842,38 @@ var file_quick_v1_users_proto_goTypes = []any{
 	(*UnblockResponse)(nil),       // 10: quick.v1.UnblockResponse
 	(*ListBlockedRequest)(nil),    // 11: quick.v1.ListBlockedRequest
 	(*ListBlockedResponse)(nil),   // 12: quick.v1.ListBlockedResponse
-	(*timestamppb.Timestamp)(nil), // 13: google.protobuf.Timestamp
+	(*Presence)(nil),              // 13: quick.v1.Presence
+	(*GetPresenceRequest)(nil),    // 14: quick.v1.GetPresenceRequest
+	(*GetPresenceResponse)(nil),   // 15: quick.v1.GetPresenceResponse
+	(*timestamppb.Timestamp)(nil), // 16: google.protobuf.Timestamp
 }
 var file_quick_v1_users_proto_depIdxs = []int32{
-	13, // 0: quick.v1.User.last_seen_at:type_name -> google.protobuf.Timestamp
+	16, // 0: quick.v1.User.last_seen_at:type_name -> google.protobuf.Timestamp
 	0,  // 1: quick.v1.MeResponse.user:type_name -> quick.v1.User
 	0,  // 2: quick.v1.UpdateProfileResponse.user:type_name -> quick.v1.User
 	0,  // 3: quick.v1.SearchResponse.users:type_name -> quick.v1.User
 	0,  // 4: quick.v1.ListBlockedResponse.users:type_name -> quick.v1.User
-	1,  // 5: quick.v1.Users.Me:input_type -> quick.v1.MeRequest
-	3,  // 6: quick.v1.Users.UpdateProfile:input_type -> quick.v1.UpdateProfileRequest
-	5,  // 7: quick.v1.Users.Search:input_type -> quick.v1.SearchRequest
-	7,  // 8: quick.v1.Users.Block:input_type -> quick.v1.BlockRequest
-	9,  // 9: quick.v1.Users.Unblock:input_type -> quick.v1.UnblockRequest
-	11, // 10: quick.v1.Users.ListBlocked:input_type -> quick.v1.ListBlockedRequest
-	2,  // 11: quick.v1.Users.Me:output_type -> quick.v1.MeResponse
-	4,  // 12: quick.v1.Users.UpdateProfile:output_type -> quick.v1.UpdateProfileResponse
-	6,  // 13: quick.v1.Users.Search:output_type -> quick.v1.SearchResponse
-	8,  // 14: quick.v1.Users.Block:output_type -> quick.v1.BlockResponse
-	10, // 15: quick.v1.Users.Unblock:output_type -> quick.v1.UnblockResponse
-	12, // 16: quick.v1.Users.ListBlocked:output_type -> quick.v1.ListBlockedResponse
-	11, // [11:17] is the sub-list for method output_type
-	5,  // [5:11] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	16, // 5: quick.v1.Presence.last_seen_at:type_name -> google.protobuf.Timestamp
+	13, // 6: quick.v1.GetPresenceResponse.presence:type_name -> quick.v1.Presence
+	1,  // 7: quick.v1.Users.Me:input_type -> quick.v1.MeRequest
+	3,  // 8: quick.v1.Users.UpdateProfile:input_type -> quick.v1.UpdateProfileRequest
+	5,  // 9: quick.v1.Users.Search:input_type -> quick.v1.SearchRequest
+	7,  // 10: quick.v1.Users.Block:input_type -> quick.v1.BlockRequest
+	9,  // 11: quick.v1.Users.Unblock:input_type -> quick.v1.UnblockRequest
+	11, // 12: quick.v1.Users.ListBlocked:input_type -> quick.v1.ListBlockedRequest
+	14, // 13: quick.v1.Users.GetPresence:input_type -> quick.v1.GetPresenceRequest
+	2,  // 14: quick.v1.Users.Me:output_type -> quick.v1.MeResponse
+	4,  // 15: quick.v1.Users.UpdateProfile:output_type -> quick.v1.UpdateProfileResponse
+	6,  // 16: quick.v1.Users.Search:output_type -> quick.v1.SearchResponse
+	8,  // 17: quick.v1.Users.Block:output_type -> quick.v1.BlockResponse
+	10, // 18: quick.v1.Users.Unblock:output_type -> quick.v1.UnblockResponse
+	12, // 19: quick.v1.Users.ListBlocked:output_type -> quick.v1.ListBlockedResponse
+	15, // 20: quick.v1.Users.GetPresence:output_type -> quick.v1.GetPresenceResponse
+	14, // [14:21] is the sub-list for method output_type
+	7,  // [7:14] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_quick_v1_users_proto_init() }
@@ -723,7 +888,7 @@ func file_quick_v1_users_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_quick_v1_users_proto_rawDesc), len(file_quick_v1_users_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

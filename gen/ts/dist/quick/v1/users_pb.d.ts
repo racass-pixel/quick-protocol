@@ -192,6 +192,56 @@ export type ListBlockedResponse = Message<"quick.v1.ListBlockedResponse"> & {
  */
 export declare const ListBlockedResponseSchema: GenMessage<ListBlockedResponse>;
 /**
+ * @generated from message quick.v1.Presence
+ */
+export type Presence = Message<"quick.v1.Presence"> & {
+    /**
+     * @generated from field: string user_id = 1;
+     */
+    userId: string;
+    /**
+     * @generated from field: bool online = 2;
+     */
+    online: boolean;
+    /**
+     * @generated from field: google.protobuf.Timestamp last_seen_at = 3;
+     */
+    lastSeenAt?: Timestamp | undefined;
+};
+/**
+ * Describes the message quick.v1.Presence.
+ * Use `create(PresenceSchema)` to create a new message.
+ */
+export declare const PresenceSchema: GenMessage<Presence>;
+/**
+ * @generated from message quick.v1.GetPresenceRequest
+ */
+export type GetPresenceRequest = Message<"quick.v1.GetPresenceRequest"> & {
+    /**
+     * @generated from field: repeated string user_ids = 1;
+     */
+    userIds: string[];
+};
+/**
+ * Describes the message quick.v1.GetPresenceRequest.
+ * Use `create(GetPresenceRequestSchema)` to create a new message.
+ */
+export declare const GetPresenceRequestSchema: GenMessage<GetPresenceRequest>;
+/**
+ * @generated from message quick.v1.GetPresenceResponse
+ */
+export type GetPresenceResponse = Message<"quick.v1.GetPresenceResponse"> & {
+    /**
+     * @generated from field: repeated quick.v1.Presence presence = 1;
+     */
+    presence: Presence[];
+};
+/**
+ * Describes the message quick.v1.GetPresenceResponse.
+ * Use `create(GetPresenceResponseSchema)` to create a new message.
+ */
+export declare const GetPresenceResponseSchema: GenMessage<GetPresenceResponse>;
+/**
  * @generated from service quick.v1.Users
  */
 export declare const Users: GenService<{
@@ -242,5 +292,13 @@ export declare const Users: GenService<{
         methodKind: "unary";
         input: typeof ListBlockedRequestSchema;
         output: typeof ListBlockedResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Users.GetPresence
+     */
+    getPresence: {
+        methodKind: "unary";
+        input: typeof GetPresenceRequestSchema;
+        output: typeof GetPresenceResponseSchema;
     };
 }>;
