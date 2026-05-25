@@ -1,0 +1,10 @@
+.tmp/
+node_modules/
+gen/ts/node_modules/
+gen/dart/.dart_tool/
+gen/dart/.packages
+gen/dart/build/
+.idea/
+.vscode/
+*.swp
+.DS_Store
