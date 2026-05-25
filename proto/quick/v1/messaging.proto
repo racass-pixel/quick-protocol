@@ -1,0 +1,45 @@
+syntax = "proto3";
+package quick.v1;
+import "google/protobuf/timestamp.proto";
+import "quick/v1/users.proto";
+
+service Messaging {
+  rpc ListConversations(ListConversationsRequest) returns (ListConversationsResponse) {}
+  rpc OpenDM(OpenDMRequest)                       returns (OpenDMResponse)            {}
+  rpc ListMessages(ListMessagesRequest)           returns (ListMessagesResponse)      {}
+  rpc SendMessage(SendMessageRequest)             returns (SendMessageResponse)       {}
+  rpc MarkRead(MarkReadRequest)                   returns (MarkReadResponse)          {}
+}
+
+message Conversation {
+  string id    = 1;
+  string type  = 2;
+  string title = 3;
+  User   peer  = 4;
+  google.protobuf.Timestamp last_message_at = 5;
+  Message preview = 6;
+  int32  unread_count = 7;
+}
+
+message Message {
+  string id              = 1;
+  string conversation_id = 2;
+  string sender_id       = 3;
+  string body            = 4;
+  google.protobuf.Timestamp created_at = 5;
+}
+
+message OpenDMRequest  { string user_id = 1; }
+message OpenDMResponse { Conversation conversation = 1; }
+
+message ListConversationsRequest  {}
+message ListConversationsResponse { repeated Conversation conversations = 1; }
+
+message ListMessagesRequest  { string conversation_id = 1; string before_id = 2; int32 limit = 3; }
+message ListMessagesResponse { repeated Message messages = 1; bool has_more = 2; }
+
+message SendMessageRequest  { string conversation_id = 1; string body = 2; }
+message SendMessageResponse { Message message = 1; }
+
+message MarkReadRequest  { string conversation_id = 1; string last_message_id = 2; }
+message MarkReadResponse {}
