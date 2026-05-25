@@ -5,23 +5,16 @@ managed:
     - file_option: go_package_prefix
       value: github.com/racass-pixel/quick-protocol/gen/go
 plugins:
-  - remote: buf.build/protocolbuffers/go
+  - local: protoc-gen-go
     out: gen/go
     opt: paths=source_relative
-  - remote: buf.build/connectrpc/go
+  - local: protoc-gen-connect-go
     out: gen/go
     opt: paths=source_relative
-  - remote: buf.build/bufbuild/es
+  - local:
+      - node
+      - tools/node_modules/@bufbuild/protoc-gen-es/bin/protoc-gen-es
     out: gen/ts/src
     opt:
       - target=ts
       - import_extension=js
-  - remote: buf.build/connectrpc/es
-    out: gen/ts/src
-    opt:
-      - target=ts
-      - import_extension=js
-  - remote: buf.build/protocolbuffers/dart
-    out: gen/dart/lib
-  - remote: buf.build/connectrpc/dart
-    out: gen/dart/lib

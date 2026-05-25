@@ -1,6 +1,9 @@
-.PHONY: generate lint breaking clean
+.PHONY: generate lint breaking clean tools
 
-generate:
+tools:
+	cd tools && pnpm install
+
+generate: tools
 	buf generate
 
 lint:

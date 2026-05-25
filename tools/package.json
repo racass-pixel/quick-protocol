@@ -1,0 +1,9 @@
+{
+  "name": "quick-protocol-tools",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Local protoc plugins used by buf generate",
+  "devDependencies": {
+    "@bufbuild/protoc-gen-es": "^2.0.0"
+  }
+}
