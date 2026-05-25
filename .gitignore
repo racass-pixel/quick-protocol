@@ -2,7 +2,8 @@
 node_modules/
 tools/node_modules/
 gen/ts/node_modules/
-gen/ts/dist/
+# dist/ is committed so consumers can use it without rebuilding the SDK locally.
+# gen/ts/dist/
 gen/dart/.dart_tool/
 gen/dart/.packages
 gen/dart/build/

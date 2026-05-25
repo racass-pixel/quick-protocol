@@ -1,6 +1,7 @@
 {
   "name": "@racass-pixel/quick-protocol",
   "version": "0.1.0",
+  "packageManager": "pnpm@10.29.3",
   "description": "TypeScript SDK generated from quick-protocol",
   "type": "module",
   "main": "./dist/index.js",
