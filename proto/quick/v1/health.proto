@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package quick.v1;
+
+// Health is a liveness probe served over Connect-RPC.
+// Clients call Check at startup and on focus to verify the server is reachable
+// and to read its version string.
+service Health {
+  rpc Check(CheckRequest) returns (CheckResponse) {}
+}
+
+message CheckRequest {}
+
+message CheckResponse {
+  // Semver of the running server build (e.g. "0.1.0").
+  string version = 1;
+  // Short git commit SHA of the running server build.
+  string commit = 2;
+  // Always set to SERVING when the server can answer. Other values reserved.
+  ServingStatus status = 3;
+}
+
+enum ServingStatus {
+  SERVING_STATUS_UNSPECIFIED = 0;
+  SERVING_STATUS_SERVING = 1;
+  SERVING_STATUS_NOT_SERVING = 2;
+}

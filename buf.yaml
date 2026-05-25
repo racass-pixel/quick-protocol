@@ -9,3 +9,4 @@ lint:
     - STANDARD
   except:
     - PACKAGE_VERSION_SUFFIX
+    - SERVICE_SUFFIX
