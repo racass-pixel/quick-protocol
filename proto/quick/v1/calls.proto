@@ -1,0 +1,27 @@
+syntax = "proto3";
+package quick.v1;
+
+service Calls {
+  rpc StartCall(StartCallRequest)     returns (StartCallResponse)   {}
+  rpc AcceptCall(AcceptCallRequest)   returns (AcceptCallResponse)  {}
+  rpc DeclineCall(DeclineCallRequest) returns (DeclineCallResponse) {}
+  rpc EndCall(EndCallRequest)         returns (EndCallResponse)     {}
+}
+
+message CallJoin {
+  string room_name   = 1;
+  string token       = 2;
+  string livekit_url = 3;
+}
+
+message StartCallRequest  { string user_id = 1; bool video = 2; }
+message StartCallResponse { string call_id = 1; CallJoin join = 2; }
+
+message AcceptCallRequest  { string call_id = 1; }
+message AcceptCallResponse { CallJoin join = 1; }
+
+message DeclineCallRequest  { string call_id = 1; }
+message DeclineCallResponse {}
+
+message EndCallRequest  { string call_id = 1; }
+message EndCallResponse {}
