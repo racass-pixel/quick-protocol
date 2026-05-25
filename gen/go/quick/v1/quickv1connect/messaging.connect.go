@@ -44,6 +44,19 @@ const (
 	MessagingSendMessageProcedure = "/quick.v1.Messaging/SendMessage"
 	// MessagingMarkReadProcedure is the fully-qualified name of the Messaging's MarkRead RPC.
 	MessagingMarkReadProcedure = "/quick.v1.Messaging/MarkRead"
+	// MessagingCreateGroupProcedure is the fully-qualified name of the Messaging's CreateGroup RPC.
+	MessagingCreateGroupProcedure = "/quick.v1.Messaging/CreateGroup"
+	// MessagingCreateChannelProcedure is the fully-qualified name of the Messaging's CreateChannel RPC.
+	MessagingCreateChannelProcedure = "/quick.v1.Messaging/CreateChannel"
+	// MessagingAddMembersProcedure is the fully-qualified name of the Messaging's AddMembers RPC.
+	MessagingAddMembersProcedure = "/quick.v1.Messaging/AddMembers"
+	// MessagingRemoveMemberProcedure is the fully-qualified name of the Messaging's RemoveMember RPC.
+	MessagingRemoveMemberProcedure = "/quick.v1.Messaging/RemoveMember"
+	// MessagingLeaveConversationProcedure is the fully-qualified name of the Messaging's
+	// LeaveConversation RPC.
+	MessagingLeaveConversationProcedure = "/quick.v1.Messaging/LeaveConversation"
+	// MessagingListMembersProcedure is the fully-qualified name of the Messaging's ListMembers RPC.
+	MessagingListMembersProcedure = "/quick.v1.Messaging/ListMembers"
 )
 
 // MessagingClient is a client for the quick.v1.Messaging service.
@@ -53,6 +66,12 @@ type MessagingClient interface {
 	ListMessages(context.Context, *connect.Request[v1.ListMessagesRequest]) (*connect.Response[v1.ListMessagesResponse], error)
 	SendMessage(context.Context, *connect.Request[v1.SendMessageRequest]) (*connect.Response[v1.SendMessageResponse], error)
 	MarkRead(context.Context, *connect.Request[v1.MarkReadRequest]) (*connect.Response[v1.MarkReadResponse], error)
+	CreateGroup(context.Context, *connect.Request[v1.CreateGroupRequest]) (*connect.Response[v1.CreateGroupResponse], error)
+	CreateChannel(context.Context, *connect.Request[v1.CreateChannelRequest]) (*connect.Response[v1.CreateChannelResponse], error)
+	AddMembers(context.Context, *connect.Request[v1.AddMembersRequest]) (*connect.Response[v1.AddMembersResponse], error)
+	RemoveMember(context.Context, *connect.Request[v1.RemoveMemberRequest]) (*connect.Response[v1.RemoveMemberResponse], error)
+	LeaveConversation(context.Context, *connect.Request[v1.LeaveConversationRequest]) (*connect.Response[v1.LeaveConversationResponse], error)
+	ListMembers(context.Context, *connect.Request[v1.ListMembersRequest]) (*connect.Response[v1.ListMembersResponse], error)
 }
 
 // NewMessagingClient constructs a client for the quick.v1.Messaging service. By default, it uses
@@ -96,6 +115,42 @@ func NewMessagingClient(httpClient connect.HTTPClient, baseURL string, opts ...c
 			connect.WithSchema(messagingMethods.ByName("MarkRead")),
 			connect.WithClientOptions(opts...),
 		),
+		createGroup: connect.NewClient[v1.CreateGroupRequest, v1.CreateGroupResponse](
+			httpClient,
+			baseURL+MessagingCreateGroupProcedure,
+			connect.WithSchema(messagingMethods.ByName("CreateGroup")),
+			connect.WithClientOptions(opts...),
+		),
+		createChannel: connect.NewClient[v1.CreateChannelRequest, v1.CreateChannelResponse](
+			httpClient,
+			baseURL+MessagingCreateChannelProcedure,
+			connect.WithSchema(messagingMethods.ByName("CreateChannel")),
+			connect.WithClientOptions(opts...),
+		),
+		addMembers: connect.NewClient[v1.AddMembersRequest, v1.AddMembersResponse](
+			httpClient,
+			baseURL+MessagingAddMembersProcedure,
+			connect.WithSchema(messagingMethods.ByName("AddMembers")),
+			connect.WithClientOptions(opts...),
+		),
+		removeMember: connect.NewClient[v1.RemoveMemberRequest, v1.RemoveMemberResponse](
+			httpClient,
+			baseURL+MessagingRemoveMemberProcedure,
+			connect.WithSchema(messagingMethods.ByName("RemoveMember")),
+			connect.WithClientOptions(opts...),
+		),
+		leaveConversation: connect.NewClient[v1.LeaveConversationRequest, v1.LeaveConversationResponse](
+			httpClient,
+			baseURL+MessagingLeaveConversationProcedure,
+			connect.WithSchema(messagingMethods.ByName("LeaveConversation")),
+			connect.WithClientOptions(opts...),
+		),
+		listMembers: connect.NewClient[v1.ListMembersRequest, v1.ListMembersResponse](
+			httpClient,
+			baseURL+MessagingListMembersProcedure,
+			connect.WithSchema(messagingMethods.ByName("ListMembers")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -106,6 +161,12 @@ type messagingClient struct {
 	listMessages      *connect.Client[v1.ListMessagesRequest, v1.ListMessagesResponse]
 	sendMessage       *connect.Client[v1.SendMessageRequest, v1.SendMessageResponse]
 	markRead          *connect.Client[v1.MarkReadRequest, v1.MarkReadResponse]
+	createGroup       *connect.Client[v1.CreateGroupRequest, v1.CreateGroupResponse]
+	createChannel     *connect.Client[v1.CreateChannelRequest, v1.CreateChannelResponse]
+	addMembers        *connect.Client[v1.AddMembersRequest, v1.AddMembersResponse]
+	removeMember      *connect.Client[v1.RemoveMemberRequest, v1.RemoveMemberResponse]
+	leaveConversation *connect.Client[v1.LeaveConversationRequest, v1.LeaveConversationResponse]
+	listMembers       *connect.Client[v1.ListMembersRequest, v1.ListMembersResponse]
 }
 
 // ListConversations calls quick.v1.Messaging.ListConversations.
@@ -133,6 +194,36 @@ func (c *messagingClient) MarkRead(ctx context.Context, req *connect.Request[v1.
 	return c.markRead.CallUnary(ctx, req)
 }
 
+// CreateGroup calls quick.v1.Messaging.CreateGroup.
+func (c *messagingClient) CreateGroup(ctx context.Context, req *connect.Request[v1.CreateGroupRequest]) (*connect.Response[v1.CreateGroupResponse], error) {
+	return c.createGroup.CallUnary(ctx, req)
+}
+
+// CreateChannel calls quick.v1.Messaging.CreateChannel.
+func (c *messagingClient) CreateChannel(ctx context.Context, req *connect.Request[v1.CreateChannelRequest]) (*connect.Response[v1.CreateChannelResponse], error) {
+	return c.createChannel.CallUnary(ctx, req)
+}
+
+// AddMembers calls quick.v1.Messaging.AddMembers.
+func (c *messagingClient) AddMembers(ctx context.Context, req *connect.Request[v1.AddMembersRequest]) (*connect.Response[v1.AddMembersResponse], error) {
+	return c.addMembers.CallUnary(ctx, req)
+}
+
+// RemoveMember calls quick.v1.Messaging.RemoveMember.
+func (c *messagingClient) RemoveMember(ctx context.Context, req *connect.Request[v1.RemoveMemberRequest]) (*connect.Response[v1.RemoveMemberResponse], error) {
+	return c.removeMember.CallUnary(ctx, req)
+}
+
+// LeaveConversation calls quick.v1.Messaging.LeaveConversation.
+func (c *messagingClient) LeaveConversation(ctx context.Context, req *connect.Request[v1.LeaveConversationRequest]) (*connect.Response[v1.LeaveConversationResponse], error) {
+	return c.leaveConversation.CallUnary(ctx, req)
+}
+
+// ListMembers calls quick.v1.Messaging.ListMembers.
+func (c *messagingClient) ListMembers(ctx context.Context, req *connect.Request[v1.ListMembersRequest]) (*connect.Response[v1.ListMembersResponse], error) {
+	return c.listMembers.CallUnary(ctx, req)
+}
+
 // MessagingHandler is an implementation of the quick.v1.Messaging service.
 type MessagingHandler interface {
 	ListConversations(context.Context, *connect.Request[v1.ListConversationsRequest]) (*connect.Response[v1.ListConversationsResponse], error)
@@ -140,6 +231,12 @@ type MessagingHandler interface {
 	ListMessages(context.Context, *connect.Request[v1.ListMessagesRequest]) (*connect.Response[v1.ListMessagesResponse], error)
 	SendMessage(context.Context, *connect.Request[v1.SendMessageRequest]) (*connect.Response[v1.SendMessageResponse], error)
 	MarkRead(context.Context, *connect.Request[v1.MarkReadRequest]) (*connect.Response[v1.MarkReadResponse], error)
+	CreateGroup(context.Context, *connect.Request[v1.CreateGroupRequest]) (*connect.Response[v1.CreateGroupResponse], error)
+	CreateChannel(context.Context, *connect.Request[v1.CreateChannelRequest]) (*connect.Response[v1.CreateChannelResponse], error)
+	AddMembers(context.Context, *connect.Request[v1.AddMembersRequest]) (*connect.Response[v1.AddMembersResponse], error)
+	RemoveMember(context.Context, *connect.Request[v1.RemoveMemberRequest]) (*connect.Response[v1.RemoveMemberResponse], error)
+	LeaveConversation(context.Context, *connect.Request[v1.LeaveConversationRequest]) (*connect.Response[v1.LeaveConversationResponse], error)
+	ListMembers(context.Context, *connect.Request[v1.ListMembersRequest]) (*connect.Response[v1.ListMembersResponse], error)
 }
 
 // NewMessagingHandler builds an HTTP handler from the service implementation. It returns the path
@@ -179,6 +276,42 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 		connect.WithSchema(messagingMethods.ByName("MarkRead")),
 		connect.WithHandlerOptions(opts...),
 	)
+	messagingCreateGroupHandler := connect.NewUnaryHandler(
+		MessagingCreateGroupProcedure,
+		svc.CreateGroup,
+		connect.WithSchema(messagingMethods.ByName("CreateGroup")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingCreateChannelHandler := connect.NewUnaryHandler(
+		MessagingCreateChannelProcedure,
+		svc.CreateChannel,
+		connect.WithSchema(messagingMethods.ByName("CreateChannel")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingAddMembersHandler := connect.NewUnaryHandler(
+		MessagingAddMembersProcedure,
+		svc.AddMembers,
+		connect.WithSchema(messagingMethods.ByName("AddMembers")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingRemoveMemberHandler := connect.NewUnaryHandler(
+		MessagingRemoveMemberProcedure,
+		svc.RemoveMember,
+		connect.WithSchema(messagingMethods.ByName("RemoveMember")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingLeaveConversationHandler := connect.NewUnaryHandler(
+		MessagingLeaveConversationProcedure,
+		svc.LeaveConversation,
+		connect.WithSchema(messagingMethods.ByName("LeaveConversation")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingListMembersHandler := connect.NewUnaryHandler(
+		MessagingListMembersProcedure,
+		svc.ListMembers,
+		connect.WithSchema(messagingMethods.ByName("ListMembers")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Messaging/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case MessagingListConversationsProcedure:
@@ -191,6 +324,18 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 			messagingSendMessageHandler.ServeHTTP(w, r)
 		case MessagingMarkReadProcedure:
 			messagingMarkReadHandler.ServeHTTP(w, r)
+		case MessagingCreateGroupProcedure:
+			messagingCreateGroupHandler.ServeHTTP(w, r)
+		case MessagingCreateChannelProcedure:
+			messagingCreateChannelHandler.ServeHTTP(w, r)
+		case MessagingAddMembersProcedure:
+			messagingAddMembersHandler.ServeHTTP(w, r)
+		case MessagingRemoveMemberProcedure:
+			messagingRemoveMemberHandler.ServeHTTP(w, r)
+		case MessagingLeaveConversationProcedure:
+			messagingLeaveConversationHandler.ServeHTTP(w, r)
+		case MessagingListMembersProcedure:
+			messagingListMembersHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -218,4 +363,28 @@ func (UnimplementedMessagingHandler) SendMessage(context.Context, *connect.Reque
 
 func (UnimplementedMessagingHandler) MarkRead(context.Context, *connect.Request[v1.MarkReadRequest]) (*connect.Response[v1.MarkReadResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.MarkRead is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) CreateGroup(context.Context, *connect.Request[v1.CreateGroupRequest]) (*connect.Response[v1.CreateGroupResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.CreateGroup is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) CreateChannel(context.Context, *connect.Request[v1.CreateChannelRequest]) (*connect.Response[v1.CreateChannelResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.CreateChannel is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) AddMembers(context.Context, *connect.Request[v1.AddMembersRequest]) (*connect.Response[v1.AddMembersResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.AddMembers is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) RemoveMember(context.Context, *connect.Request[v1.RemoveMemberRequest]) (*connect.Response[v1.RemoveMemberResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.RemoveMember is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) LeaveConversation(context.Context, *connect.Request[v1.LeaveConversationRequest]) (*connect.Response[v1.LeaveConversationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.LeaveConversation is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) ListMembers(context.Context, *connect.Request[v1.ListMembersRequest]) (*connect.Response[v1.ListMembersResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.ListMembers is not implemented"))
 }

@@ -39,6 +39,12 @@ const (
 	UsersUpdateProfileProcedure = "/quick.v1.Users/UpdateProfile"
 	// UsersSearchProcedure is the fully-qualified name of the Users's Search RPC.
 	UsersSearchProcedure = "/quick.v1.Users/Search"
+	// UsersBlockProcedure is the fully-qualified name of the Users's Block RPC.
+	UsersBlockProcedure = "/quick.v1.Users/Block"
+	// UsersUnblockProcedure is the fully-qualified name of the Users's Unblock RPC.
+	UsersUnblockProcedure = "/quick.v1.Users/Unblock"
+	// UsersListBlockedProcedure is the fully-qualified name of the Users's ListBlocked RPC.
+	UsersListBlockedProcedure = "/quick.v1.Users/ListBlocked"
 )
 
 // UsersClient is a client for the quick.v1.Users service.
@@ -46,6 +52,9 @@ type UsersClient interface {
 	Me(context.Context, *connect.Request[v1.MeRequest]) (*connect.Response[v1.MeResponse], error)
 	UpdateProfile(context.Context, *connect.Request[v1.UpdateProfileRequest]) (*connect.Response[v1.UpdateProfileResponse], error)
 	Search(context.Context, *connect.Request[v1.SearchRequest]) (*connect.Response[v1.SearchResponse], error)
+	Block(context.Context, *connect.Request[v1.BlockRequest]) (*connect.Response[v1.BlockResponse], error)
+	Unblock(context.Context, *connect.Request[v1.UnblockRequest]) (*connect.Response[v1.UnblockResponse], error)
+	ListBlocked(context.Context, *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error)
 }
 
 // NewUsersClient constructs a client for the quick.v1.Users service. By default, it uses the
@@ -77,6 +86,24 @@ func NewUsersClient(httpClient connect.HTTPClient, baseURL string, opts ...conne
 			connect.WithSchema(usersMethods.ByName("Search")),
 			connect.WithClientOptions(opts...),
 		),
+		block: connect.NewClient[v1.BlockRequest, v1.BlockResponse](
+			httpClient,
+			baseURL+UsersBlockProcedure,
+			connect.WithSchema(usersMethods.ByName("Block")),
+			connect.WithClientOptions(opts...),
+		),
+		unblock: connect.NewClient[v1.UnblockRequest, v1.UnblockResponse](
+			httpClient,
+			baseURL+UsersUnblockProcedure,
+			connect.WithSchema(usersMethods.ByName("Unblock")),
+			connect.WithClientOptions(opts...),
+		),
+		listBlocked: connect.NewClient[v1.ListBlockedRequest, v1.ListBlockedResponse](
+			httpClient,
+			baseURL+UsersListBlockedProcedure,
+			connect.WithSchema(usersMethods.ByName("ListBlocked")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -85,6 +112,9 @@ type usersClient struct {
 	me            *connect.Client[v1.MeRequest, v1.MeResponse]
 	updateProfile *connect.Client[v1.UpdateProfileRequest, v1.UpdateProfileResponse]
 	search        *connect.Client[v1.SearchRequest, v1.SearchResponse]
+	block         *connect.Client[v1.BlockRequest, v1.BlockResponse]
+	unblock       *connect.Client[v1.UnblockRequest, v1.UnblockResponse]
+	listBlocked   *connect.Client[v1.ListBlockedRequest, v1.ListBlockedResponse]
 }
 
 // Me calls quick.v1.Users.Me.
@@ -102,11 +132,29 @@ func (c *usersClient) Search(ctx context.Context, req *connect.Request[v1.Search
 	return c.search.CallUnary(ctx, req)
 }
 
+// Block calls quick.v1.Users.Block.
+func (c *usersClient) Block(ctx context.Context, req *connect.Request[v1.BlockRequest]) (*connect.Response[v1.BlockResponse], error) {
+	return c.block.CallUnary(ctx, req)
+}
+
+// Unblock calls quick.v1.Users.Unblock.
+func (c *usersClient) Unblock(ctx context.Context, req *connect.Request[v1.UnblockRequest]) (*connect.Response[v1.UnblockResponse], error) {
+	return c.unblock.CallUnary(ctx, req)
+}
+
+// ListBlocked calls quick.v1.Users.ListBlocked.
+func (c *usersClient) ListBlocked(ctx context.Context, req *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error) {
+	return c.listBlocked.CallUnary(ctx, req)
+}
+
 // UsersHandler is an implementation of the quick.v1.Users service.
 type UsersHandler interface {
 	Me(context.Context, *connect.Request[v1.MeRequest]) (*connect.Response[v1.MeResponse], error)
 	UpdateProfile(context.Context, *connect.Request[v1.UpdateProfileRequest]) (*connect.Response[v1.UpdateProfileResponse], error)
 	Search(context.Context, *connect.Request[v1.SearchRequest]) (*connect.Response[v1.SearchResponse], error)
+	Block(context.Context, *connect.Request[v1.BlockRequest]) (*connect.Response[v1.BlockResponse], error)
+	Unblock(context.Context, *connect.Request[v1.UnblockRequest]) (*connect.Response[v1.UnblockResponse], error)
+	ListBlocked(context.Context, *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error)
 }
 
 // NewUsersHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -134,6 +182,24 @@ func NewUsersHandler(svc UsersHandler, opts ...connect.HandlerOption) (string, h
 		connect.WithSchema(usersMethods.ByName("Search")),
 		connect.WithHandlerOptions(opts...),
 	)
+	usersBlockHandler := connect.NewUnaryHandler(
+		UsersBlockProcedure,
+		svc.Block,
+		connect.WithSchema(usersMethods.ByName("Block")),
+		connect.WithHandlerOptions(opts...),
+	)
+	usersUnblockHandler := connect.NewUnaryHandler(
+		UsersUnblockProcedure,
+		svc.Unblock,
+		connect.WithSchema(usersMethods.ByName("Unblock")),
+		connect.WithHandlerOptions(opts...),
+	)
+	usersListBlockedHandler := connect.NewUnaryHandler(
+		UsersListBlockedProcedure,
+		svc.ListBlocked,
+		connect.WithSchema(usersMethods.ByName("ListBlocked")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Users/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case UsersMeProcedure:
@@ -142,6 +208,12 @@ func NewUsersHandler(svc UsersHandler, opts ...connect.HandlerOption) (string, h
 			usersUpdateProfileHandler.ServeHTTP(w, r)
 		case UsersSearchProcedure:
 			usersSearchHandler.ServeHTTP(w, r)
+		case UsersBlockProcedure:
+			usersBlockHandler.ServeHTTP(w, r)
+		case UsersUnblockProcedure:
+			usersUnblockHandler.ServeHTTP(w, r)
+		case UsersListBlockedProcedure:
+			usersListBlockedHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -161,4 +233,16 @@ func (UnimplementedUsersHandler) UpdateProfile(context.Context, *connect.Request
 
 func (UnimplementedUsersHandler) Search(context.Context, *connect.Request[v1.SearchRequest]) (*connect.Response[v1.SearchResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.Search is not implemented"))
+}
+
+func (UnimplementedUsersHandler) Block(context.Context, *connect.Request[v1.BlockRequest]) (*connect.Response[v1.BlockResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.Block is not implemented"))
+}
+
+func (UnimplementedUsersHandler) Unblock(context.Context, *connect.Request[v1.UnblockRequest]) (*connect.Response[v1.UnblockResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.Unblock is not implemented"))
+}
+
+func (UnimplementedUsersHandler) ListBlocked(context.Context, *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.ListBlocked is not implemented"))
 }

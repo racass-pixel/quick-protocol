@@ -6,7 +6,7 @@ import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 /**
  * Describes the file quick/v1/users.proto.
  */
-export const file_quick_v1_users = /*@__PURE__*/ fileDesc("ChRxdWljay92MS91c2Vycy5wcm90bxIIcXVpY2sudjEigAEKBFVzZXISCgoCaWQYASABKAkSDgoGaGFuZGxlGAIgASgJEhQKDGRpc3BsYXlfbmFtZRgDIAEoCRIUCgxhdmF0YXJfY29sb3IYBCABKAkSMAoMbGFzdF9zZWVuX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCILCglNZVJlcXVlc3QiKgoKTWVSZXNwb25zZRIcCgR1c2VyGAEgASgLMg4ucXVpY2sudjEuVXNlciJiChRVcGRhdGVQcm9maWxlUmVxdWVzdBIZCgxkaXNwbGF5X25hbWUYASABKAlIAIgBARITCgZoYW5kbGUYAiABKAlIAYgBAUIPCg1fZGlzcGxheV9uYW1lQgkKB19oYW5kbGUiNQoVVXBkYXRlUHJvZmlsZVJlc3BvbnNlEhwKBHVzZXIYASABKAsyDi5xdWljay52MS5Vc2VyIh8KDVNlYXJjaFJlcXVlc3QSDgoGaGFuZGxlGAEgASgJIi4KDlNlYXJjaFJlc3BvbnNlEhwKBHVzZXIYASABKAsyDi5xdWljay52MS5Vc2VyMs0BCgVVc2VycxIxCgJNZRITLnF1aWNrLnYxLk1lUmVxdWVzdBoULnF1aWNrLnYxLk1lUmVzcG9uc2UiABJSCg1VcGRhdGVQcm9maWxlEh4ucXVpY2sudjEuVXBkYXRlUHJvZmlsZVJlcXVlc3QaHy5xdWljay52MS5VcGRhdGVQcm9maWxlUmVzcG9uc2UiABI9CgZTZWFyY2gSFy5xdWljay52MS5TZWFyY2hSZXF1ZXN0GhgucXVpY2sudjEuU2VhcmNoUmVzcG9uc2UiAEKbAQoMY29tLnF1aWNrLnYxQgpVc2Vyc1Byb3RvUAFaPmdpdGh1Yi5jb20vcmFjYXNzLXBpeGVsL3F1aWNrLXByb3RvY29sL2dlbi9nby9xdWljay92MTtxdWlja3YxogIDUVhYqgIIUXVpY2suVjHKAghRdWlja1xWMeICFFF1aWNrXFYxXEdQQk1ldGFkYXRh6gIJUXVpY2s6OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
+export const file_quick_v1_users = /*@__PURE__*/ fileDesc("ChRxdWljay92MS91c2Vycy5wcm90bxIIcXVpY2sudjEigAEKBFVzZXISCgoCaWQYASABKAkSDgoGaGFuZGxlGAIgASgJEhQKDGRpc3BsYXlfbmFtZRgDIAEoCRIUCgxhdmF0YXJfY29sb3IYBCABKAkSMAoMbGFzdF9zZWVuX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCILCglNZVJlcXVlc3QiKgoKTWVSZXNwb25zZRIcCgR1c2VyGAEgASgLMg4ucXVpY2sudjEuVXNlciJiChRVcGRhdGVQcm9maWxlUmVxdWVzdBIZCgxkaXNwbGF5X25hbWUYASABKAlIAIgBARITCgZoYW5kbGUYAiABKAlIAYgBAUIPCg1fZGlzcGxheV9uYW1lQgkKB19oYW5kbGUiNQoVVXBkYXRlUHJvZmlsZVJlc3BvbnNlEhwKBHVzZXIYASABKAsyDi5xdWljay52MS5Vc2VyIjUKDVNlYXJjaFJlcXVlc3QSFQoNaGFuZGxlX3ByZWZpeBgBIAEoCRINCgVsaW1pdBgCIAEoBSIvCg5TZWFyY2hSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIiHwoMQmxvY2tSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkiDwoNQmxvY2tSZXNwb25zZSIhCg5VbmJsb2NrUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgJIhEKD1VuYmxvY2tSZXNwb25zZSIUChJMaXN0QmxvY2tlZFJlcXVlc3QiNAoTTGlzdEJsb2NrZWRSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIymQMKBVVzZXJzEjEKAk1lEhMucXVpY2sudjEuTWVSZXF1ZXN0GhQucXVpY2sudjEuTWVSZXNwb25zZSIAElIKDVVwZGF0ZVByb2ZpbGUSHi5xdWljay52MS5VcGRhdGVQcm9maWxlUmVxdWVzdBofLnF1aWNrLnYxLlVwZGF0ZVByb2ZpbGVSZXNwb25zZSIAEj0KBlNlYXJjaBIXLnF1aWNrLnYxLlNlYXJjaFJlcXVlc3QaGC5xdWljay52MS5TZWFyY2hSZXNwb25zZSIAEjoKBUJsb2NrEhYucXVpY2sudjEuQmxvY2tSZXF1ZXN0GhcucXVpY2sudjEuQmxvY2tSZXNwb25zZSIAEkAKB1VuYmxvY2sSGC5xdWljay52MS5VbmJsb2NrUmVxdWVzdBoZLnF1aWNrLnYxLlVuYmxvY2tSZXNwb25zZSIAEkwKC0xpc3RCbG9ja2VkEhwucXVpY2sudjEuTGlzdEJsb2NrZWRSZXF1ZXN0Gh0ucXVpY2sudjEuTGlzdEJsb2NrZWRSZXNwb25zZSIAQpsBCgxjb20ucXVpY2sudjFCClVzZXJzUHJvdG9QAVo+Z2l0aHViLmNvbS9yYWNhc3MtcGl4ZWwvcXVpY2stcHJvdG9jb2wvZ2VuL2dvL3F1aWNrL3YxO3F1aWNrdjGiAgNRWFiqAghRdWljay5WMcoCCFF1aWNrXFYx4gIUUXVpY2tcVjFcR1BCTWV0YWRhdGHqAglRdWljazo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp]);
 /**
  * Describes the message quick.v1.User.
  * Use `create(UserSchema)` to create a new message.
@@ -42,6 +42,36 @@ export const SearchRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_users
  * Use `create(SearchResponseSchema)` to create a new message.
  */
 export const SearchResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_users, 6);
+/**
+ * Describes the message quick.v1.BlockRequest.
+ * Use `create(BlockRequestSchema)` to create a new message.
+ */
+export const BlockRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_users, 7);
+/**
+ * Describes the message quick.v1.BlockResponse.
+ * Use `create(BlockResponseSchema)` to create a new message.
+ */
+export const BlockResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_users, 8);
+/**
+ * Describes the message quick.v1.UnblockRequest.
+ * Use `create(UnblockRequestSchema)` to create a new message.
+ */
+export const UnblockRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_users, 9);
+/**
+ * Describes the message quick.v1.UnblockResponse.
+ * Use `create(UnblockResponseSchema)` to create a new message.
+ */
+export const UnblockResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_users, 10);
+/**
+ * Describes the message quick.v1.ListBlockedRequest.
+ * Use `create(ListBlockedRequestSchema)` to create a new message.
+ */
+export const ListBlockedRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_users, 11);
+/**
+ * Describes the message quick.v1.ListBlockedResponse.
+ * Use `create(ListBlockedResponseSchema)` to create a new message.
+ */
+export const ListBlockedResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_users, 12);
 /**
  * @generated from service quick.v1.Users
  */

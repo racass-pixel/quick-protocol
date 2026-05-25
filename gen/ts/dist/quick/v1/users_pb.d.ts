@@ -95,9 +95,13 @@ export declare const UpdateProfileResponseSchema: GenMessage<UpdateProfileRespon
  */
 export type SearchRequest = Message<"quick.v1.SearchRequest"> & {
     /**
-     * @generated from field: string handle = 1;
+     * @generated from field: string handle_prefix = 1;
      */
-    handle: string;
+    handlePrefix: string;
+    /**
+     * @generated from field: int32 limit = 2;
+     */
+    limit: number;
 };
 /**
  * Describes the message quick.v1.SearchRequest.
@@ -109,15 +113,84 @@ export declare const SearchRequestSchema: GenMessage<SearchRequest>;
  */
 export type SearchResponse = Message<"quick.v1.SearchResponse"> & {
     /**
-     * @generated from field: quick.v1.User user = 1;
+     * @generated from field: repeated quick.v1.User users = 1;
      */
-    user?: User | undefined;
+    users: User[];
 };
 /**
  * Describes the message quick.v1.SearchResponse.
  * Use `create(SearchResponseSchema)` to create a new message.
  */
 export declare const SearchResponseSchema: GenMessage<SearchResponse>;
+/**
+ * @generated from message quick.v1.BlockRequest
+ */
+export type BlockRequest = Message<"quick.v1.BlockRequest"> & {
+    /**
+     * @generated from field: string user_id = 1;
+     */
+    userId: string;
+};
+/**
+ * Describes the message quick.v1.BlockRequest.
+ * Use `create(BlockRequestSchema)` to create a new message.
+ */
+export declare const BlockRequestSchema: GenMessage<BlockRequest>;
+/**
+ * @generated from message quick.v1.BlockResponse
+ */
+export type BlockResponse = Message<"quick.v1.BlockResponse"> & {};
+/**
+ * Describes the message quick.v1.BlockResponse.
+ * Use `create(BlockResponseSchema)` to create a new message.
+ */
+export declare const BlockResponseSchema: GenMessage<BlockResponse>;
+/**
+ * @generated from message quick.v1.UnblockRequest
+ */
+export type UnblockRequest = Message<"quick.v1.UnblockRequest"> & {
+    /**
+     * @generated from field: string user_id = 1;
+     */
+    userId: string;
+};
+/**
+ * Describes the message quick.v1.UnblockRequest.
+ * Use `create(UnblockRequestSchema)` to create a new message.
+ */
+export declare const UnblockRequestSchema: GenMessage<UnblockRequest>;
+/**
+ * @generated from message quick.v1.UnblockResponse
+ */
+export type UnblockResponse = Message<"quick.v1.UnblockResponse"> & {};
+/**
+ * Describes the message quick.v1.UnblockResponse.
+ * Use `create(UnblockResponseSchema)` to create a new message.
+ */
+export declare const UnblockResponseSchema: GenMessage<UnblockResponse>;
+/**
+ * @generated from message quick.v1.ListBlockedRequest
+ */
+export type ListBlockedRequest = Message<"quick.v1.ListBlockedRequest"> & {};
+/**
+ * Describes the message quick.v1.ListBlockedRequest.
+ * Use `create(ListBlockedRequestSchema)` to create a new message.
+ */
+export declare const ListBlockedRequestSchema: GenMessage<ListBlockedRequest>;
+/**
+ * @generated from message quick.v1.ListBlockedResponse
+ */
+export type ListBlockedResponse = Message<"quick.v1.ListBlockedResponse"> & {
+    /**
+     * @generated from field: repeated quick.v1.User users = 1;
+     */
+    users: User[];
+};
+/**
+ * Describes the message quick.v1.ListBlockedResponse.
+ * Use `create(ListBlockedResponseSchema)` to create a new message.
+ */
+export declare const ListBlockedResponseSchema: GenMessage<ListBlockedResponse>;
 /**
  * @generated from service quick.v1.Users
  */
@@ -145,5 +218,29 @@ export declare const Users: GenService<{
         methodKind: "unary";
         input: typeof SearchRequestSchema;
         output: typeof SearchResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Users.Block
+     */
+    block: {
+        methodKind: "unary";
+        input: typeof BlockRequestSchema;
+        output: typeof BlockResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Users.Unblock
+     */
+    unblock: {
+        methodKind: "unary";
+        input: typeof UnblockRequestSchema;
+        output: typeof UnblockResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Users.ListBlocked
+     */
+    listBlocked: {
+        methodKind: "unary";
+        input: typeof ListBlockedRequestSchema;
+        output: typeof ListBlockedResponseSchema;
     };
 }>;

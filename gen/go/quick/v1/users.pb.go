@@ -276,7 +276,8 @@ func (x *UpdateProfileResponse) GetUser() *User {
 
 type SearchRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Handle        string                 `protobuf:"bytes,1,opt,name=handle,proto3" json:"handle,omitempty"`
+	HandlePrefix  string                 `protobuf:"bytes,1,opt,name=handle_prefix,json=handlePrefix,proto3" json:"handle_prefix,omitempty"`
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -311,16 +312,23 @@ func (*SearchRequest) Descriptor() ([]byte, []int) {
 	return file_quick_v1_users_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *SearchRequest) GetHandle() string {
+func (x *SearchRequest) GetHandlePrefix() string {
 	if x != nil {
-		return x.Handle
+		return x.HandlePrefix
 	}
 	return ""
 }
 
+func (x *SearchRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
 type SearchResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	Users         []*User                `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -355,9 +363,249 @@ func (*SearchResponse) Descriptor() ([]byte, []int) {
 	return file_quick_v1_users_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *SearchResponse) GetUser() *User {
+func (x *SearchResponse) GetUsers() []*User {
 	if x != nil {
-		return x.User
+		return x.Users
+	}
+	return nil
+}
+
+type BlockRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BlockRequest) Reset() {
+	*x = BlockRequest{}
+	mi := &file_quick_v1_users_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BlockRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BlockRequest) ProtoMessage() {}
+
+func (x *BlockRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BlockRequest.ProtoReflect.Descriptor instead.
+func (*BlockRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *BlockRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type BlockResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BlockResponse) Reset() {
+	*x = BlockResponse{}
+	mi := &file_quick_v1_users_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BlockResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BlockResponse) ProtoMessage() {}
+
+func (x *BlockResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BlockResponse.ProtoReflect.Descriptor instead.
+func (*BlockResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{8}
+}
+
+type UnblockRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UnblockRequest) Reset() {
+	*x = UnblockRequest{}
+	mi := &file_quick_v1_users_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UnblockRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UnblockRequest) ProtoMessage() {}
+
+func (x *UnblockRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UnblockRequest.ProtoReflect.Descriptor instead.
+func (*UnblockRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *UnblockRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type UnblockResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UnblockResponse) Reset() {
+	*x = UnblockResponse{}
+	mi := &file_quick_v1_users_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UnblockResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UnblockResponse) ProtoMessage() {}
+
+func (x *UnblockResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UnblockResponse.ProtoReflect.Descriptor instead.
+func (*UnblockResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{10}
+}
+
+type ListBlockedRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListBlockedRequest) Reset() {
+	*x = ListBlockedRequest{}
+	mi := &file_quick_v1_users_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListBlockedRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListBlockedRequest) ProtoMessage() {}
+
+func (x *ListBlockedRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListBlockedRequest.ProtoReflect.Descriptor instead.
+func (*ListBlockedRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{11}
+}
+
+type ListBlockedResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Users         []*User                `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListBlockedResponse) Reset() {
+	*x = ListBlockedResponse{}
+	mi := &file_quick_v1_users_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListBlockedResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListBlockedResponse) ProtoMessage() {}
+
+func (x *ListBlockedResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListBlockedResponse.ProtoReflect.Descriptor instead.
+func (*ListBlockedResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ListBlockedResponse) GetUsers() []*User {
+	if x != nil {
+		return x.Users
 	}
 	return nil
 }
@@ -384,15 +632,28 @@ const file_quick_v1_users_proto_rawDesc = "" +
 	"\r_display_nameB\t\n" +
 	"\a_handle\";\n" +
 	"\x15UpdateProfileResponse\x12\"\n" +
-	"\x04user\x18\x01 \x01(\v2\x0e.quick.v1.UserR\x04user\"'\n" +
-	"\rSearchRequest\x12\x16\n" +
-	"\x06handle\x18\x01 \x01(\tR\x06handle\"4\n" +
-	"\x0eSearchResponse\x12\"\n" +
-	"\x04user\x18\x01 \x01(\v2\x0e.quick.v1.UserR\x04user2\xcd\x01\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.quick.v1.UserR\x04user\"J\n" +
+	"\rSearchRequest\x12#\n" +
+	"\rhandle_prefix\x18\x01 \x01(\tR\fhandlePrefix\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"6\n" +
+	"\x0eSearchResponse\x12$\n" +
+	"\x05users\x18\x01 \x03(\v2\x0e.quick.v1.UserR\x05users\"'\n" +
+	"\fBlockRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"\x0f\n" +
+	"\rBlockResponse\")\n" +
+	"\x0eUnblockRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"\x11\n" +
+	"\x0fUnblockResponse\"\x14\n" +
+	"\x12ListBlockedRequest\";\n" +
+	"\x13ListBlockedResponse\x12$\n" +
+	"\x05users\x18\x01 \x03(\v2\x0e.quick.v1.UserR\x05users2\x99\x03\n" +
 	"\x05Users\x121\n" +
 	"\x02Me\x12\x13.quick.v1.MeRequest\x1a\x14.quick.v1.MeResponse\"\x00\x12R\n" +
 	"\rUpdateProfile\x12\x1e.quick.v1.UpdateProfileRequest\x1a\x1f.quick.v1.UpdateProfileResponse\"\x00\x12=\n" +
-	"\x06Search\x12\x17.quick.v1.SearchRequest\x1a\x18.quick.v1.SearchResponse\"\x00B\x9b\x01\n" +
+	"\x06Search\x12\x17.quick.v1.SearchRequest\x1a\x18.quick.v1.SearchResponse\"\x00\x12:\n" +
+	"\x05Block\x12\x16.quick.v1.BlockRequest\x1a\x17.quick.v1.BlockResponse\"\x00\x12@\n" +
+	"\aUnblock\x12\x18.quick.v1.UnblockRequest\x1a\x19.quick.v1.UnblockResponse\"\x00\x12L\n" +
+	"\vListBlocked\x12\x1c.quick.v1.ListBlockedRequest\x1a\x1d.quick.v1.ListBlockedResponse\"\x00B\x9b\x01\n" +
 	"\fcom.quick.v1B\n" +
 	"UsersProtoP\x01Z>github.com/racass-pixel/quick-protocol/gen/go/quick/v1;quickv1\xa2\x02\x03QXX\xaa\x02\bQuick.V1\xca\x02\bQuick\\V1\xe2\x02\x14Quick\\V1\\GPBMetadata\xea\x02\tQuick::V1b\x06proto3"
 
@@ -408,7 +669,7 @@ func file_quick_v1_users_proto_rawDescGZIP() []byte {
 	return file_quick_v1_users_proto_rawDescData
 }
 
-var file_quick_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_quick_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_quick_v1_users_proto_goTypes = []any{
 	(*User)(nil),                  // 0: quick.v1.User
 	(*MeRequest)(nil),             // 1: quick.v1.MeRequest
@@ -417,24 +678,37 @@ var file_quick_v1_users_proto_goTypes = []any{
 	(*UpdateProfileResponse)(nil), // 4: quick.v1.UpdateProfileResponse
 	(*SearchRequest)(nil),         // 5: quick.v1.SearchRequest
 	(*SearchResponse)(nil),        // 6: quick.v1.SearchResponse
-	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
+	(*BlockRequest)(nil),          // 7: quick.v1.BlockRequest
+	(*BlockResponse)(nil),         // 8: quick.v1.BlockResponse
+	(*UnblockRequest)(nil),        // 9: quick.v1.UnblockRequest
+	(*UnblockResponse)(nil),       // 10: quick.v1.UnblockResponse
+	(*ListBlockedRequest)(nil),    // 11: quick.v1.ListBlockedRequest
+	(*ListBlockedResponse)(nil),   // 12: quick.v1.ListBlockedResponse
+	(*timestamppb.Timestamp)(nil), // 13: google.protobuf.Timestamp
 }
 var file_quick_v1_users_proto_depIdxs = []int32{
-	7, // 0: quick.v1.User.last_seen_at:type_name -> google.protobuf.Timestamp
-	0, // 1: quick.v1.MeResponse.user:type_name -> quick.v1.User
-	0, // 2: quick.v1.UpdateProfileResponse.user:type_name -> quick.v1.User
-	0, // 3: quick.v1.SearchResponse.user:type_name -> quick.v1.User
-	1, // 4: quick.v1.Users.Me:input_type -> quick.v1.MeRequest
-	3, // 5: quick.v1.Users.UpdateProfile:input_type -> quick.v1.UpdateProfileRequest
-	5, // 6: quick.v1.Users.Search:input_type -> quick.v1.SearchRequest
-	2, // 7: quick.v1.Users.Me:output_type -> quick.v1.MeResponse
-	4, // 8: quick.v1.Users.UpdateProfile:output_type -> quick.v1.UpdateProfileResponse
-	6, // 9: quick.v1.Users.Search:output_type -> quick.v1.SearchResponse
-	7, // [7:10] is the sub-list for method output_type
-	4, // [4:7] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	13, // 0: quick.v1.User.last_seen_at:type_name -> google.protobuf.Timestamp
+	0,  // 1: quick.v1.MeResponse.user:type_name -> quick.v1.User
+	0,  // 2: quick.v1.UpdateProfileResponse.user:type_name -> quick.v1.User
+	0,  // 3: quick.v1.SearchResponse.users:type_name -> quick.v1.User
+	0,  // 4: quick.v1.ListBlockedResponse.users:type_name -> quick.v1.User
+	1,  // 5: quick.v1.Users.Me:input_type -> quick.v1.MeRequest
+	3,  // 6: quick.v1.Users.UpdateProfile:input_type -> quick.v1.UpdateProfileRequest
+	5,  // 7: quick.v1.Users.Search:input_type -> quick.v1.SearchRequest
+	7,  // 8: quick.v1.Users.Block:input_type -> quick.v1.BlockRequest
+	9,  // 9: quick.v1.Users.Unblock:input_type -> quick.v1.UnblockRequest
+	11, // 10: quick.v1.Users.ListBlocked:input_type -> quick.v1.ListBlockedRequest
+	2,  // 11: quick.v1.Users.Me:output_type -> quick.v1.MeResponse
+	4,  // 12: quick.v1.Users.UpdateProfile:output_type -> quick.v1.UpdateProfileResponse
+	6,  // 13: quick.v1.Users.Search:output_type -> quick.v1.SearchResponse
+	8,  // 14: quick.v1.Users.Block:output_type -> quick.v1.BlockResponse
+	10, // 15: quick.v1.Users.Unblock:output_type -> quick.v1.UnblockResponse
+	12, // 16: quick.v1.Users.ListBlocked:output_type -> quick.v1.ListBlockedResponse
+	11, // [11:17] is the sub-list for method output_type
+	5,  // [5:11] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_quick_v1_users_proto_init() }
@@ -449,7 +723,7 @@ func file_quick_v1_users_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_quick_v1_users_proto_rawDesc), len(file_quick_v1_users_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

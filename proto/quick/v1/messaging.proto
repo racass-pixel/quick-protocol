@@ -9,6 +9,12 @@ service Messaging {
   rpc ListMessages(ListMessagesRequest)           returns (ListMessagesResponse)      {}
   rpc SendMessage(SendMessageRequest)             returns (SendMessageResponse)       {}
   rpc MarkRead(MarkReadRequest)                   returns (MarkReadResponse)          {}
+  rpc CreateGroup(CreateGroupRequest)             returns (CreateGroupResponse)       {}
+  rpc CreateChannel(CreateChannelRequest)         returns (CreateChannelResponse)     {}
+  rpc AddMembers(AddMembersRequest)               returns (AddMembersResponse)        {}
+  rpc RemoveMember(RemoveMemberRequest)           returns (RemoveMemberResponse)      {}
+  rpc LeaveConversation(LeaveConversationRequest) returns (LeaveConversationResponse) {}
+  rpc ListMembers(ListMembersRequest)             returns (ListMembersResponse)       {}
 }
 
 message Conversation {
@@ -19,6 +25,9 @@ message Conversation {
   google.protobuf.Timestamp last_message_at = 5;
   Message preview = 6;
   int32  unread_count = 7;
+  int32  member_count = 8;
+  string avatar_color = 9;
+  string my_role = 10;
 }
 
 message Message {
@@ -43,3 +52,27 @@ message SendMessageResponse { Message message = 1; }
 
 message MarkReadRequest  { string conversation_id = 1; string last_message_id = 2; }
 message MarkReadResponse {}
+
+message CreateGroupRequest  { string title = 1; repeated string member_user_ids = 2; }
+message CreateGroupResponse { Conversation conversation = 1; }
+
+message CreateChannelRequest  { string title = 1; repeated string subscriber_user_ids = 2; }
+message CreateChannelResponse { Conversation conversation = 1; }
+
+message AddMembersRequest  { string conversation_id = 1; repeated string user_ids = 2; }
+message AddMembersResponse {}
+
+message RemoveMemberRequest  { string conversation_id = 1; string user_id = 2; }
+message RemoveMemberResponse {}
+
+message LeaveConversationRequest  { string conversation_id = 1; }
+message LeaveConversationResponse {}
+
+message ListMembersRequest  { string conversation_id = 1; }
+message ListMembersResponse { repeated Member members = 1; }
+
+message Member {
+  User user = 1;
+  string role = 2;
+  google.protobuf.Timestamp joined_at = 3;
+}

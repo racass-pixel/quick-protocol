@@ -7,6 +7,9 @@ service Users {
   rpc Me(MeRequest)                       returns (MeResponse)            {}
   rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse) {}
   rpc Search(SearchRequest)               returns (SearchResponse)        {}
+  rpc Block(BlockRequest)                 returns (BlockResponse)         {}
+  rpc Unblock(UnblockRequest)             returns (UnblockResponse)       {}
+  rpc ListBlocked(ListBlockedRequest)     returns (ListBlockedResponse)   {}
 }
 
 message User {
@@ -26,5 +29,12 @@ message UpdateProfileRequest {
 }
 message UpdateProfileResponse { User user = 1; }
 
-message SearchRequest  { string handle = 1; }
-message SearchResponse { User   user   = 1; }
+message SearchRequest  { string handle_prefix = 1; int32 limit = 2; }
+message SearchResponse { repeated User users = 1; }
+
+message BlockRequest    { string user_id = 1; }
+message BlockResponse   {}
+message UnblockRequest  { string user_id = 1; }
+message UnblockResponse {}
+message ListBlockedRequest  {}
+message ListBlockedResponse { repeated User users = 1; }

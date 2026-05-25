@@ -31,6 +31,9 @@ type Conversation struct {
 	LastMessageAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=last_message_at,json=lastMessageAt,proto3" json:"last_message_at,omitempty"`
 	Preview       *Message               `protobuf:"bytes,6,opt,name=preview,proto3" json:"preview,omitempty"`
 	UnreadCount   int32                  `protobuf:"varint,7,opt,name=unread_count,json=unreadCount,proto3" json:"unread_count,omitempty"`
+	MemberCount   int32                  `protobuf:"varint,8,opt,name=member_count,json=memberCount,proto3" json:"member_count,omitempty"`
+	AvatarColor   string                 `protobuf:"bytes,9,opt,name=avatar_color,json=avatarColor,proto3" json:"avatar_color,omitempty"`
+	MyRole        string                 `protobuf:"bytes,10,opt,name=my_role,json=myRole,proto3" json:"my_role,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -112,6 +115,27 @@ func (x *Conversation) GetUnreadCount() int32 {
 		return x.UnreadCount
 	}
 	return 0
+}
+
+func (x *Conversation) GetMemberCount() int32 {
+	if x != nil {
+		return x.MemberCount
+	}
+	return 0
+}
+
+func (x *Conversation) GetAvatarColor() string {
+	if x != nil {
+		return x.AvatarColor
+	}
+	return ""
+}
+
+func (x *Conversation) GetMyRole() string {
+	if x != nil {
+		return x.MyRole
+	}
+	return ""
 }
 
 type Message struct {
@@ -654,11 +678,607 @@ func (*MarkReadResponse) Descriptor() ([]byte, []int) {
 	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{11}
 }
 
+type CreateGroupRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	MemberUserIds []string               `protobuf:"bytes,2,rep,name=member_user_ids,json=memberUserIds,proto3" json:"member_user_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGroupRequest) Reset() {
+	*x = CreateGroupRequest{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGroupRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGroupRequest) ProtoMessage() {}
+
+func (x *CreateGroupRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGroupRequest.ProtoReflect.Descriptor instead.
+func (*CreateGroupRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *CreateGroupRequest) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *CreateGroupRequest) GetMemberUserIds() []string {
+	if x != nil {
+		return x.MemberUserIds
+	}
+	return nil
+}
+
+type CreateGroupResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Conversation  *Conversation          `protobuf:"bytes,1,opt,name=conversation,proto3" json:"conversation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGroupResponse) Reset() {
+	*x = CreateGroupResponse{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGroupResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGroupResponse) ProtoMessage() {}
+
+func (x *CreateGroupResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGroupResponse.ProtoReflect.Descriptor instead.
+func (*CreateGroupResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *CreateGroupResponse) GetConversation() *Conversation {
+	if x != nil {
+		return x.Conversation
+	}
+	return nil
+}
+
+type CreateChannelRequest struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Title             string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	SubscriberUserIds []string               `protobuf:"bytes,2,rep,name=subscriber_user_ids,json=subscriberUserIds,proto3" json:"subscriber_user_ids,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *CreateChannelRequest) Reset() {
+	*x = CreateChannelRequest{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateChannelRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateChannelRequest) ProtoMessage() {}
+
+func (x *CreateChannelRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateChannelRequest.ProtoReflect.Descriptor instead.
+func (*CreateChannelRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *CreateChannelRequest) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *CreateChannelRequest) GetSubscriberUserIds() []string {
+	if x != nil {
+		return x.SubscriberUserIds
+	}
+	return nil
+}
+
+type CreateChannelResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Conversation  *Conversation          `protobuf:"bytes,1,opt,name=conversation,proto3" json:"conversation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateChannelResponse) Reset() {
+	*x = CreateChannelResponse{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateChannelResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateChannelResponse) ProtoMessage() {}
+
+func (x *CreateChannelResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateChannelResponse.ProtoReflect.Descriptor instead.
+func (*CreateChannelResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *CreateChannelResponse) GetConversation() *Conversation {
+	if x != nil {
+		return x.Conversation
+	}
+	return nil
+}
+
+type AddMembersRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	UserIds        []string               `protobuf:"bytes,2,rep,name=user_ids,json=userIds,proto3" json:"user_ids,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *AddMembersRequest) Reset() {
+	*x = AddMembersRequest{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddMembersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddMembersRequest) ProtoMessage() {}
+
+func (x *AddMembersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddMembersRequest.ProtoReflect.Descriptor instead.
+func (*AddMembersRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *AddMembersRequest) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+func (x *AddMembersRequest) GetUserIds() []string {
+	if x != nil {
+		return x.UserIds
+	}
+	return nil
+}
+
+type AddMembersResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddMembersResponse) Reset() {
+	*x = AddMembersResponse{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddMembersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddMembersResponse) ProtoMessage() {}
+
+func (x *AddMembersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddMembersResponse.ProtoReflect.Descriptor instead.
+func (*AddMembersResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{17}
+}
+
+type RemoveMemberRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	UserId         string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RemoveMemberRequest) Reset() {
+	*x = RemoveMemberRequest{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveMemberRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveMemberRequest) ProtoMessage() {}
+
+func (x *RemoveMemberRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveMemberRequest.ProtoReflect.Descriptor instead.
+func (*RemoveMemberRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *RemoveMemberRequest) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+func (x *RemoveMemberRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type RemoveMemberResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveMemberResponse) Reset() {
+	*x = RemoveMemberResponse{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveMemberResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveMemberResponse) ProtoMessage() {}
+
+func (x *RemoveMemberResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveMemberResponse.ProtoReflect.Descriptor instead.
+func (*RemoveMemberResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{19}
+}
+
+type LeaveConversationRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *LeaveConversationRequest) Reset() {
+	*x = LeaveConversationRequest{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeaveConversationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeaveConversationRequest) ProtoMessage() {}
+
+func (x *LeaveConversationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeaveConversationRequest.ProtoReflect.Descriptor instead.
+func (*LeaveConversationRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *LeaveConversationRequest) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+type LeaveConversationResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeaveConversationResponse) Reset() {
+	*x = LeaveConversationResponse{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeaveConversationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeaveConversationResponse) ProtoMessage() {}
+
+func (x *LeaveConversationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeaveConversationResponse.ProtoReflect.Descriptor instead.
+func (*LeaveConversationResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{21}
+}
+
+type ListMembersRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListMembersRequest) Reset() {
+	*x = ListMembersRequest{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListMembersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListMembersRequest) ProtoMessage() {}
+
+func (x *ListMembersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListMembersRequest.ProtoReflect.Descriptor instead.
+func (*ListMembersRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *ListMembersRequest) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+type ListMembersResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Members       []*Member              `protobuf:"bytes,1,rep,name=members,proto3" json:"members,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListMembersResponse) Reset() {
+	*x = ListMembersResponse{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListMembersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListMembersResponse) ProtoMessage() {}
+
+func (x *ListMembersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListMembersResponse.ProtoReflect.Descriptor instead.
+func (*ListMembersResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ListMembersResponse) GetMembers() []*Member {
+	if x != nil {
+		return x.Members
+	}
+	return nil
+}
+
+type Member struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	Role          string                 `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
+	JoinedAt      *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=joined_at,json=joinedAt,proto3" json:"joined_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Member) Reset() {
+	*x = Member{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Member) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Member) ProtoMessage() {}
+
+func (x *Member) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Member.ProtoReflect.Descriptor instead.
+func (*Member) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *Member) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+func (x *Member) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+func (x *Member) GetJoinedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.JoinedAt
+	}
+	return nil
+}
+
 var File_quick_v1_messaging_proto protoreflect.FileDescriptor
 
 const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\n" +
-	"\x18quick/v1/messaging.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x14quick/v1/users.proto\"\x80\x02\n" +
+	"\x18quick/v1/messaging.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x14quick/v1/users.proto\"\xdf\x02\n" +
 	"\fConversation\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x14\n" +
@@ -666,7 +1286,11 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\x04peer\x18\x04 \x01(\v2\x0e.quick.v1.UserR\x04peer\x12B\n" +
 	"\x0flast_message_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\rlastMessageAt\x12+\n" +
 	"\apreview\x18\x06 \x01(\v2\x11.quick.v1.MessageR\apreview\x12!\n" +
-	"\funread_count\x18\a \x01(\x05R\vunreadCount\"\xae\x01\n" +
+	"\funread_count\x18\a \x01(\x05R\vunreadCount\x12!\n" +
+	"\fmember_count\x18\b \x01(\x05R\vmemberCount\x12!\n" +
+	"\favatar_color\x18\t \x01(\tR\vavatarColor\x12\x17\n" +
+	"\amy_role\x18\n" +
+	" \x01(\tR\x06myRole\"\xae\x01\n" +
 	"\aMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
 	"\x0fconversation_id\x18\x02 \x01(\tR\x0econversationId\x12\x1b\n" +
@@ -696,13 +1320,49 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\x0fMarkReadRequest\x12'\n" +
 	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12&\n" +
 	"\x0flast_message_id\x18\x02 \x01(\tR\rlastMessageId\"\x12\n" +
-	"\x10MarkReadResponse2\x8e\x03\n" +
+	"\x10MarkReadResponse\"R\n" +
+	"\x12CreateGroupRequest\x12\x14\n" +
+	"\x05title\x18\x01 \x01(\tR\x05title\x12&\n" +
+	"\x0fmember_user_ids\x18\x02 \x03(\tR\rmemberUserIds\"Q\n" +
+	"\x13CreateGroupResponse\x12:\n" +
+	"\fconversation\x18\x01 \x01(\v2\x16.quick.v1.ConversationR\fconversation\"\\\n" +
+	"\x14CreateChannelRequest\x12\x14\n" +
+	"\x05title\x18\x01 \x01(\tR\x05title\x12.\n" +
+	"\x13subscriber_user_ids\x18\x02 \x03(\tR\x11subscriberUserIds\"S\n" +
+	"\x15CreateChannelResponse\x12:\n" +
+	"\fconversation\x18\x01 \x01(\v2\x16.quick.v1.ConversationR\fconversation\"W\n" +
+	"\x11AddMembersRequest\x12'\n" +
+	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12\x19\n" +
+	"\buser_ids\x18\x02 \x03(\tR\auserIds\"\x14\n" +
+	"\x12AddMembersResponse\"W\n" +
+	"\x13RemoveMemberRequest\x12'\n" +
+	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"\x16\n" +
+	"\x14RemoveMemberResponse\"C\n" +
+	"\x18LeaveConversationRequest\x12'\n" +
+	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\"\x1b\n" +
+	"\x19LeaveConversationResponse\"=\n" +
+	"\x12ListMembersRequest\x12'\n" +
+	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\"A\n" +
+	"\x13ListMembersResponse\x12*\n" +
+	"\amembers\x18\x01 \x03(\v2\x10.quick.v1.MemberR\amembers\"y\n" +
+	"\x06Member\x12\"\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.quick.v1.UserR\x04user\x12\x12\n" +
+	"\x04role\x18\x02 \x01(\tR\x04role\x127\n" +
+	"\tjoined_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\bjoinedAt2\xfa\x06\n" +
 	"\tMessaging\x12^\n" +
 	"\x11ListConversations\x12\".quick.v1.ListConversationsRequest\x1a#.quick.v1.ListConversationsResponse\"\x00\x12=\n" +
 	"\x06OpenDM\x12\x17.quick.v1.OpenDMRequest\x1a\x18.quick.v1.OpenDMResponse\"\x00\x12O\n" +
 	"\fListMessages\x12\x1d.quick.v1.ListMessagesRequest\x1a\x1e.quick.v1.ListMessagesResponse\"\x00\x12L\n" +
 	"\vSendMessage\x12\x1c.quick.v1.SendMessageRequest\x1a\x1d.quick.v1.SendMessageResponse\"\x00\x12C\n" +
-	"\bMarkRead\x12\x19.quick.v1.MarkReadRequest\x1a\x1a.quick.v1.MarkReadResponse\"\x00B\x9f\x01\n" +
+	"\bMarkRead\x12\x19.quick.v1.MarkReadRequest\x1a\x1a.quick.v1.MarkReadResponse\"\x00\x12L\n" +
+	"\vCreateGroup\x12\x1c.quick.v1.CreateGroupRequest\x1a\x1d.quick.v1.CreateGroupResponse\"\x00\x12R\n" +
+	"\rCreateChannel\x12\x1e.quick.v1.CreateChannelRequest\x1a\x1f.quick.v1.CreateChannelResponse\"\x00\x12I\n" +
+	"\n" +
+	"AddMembers\x12\x1b.quick.v1.AddMembersRequest\x1a\x1c.quick.v1.AddMembersResponse\"\x00\x12O\n" +
+	"\fRemoveMember\x12\x1d.quick.v1.RemoveMemberRequest\x1a\x1e.quick.v1.RemoveMemberResponse\"\x00\x12^\n" +
+	"\x11LeaveConversation\x12\".quick.v1.LeaveConversationRequest\x1a#.quick.v1.LeaveConversationResponse\"\x00\x12L\n" +
+	"\vListMembers\x12\x1c.quick.v1.ListMembersRequest\x1a\x1d.quick.v1.ListMembersResponse\"\x00B\x9f\x01\n" +
 	"\fcom.quick.v1B\x0eMessagingProtoP\x01Z>github.com/racass-pixel/quick-protocol/gen/go/quick/v1;quickv1\xa2\x02\x03QXX\xaa\x02\bQuick.V1\xca\x02\bQuick\\V1\xe2\x02\x14Quick\\V1\\GPBMetadata\xea\x02\tQuick::V1b\x06proto3"
 
 var (
@@ -717,7 +1377,7 @@ func file_quick_v1_messaging_proto_rawDescGZIP() []byte {
 	return file_quick_v1_messaging_proto_rawDescData
 }
 
-var file_quick_v1_messaging_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_quick_v1_messaging_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_quick_v1_messaging_proto_goTypes = []any{
 	(*Conversation)(nil),              // 0: quick.v1.Conversation
 	(*Message)(nil),                   // 1: quick.v1.Message
@@ -731,33 +1391,63 @@ var file_quick_v1_messaging_proto_goTypes = []any{
 	(*SendMessageResponse)(nil),       // 9: quick.v1.SendMessageResponse
 	(*MarkReadRequest)(nil),           // 10: quick.v1.MarkReadRequest
 	(*MarkReadResponse)(nil),          // 11: quick.v1.MarkReadResponse
-	(*User)(nil),                      // 12: quick.v1.User
-	(*timestamppb.Timestamp)(nil),     // 13: google.protobuf.Timestamp
+	(*CreateGroupRequest)(nil),        // 12: quick.v1.CreateGroupRequest
+	(*CreateGroupResponse)(nil),       // 13: quick.v1.CreateGroupResponse
+	(*CreateChannelRequest)(nil),      // 14: quick.v1.CreateChannelRequest
+	(*CreateChannelResponse)(nil),     // 15: quick.v1.CreateChannelResponse
+	(*AddMembersRequest)(nil),         // 16: quick.v1.AddMembersRequest
+	(*AddMembersResponse)(nil),        // 17: quick.v1.AddMembersResponse
+	(*RemoveMemberRequest)(nil),       // 18: quick.v1.RemoveMemberRequest
+	(*RemoveMemberResponse)(nil),      // 19: quick.v1.RemoveMemberResponse
+	(*LeaveConversationRequest)(nil),  // 20: quick.v1.LeaveConversationRequest
+	(*LeaveConversationResponse)(nil), // 21: quick.v1.LeaveConversationResponse
+	(*ListMembersRequest)(nil),        // 22: quick.v1.ListMembersRequest
+	(*ListMembersResponse)(nil),       // 23: quick.v1.ListMembersResponse
+	(*Member)(nil),                    // 24: quick.v1.Member
+	(*User)(nil),                      // 25: quick.v1.User
+	(*timestamppb.Timestamp)(nil),     // 26: google.protobuf.Timestamp
 }
 var file_quick_v1_messaging_proto_depIdxs = []int32{
-	12, // 0: quick.v1.Conversation.peer:type_name -> quick.v1.User
-	13, // 1: quick.v1.Conversation.last_message_at:type_name -> google.protobuf.Timestamp
+	25, // 0: quick.v1.Conversation.peer:type_name -> quick.v1.User
+	26, // 1: quick.v1.Conversation.last_message_at:type_name -> google.protobuf.Timestamp
 	1,  // 2: quick.v1.Conversation.preview:type_name -> quick.v1.Message
-	13, // 3: quick.v1.Message.created_at:type_name -> google.protobuf.Timestamp
+	26, // 3: quick.v1.Message.created_at:type_name -> google.protobuf.Timestamp
 	0,  // 4: quick.v1.OpenDMResponse.conversation:type_name -> quick.v1.Conversation
 	0,  // 5: quick.v1.ListConversationsResponse.conversations:type_name -> quick.v1.Conversation
 	1,  // 6: quick.v1.ListMessagesResponse.messages:type_name -> quick.v1.Message
 	1,  // 7: quick.v1.SendMessageResponse.message:type_name -> quick.v1.Message
-	4,  // 8: quick.v1.Messaging.ListConversations:input_type -> quick.v1.ListConversationsRequest
-	2,  // 9: quick.v1.Messaging.OpenDM:input_type -> quick.v1.OpenDMRequest
-	6,  // 10: quick.v1.Messaging.ListMessages:input_type -> quick.v1.ListMessagesRequest
-	8,  // 11: quick.v1.Messaging.SendMessage:input_type -> quick.v1.SendMessageRequest
-	10, // 12: quick.v1.Messaging.MarkRead:input_type -> quick.v1.MarkReadRequest
-	5,  // 13: quick.v1.Messaging.ListConversations:output_type -> quick.v1.ListConversationsResponse
-	3,  // 14: quick.v1.Messaging.OpenDM:output_type -> quick.v1.OpenDMResponse
-	7,  // 15: quick.v1.Messaging.ListMessages:output_type -> quick.v1.ListMessagesResponse
-	9,  // 16: quick.v1.Messaging.SendMessage:output_type -> quick.v1.SendMessageResponse
-	11, // 17: quick.v1.Messaging.MarkRead:output_type -> quick.v1.MarkReadResponse
-	13, // [13:18] is the sub-list for method output_type
-	8,  // [8:13] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	0,  // 8: quick.v1.CreateGroupResponse.conversation:type_name -> quick.v1.Conversation
+	0,  // 9: quick.v1.CreateChannelResponse.conversation:type_name -> quick.v1.Conversation
+	24, // 10: quick.v1.ListMembersResponse.members:type_name -> quick.v1.Member
+	25, // 11: quick.v1.Member.user:type_name -> quick.v1.User
+	26, // 12: quick.v1.Member.joined_at:type_name -> google.protobuf.Timestamp
+	4,  // 13: quick.v1.Messaging.ListConversations:input_type -> quick.v1.ListConversationsRequest
+	2,  // 14: quick.v1.Messaging.OpenDM:input_type -> quick.v1.OpenDMRequest
+	6,  // 15: quick.v1.Messaging.ListMessages:input_type -> quick.v1.ListMessagesRequest
+	8,  // 16: quick.v1.Messaging.SendMessage:input_type -> quick.v1.SendMessageRequest
+	10, // 17: quick.v1.Messaging.MarkRead:input_type -> quick.v1.MarkReadRequest
+	12, // 18: quick.v1.Messaging.CreateGroup:input_type -> quick.v1.CreateGroupRequest
+	14, // 19: quick.v1.Messaging.CreateChannel:input_type -> quick.v1.CreateChannelRequest
+	16, // 20: quick.v1.Messaging.AddMembers:input_type -> quick.v1.AddMembersRequest
+	18, // 21: quick.v1.Messaging.RemoveMember:input_type -> quick.v1.RemoveMemberRequest
+	20, // 22: quick.v1.Messaging.LeaveConversation:input_type -> quick.v1.LeaveConversationRequest
+	22, // 23: quick.v1.Messaging.ListMembers:input_type -> quick.v1.ListMembersRequest
+	5,  // 24: quick.v1.Messaging.ListConversations:output_type -> quick.v1.ListConversationsResponse
+	3,  // 25: quick.v1.Messaging.OpenDM:output_type -> quick.v1.OpenDMResponse
+	7,  // 26: quick.v1.Messaging.ListMessages:output_type -> quick.v1.ListMessagesResponse
+	9,  // 27: quick.v1.Messaging.SendMessage:output_type -> quick.v1.SendMessageResponse
+	11, // 28: quick.v1.Messaging.MarkRead:output_type -> quick.v1.MarkReadResponse
+	13, // 29: quick.v1.Messaging.CreateGroup:output_type -> quick.v1.CreateGroupResponse
+	15, // 30: quick.v1.Messaging.CreateChannel:output_type -> quick.v1.CreateChannelResponse
+	17, // 31: quick.v1.Messaging.AddMembers:output_type -> quick.v1.AddMembersResponse
+	19, // 32: quick.v1.Messaging.RemoveMember:output_type -> quick.v1.RemoveMemberResponse
+	21, // 33: quick.v1.Messaging.LeaveConversation:output_type -> quick.v1.LeaveConversationResponse
+	23, // 34: quick.v1.Messaging.ListMembers:output_type -> quick.v1.ListMembersResponse
+	24, // [24:35] is the sub-list for method output_type
+	13, // [13:24] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_quick_v1_messaging_proto_init() }
@@ -772,7 +1462,7 @@ func file_quick_v1_messaging_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_quick_v1_messaging_proto_rawDesc), len(file_quick_v1_messaging_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
