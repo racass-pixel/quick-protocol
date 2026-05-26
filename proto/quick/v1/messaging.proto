@@ -2,6 +2,7 @@ syntax = "proto3";
 package quick.v1;
 import "google/protobuf/timestamp.proto";
 import "quick/v1/users.proto";
+import "quick/v1/crypto.proto";
 
 service Messaging {
   rpc ListConversations(ListConversationsRequest)     returns (ListConversationsResponse)     {}
@@ -39,6 +40,13 @@ service Messaging {
   rpc ListReactions(ListReactionsRequest)             returns (ListReactionsResponse)          {}
   rpc ForwardMessage(ForwardMessageRequest)           returns (ForwardMessageResponse)         {}
   rpc SearchMessages(SearchMessagesRequest)           returns (SearchMessagesResponse)         {}
+
+  // E2E group keys. Sender uploads the per-member wrapped key bundle when
+  // creating a group or when membership changes; recipients fetch it and
+  // decrypt their slot to recover the symmetric conversation key. DMs do
+  // NOT use bundles — both peers derive the shared key via ECDH on the fly.
+  rpc PutGroupKeyBundle(PutGroupKeyBundleRequest)     returns (PutGroupKeyBundleResponse)      {}
+  rpc GetGroupKeyBundle(GetGroupKeyBundleRequest)     returns (GetGroupKeyBundleResponse)      {}
 }
 
 message Conversation {
@@ -85,6 +93,12 @@ message Message {
   // S13 — generic attachments (images, files). Voice still uses the dedicated
   // Voice field for backward compatibility; attachments is for everything else.
   repeated Attachment attachments = 12;
+
+  // E2E encryption: when set, `body` is empty and the real payload is
+  // sealed inside `encrypted`. Voice messages use a parallel scheme — the
+  // audio blob itself is sealed pre-upload; the on-message Voice field
+  // carries only the (non-secret) duration + waveform + file id.
+  EncryptedPayload encrypted = 13;
 }
 
 message Reaction {
@@ -138,12 +152,17 @@ message ListMessagesResponse { repeated Message messages = 1; bool has_more = 2;
 
 message SendMessageRequest  {
   string conversation_id = 1;
+  // Plaintext body. Kept for backward compat — old clients still send this.
+  // When `encrypted` is set, the server stores ciphertext only and leaves
+  // this column empty.
   string body            = 2;
   // S13. Optional. If set, must reference a message in the same conversation.
   string reply_to_message_id = 3;
   // S13. Optional. Ids of previously-uploaded media_attachments rows owned by
   // the caller. Used for image/file attachments.
   repeated string attachment_file_ids = 4;
+  // E2E sealed payload. When present, the server treats `body` as ignored.
+  EncryptedPayload encrypted = 5;
 }
 message SendMessageResponse { Message message = 1; }
 
@@ -190,6 +209,8 @@ message DeleteConversationResponse {}
 message EditMessageRequest  {
   string message_id = 1;
   string body       = 2;
+  // E2E sealed replacement body. When present, `body` is ignored.
+  EncryptedPayload encrypted = 3;
 }
 message EditMessageResponse { Message message = 1; }
 
@@ -262,3 +283,18 @@ message SearchMessagesRequest {
   string before_id       = 4;
 }
 message SearchMessagesResponse { repeated Message messages = 1; bool has_more = 2; }
+
+// --- E2E group key bundles ---
+
+message PutGroupKeyBundleRequest {
+  string conversation_id = 1;
+  // ciphertext_per_member maps recipient user_id to the wrapped 32-byte
+  // group key. Every current member (including the uploader themselves)
+  // must have an entry.
+  map<string, bytes> ciphertext_per_member = 2;
+  bytes  nonce            = 3;
+}
+message PutGroupKeyBundleResponse {}
+
+message GetGroupKeyBundleRequest  { string conversation_id = 1; }
+message GetGroupKeyBundleResponse { GroupKeyBundle bundle = 1; }

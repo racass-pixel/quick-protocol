@@ -96,6 +96,12 @@ const (
 	// MessagingSearchMessagesProcedure is the fully-qualified name of the Messaging's SearchMessages
 	// RPC.
 	MessagingSearchMessagesProcedure = "/quick.v1.Messaging/SearchMessages"
+	// MessagingPutGroupKeyBundleProcedure is the fully-qualified name of the Messaging's
+	// PutGroupKeyBundle RPC.
+	MessagingPutGroupKeyBundleProcedure = "/quick.v1.Messaging/PutGroupKeyBundle"
+	// MessagingGetGroupKeyBundleProcedure is the fully-qualified name of the Messaging's
+	// GetGroupKeyBundle RPC.
+	MessagingGetGroupKeyBundleProcedure = "/quick.v1.Messaging/GetGroupKeyBundle"
 )
 
 // MessagingClient is a client for the quick.v1.Messaging service.
@@ -132,6 +138,12 @@ type MessagingClient interface {
 	ListReactions(context.Context, *connect.Request[v1.ListReactionsRequest]) (*connect.Response[v1.ListReactionsResponse], error)
 	ForwardMessage(context.Context, *connect.Request[v1.ForwardMessageRequest]) (*connect.Response[v1.ForwardMessageResponse], error)
 	SearchMessages(context.Context, *connect.Request[v1.SearchMessagesRequest]) (*connect.Response[v1.SearchMessagesResponse], error)
+	// E2E group keys. Sender uploads the per-member wrapped key bundle when
+	// creating a group or when membership changes; recipients fetch it and
+	// decrypt their slot to recover the symmetric conversation key. DMs do
+	// NOT use bundles — both peers derive the shared key via ECDH on the fly.
+	PutGroupKeyBundle(context.Context, *connect.Request[v1.PutGroupKeyBundleRequest]) (*connect.Response[v1.PutGroupKeyBundleResponse], error)
+	GetGroupKeyBundle(context.Context, *connect.Request[v1.GetGroupKeyBundleRequest]) (*connect.Response[v1.GetGroupKeyBundleResponse], error)
 }
 
 // NewMessagingClient constructs a client for the quick.v1.Messaging service. By default, it uses
@@ -301,6 +313,18 @@ func NewMessagingClient(httpClient connect.HTTPClient, baseURL string, opts ...c
 			connect.WithSchema(messagingMethods.ByName("SearchMessages")),
 			connect.WithClientOptions(opts...),
 		),
+		putGroupKeyBundle: connect.NewClient[v1.PutGroupKeyBundleRequest, v1.PutGroupKeyBundleResponse](
+			httpClient,
+			baseURL+MessagingPutGroupKeyBundleProcedure,
+			connect.WithSchema(messagingMethods.ByName("PutGroupKeyBundle")),
+			connect.WithClientOptions(opts...),
+		),
+		getGroupKeyBundle: connect.NewClient[v1.GetGroupKeyBundleRequest, v1.GetGroupKeyBundleResponse](
+			httpClient,
+			baseURL+MessagingGetGroupKeyBundleProcedure,
+			connect.WithSchema(messagingMethods.ByName("GetGroupKeyBundle")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -332,6 +356,8 @@ type messagingClient struct {
 	listReactions      *connect.Client[v1.ListReactionsRequest, v1.ListReactionsResponse]
 	forwardMessage     *connect.Client[v1.ForwardMessageRequest, v1.ForwardMessageResponse]
 	searchMessages     *connect.Client[v1.SearchMessagesRequest, v1.SearchMessagesResponse]
+	putGroupKeyBundle  *connect.Client[v1.PutGroupKeyBundleRequest, v1.PutGroupKeyBundleResponse]
+	getGroupKeyBundle  *connect.Client[v1.GetGroupKeyBundleRequest, v1.GetGroupKeyBundleResponse]
 }
 
 // ListConversations calls quick.v1.Messaging.ListConversations.
@@ -464,6 +490,16 @@ func (c *messagingClient) SearchMessages(ctx context.Context, req *connect.Reque
 	return c.searchMessages.CallUnary(ctx, req)
 }
 
+// PutGroupKeyBundle calls quick.v1.Messaging.PutGroupKeyBundle.
+func (c *messagingClient) PutGroupKeyBundle(ctx context.Context, req *connect.Request[v1.PutGroupKeyBundleRequest]) (*connect.Response[v1.PutGroupKeyBundleResponse], error) {
+	return c.putGroupKeyBundle.CallUnary(ctx, req)
+}
+
+// GetGroupKeyBundle calls quick.v1.Messaging.GetGroupKeyBundle.
+func (c *messagingClient) GetGroupKeyBundle(ctx context.Context, req *connect.Request[v1.GetGroupKeyBundleRequest]) (*connect.Response[v1.GetGroupKeyBundleResponse], error) {
+	return c.getGroupKeyBundle.CallUnary(ctx, req)
+}
+
 // MessagingHandler is an implementation of the quick.v1.Messaging service.
 type MessagingHandler interface {
 	ListConversations(context.Context, *connect.Request[v1.ListConversationsRequest]) (*connect.Response[v1.ListConversationsResponse], error)
@@ -498,6 +534,12 @@ type MessagingHandler interface {
 	ListReactions(context.Context, *connect.Request[v1.ListReactionsRequest]) (*connect.Response[v1.ListReactionsResponse], error)
 	ForwardMessage(context.Context, *connect.Request[v1.ForwardMessageRequest]) (*connect.Response[v1.ForwardMessageResponse], error)
 	SearchMessages(context.Context, *connect.Request[v1.SearchMessagesRequest]) (*connect.Response[v1.SearchMessagesResponse], error)
+	// E2E group keys. Sender uploads the per-member wrapped key bundle when
+	// creating a group or when membership changes; recipients fetch it and
+	// decrypt their slot to recover the symmetric conversation key. DMs do
+	// NOT use bundles — both peers derive the shared key via ECDH on the fly.
+	PutGroupKeyBundle(context.Context, *connect.Request[v1.PutGroupKeyBundleRequest]) (*connect.Response[v1.PutGroupKeyBundleResponse], error)
+	GetGroupKeyBundle(context.Context, *connect.Request[v1.GetGroupKeyBundleRequest]) (*connect.Response[v1.GetGroupKeyBundleResponse], error)
 }
 
 // NewMessagingHandler builds an HTTP handler from the service implementation. It returns the path
@@ -663,6 +705,18 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 		connect.WithSchema(messagingMethods.ByName("SearchMessages")),
 		connect.WithHandlerOptions(opts...),
 	)
+	messagingPutGroupKeyBundleHandler := connect.NewUnaryHandler(
+		MessagingPutGroupKeyBundleProcedure,
+		svc.PutGroupKeyBundle,
+		connect.WithSchema(messagingMethods.ByName("PutGroupKeyBundle")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingGetGroupKeyBundleHandler := connect.NewUnaryHandler(
+		MessagingGetGroupKeyBundleProcedure,
+		svc.GetGroupKeyBundle,
+		connect.WithSchema(messagingMethods.ByName("GetGroupKeyBundle")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Messaging/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case MessagingListConversationsProcedure:
@@ -717,6 +771,10 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 			messagingForwardMessageHandler.ServeHTTP(w, r)
 		case MessagingSearchMessagesProcedure:
 			messagingSearchMessagesHandler.ServeHTTP(w, r)
+		case MessagingPutGroupKeyBundleProcedure:
+			messagingPutGroupKeyBundleHandler.ServeHTTP(w, r)
+		case MessagingGetGroupKeyBundleProcedure:
+			messagingGetGroupKeyBundleHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -828,4 +886,12 @@ func (UnimplementedMessagingHandler) ForwardMessage(context.Context, *connect.Re
 
 func (UnimplementedMessagingHandler) SearchMessages(context.Context, *connect.Request[v1.SearchMessagesRequest]) (*connect.Response[v1.SearchMessagesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.SearchMessages is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) PutGroupKeyBundle(context.Context, *connect.Request[v1.PutGroupKeyBundleRequest]) (*connect.Response[v1.PutGroupKeyBundleResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.PutGroupKeyBundle is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) GetGroupKeyBundle(context.Context, *connect.Request[v1.GetGroupKeyBundleRequest]) (*connect.Response[v1.GetGroupKeyBundleResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.GetGroupKeyBundle is not implemented"))
 }

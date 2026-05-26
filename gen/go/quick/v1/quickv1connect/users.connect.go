@@ -47,6 +47,12 @@ const (
 	UsersListBlockedProcedure = "/quick.v1.Users/ListBlocked"
 	// UsersGetPresenceProcedure is the fully-qualified name of the Users's GetPresence RPC.
 	UsersGetPresenceProcedure = "/quick.v1.Users/GetPresence"
+	// UsersUploadIdentityKeyProcedure is the fully-qualified name of the Users's UploadIdentityKey RPC.
+	UsersUploadIdentityKeyProcedure = "/quick.v1.Users/UploadIdentityKey"
+	// UsersGetIdentityKeyProcedure is the fully-qualified name of the Users's GetIdentityKey RPC.
+	UsersGetIdentityKeyProcedure = "/quick.v1.Users/GetIdentityKey"
+	// UsersGetIdentityKeysProcedure is the fully-qualified name of the Users's GetIdentityKeys RPC.
+	UsersGetIdentityKeysProcedure = "/quick.v1.Users/GetIdentityKeys"
 )
 
 // UsersClient is a client for the quick.v1.Users service.
@@ -58,6 +64,12 @@ type UsersClient interface {
 	Unblock(context.Context, *connect.Request[v1.UnblockRequest]) (*connect.Response[v1.UnblockResponse], error)
 	ListBlocked(context.Context, *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error)
 	GetPresence(context.Context, *connect.Request[v1.GetPresenceRequest]) (*connect.Response[v1.GetPresenceResponse], error)
+	// End-to-end encryption: identity key publishing + lookup.
+	// Clients call UploadIdentityKey once on first launch after key generation;
+	// re-upload only when the user wipes local storage and re-onboards.
+	UploadIdentityKey(context.Context, *connect.Request[v1.UploadIdentityKeyRequest]) (*connect.Response[v1.UploadIdentityKeyResponse], error)
+	GetIdentityKey(context.Context, *connect.Request[v1.GetIdentityKeyRequest]) (*connect.Response[v1.GetIdentityKeyResponse], error)
+	GetIdentityKeys(context.Context, *connect.Request[v1.GetIdentityKeysRequest]) (*connect.Response[v1.GetIdentityKeysResponse], error)
 }
 
 // NewUsersClient constructs a client for the quick.v1.Users service. By default, it uses the
@@ -113,18 +125,39 @@ func NewUsersClient(httpClient connect.HTTPClient, baseURL string, opts ...conne
 			connect.WithSchema(usersMethods.ByName("GetPresence")),
 			connect.WithClientOptions(opts...),
 		),
+		uploadIdentityKey: connect.NewClient[v1.UploadIdentityKeyRequest, v1.UploadIdentityKeyResponse](
+			httpClient,
+			baseURL+UsersUploadIdentityKeyProcedure,
+			connect.WithSchema(usersMethods.ByName("UploadIdentityKey")),
+			connect.WithClientOptions(opts...),
+		),
+		getIdentityKey: connect.NewClient[v1.GetIdentityKeyRequest, v1.GetIdentityKeyResponse](
+			httpClient,
+			baseURL+UsersGetIdentityKeyProcedure,
+			connect.WithSchema(usersMethods.ByName("GetIdentityKey")),
+			connect.WithClientOptions(opts...),
+		),
+		getIdentityKeys: connect.NewClient[v1.GetIdentityKeysRequest, v1.GetIdentityKeysResponse](
+			httpClient,
+			baseURL+UsersGetIdentityKeysProcedure,
+			connect.WithSchema(usersMethods.ByName("GetIdentityKeys")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // usersClient implements UsersClient.
 type usersClient struct {
-	me            *connect.Client[v1.MeRequest, v1.MeResponse]
-	updateProfile *connect.Client[v1.UpdateProfileRequest, v1.UpdateProfileResponse]
-	search        *connect.Client[v1.SearchRequest, v1.SearchResponse]
-	block         *connect.Client[v1.BlockRequest, v1.BlockResponse]
-	unblock       *connect.Client[v1.UnblockRequest, v1.UnblockResponse]
-	listBlocked   *connect.Client[v1.ListBlockedRequest, v1.ListBlockedResponse]
-	getPresence   *connect.Client[v1.GetPresenceRequest, v1.GetPresenceResponse]
+	me                *connect.Client[v1.MeRequest, v1.MeResponse]
+	updateProfile     *connect.Client[v1.UpdateProfileRequest, v1.UpdateProfileResponse]
+	search            *connect.Client[v1.SearchRequest, v1.SearchResponse]
+	block             *connect.Client[v1.BlockRequest, v1.BlockResponse]
+	unblock           *connect.Client[v1.UnblockRequest, v1.UnblockResponse]
+	listBlocked       *connect.Client[v1.ListBlockedRequest, v1.ListBlockedResponse]
+	getPresence       *connect.Client[v1.GetPresenceRequest, v1.GetPresenceResponse]
+	uploadIdentityKey *connect.Client[v1.UploadIdentityKeyRequest, v1.UploadIdentityKeyResponse]
+	getIdentityKey    *connect.Client[v1.GetIdentityKeyRequest, v1.GetIdentityKeyResponse]
+	getIdentityKeys   *connect.Client[v1.GetIdentityKeysRequest, v1.GetIdentityKeysResponse]
 }
 
 // Me calls quick.v1.Users.Me.
@@ -162,6 +195,21 @@ func (c *usersClient) GetPresence(ctx context.Context, req *connect.Request[v1.G
 	return c.getPresence.CallUnary(ctx, req)
 }
 
+// UploadIdentityKey calls quick.v1.Users.UploadIdentityKey.
+func (c *usersClient) UploadIdentityKey(ctx context.Context, req *connect.Request[v1.UploadIdentityKeyRequest]) (*connect.Response[v1.UploadIdentityKeyResponse], error) {
+	return c.uploadIdentityKey.CallUnary(ctx, req)
+}
+
+// GetIdentityKey calls quick.v1.Users.GetIdentityKey.
+func (c *usersClient) GetIdentityKey(ctx context.Context, req *connect.Request[v1.GetIdentityKeyRequest]) (*connect.Response[v1.GetIdentityKeyResponse], error) {
+	return c.getIdentityKey.CallUnary(ctx, req)
+}
+
+// GetIdentityKeys calls quick.v1.Users.GetIdentityKeys.
+func (c *usersClient) GetIdentityKeys(ctx context.Context, req *connect.Request[v1.GetIdentityKeysRequest]) (*connect.Response[v1.GetIdentityKeysResponse], error) {
+	return c.getIdentityKeys.CallUnary(ctx, req)
+}
+
 // UsersHandler is an implementation of the quick.v1.Users service.
 type UsersHandler interface {
 	Me(context.Context, *connect.Request[v1.MeRequest]) (*connect.Response[v1.MeResponse], error)
@@ -171,6 +219,12 @@ type UsersHandler interface {
 	Unblock(context.Context, *connect.Request[v1.UnblockRequest]) (*connect.Response[v1.UnblockResponse], error)
 	ListBlocked(context.Context, *connect.Request[v1.ListBlockedRequest]) (*connect.Response[v1.ListBlockedResponse], error)
 	GetPresence(context.Context, *connect.Request[v1.GetPresenceRequest]) (*connect.Response[v1.GetPresenceResponse], error)
+	// End-to-end encryption: identity key publishing + lookup.
+	// Clients call UploadIdentityKey once on first launch after key generation;
+	// re-upload only when the user wipes local storage and re-onboards.
+	UploadIdentityKey(context.Context, *connect.Request[v1.UploadIdentityKeyRequest]) (*connect.Response[v1.UploadIdentityKeyResponse], error)
+	GetIdentityKey(context.Context, *connect.Request[v1.GetIdentityKeyRequest]) (*connect.Response[v1.GetIdentityKeyResponse], error)
+	GetIdentityKeys(context.Context, *connect.Request[v1.GetIdentityKeysRequest]) (*connect.Response[v1.GetIdentityKeysResponse], error)
 }
 
 // NewUsersHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -222,6 +276,24 @@ func NewUsersHandler(svc UsersHandler, opts ...connect.HandlerOption) (string, h
 		connect.WithSchema(usersMethods.ByName("GetPresence")),
 		connect.WithHandlerOptions(opts...),
 	)
+	usersUploadIdentityKeyHandler := connect.NewUnaryHandler(
+		UsersUploadIdentityKeyProcedure,
+		svc.UploadIdentityKey,
+		connect.WithSchema(usersMethods.ByName("UploadIdentityKey")),
+		connect.WithHandlerOptions(opts...),
+	)
+	usersGetIdentityKeyHandler := connect.NewUnaryHandler(
+		UsersGetIdentityKeyProcedure,
+		svc.GetIdentityKey,
+		connect.WithSchema(usersMethods.ByName("GetIdentityKey")),
+		connect.WithHandlerOptions(opts...),
+	)
+	usersGetIdentityKeysHandler := connect.NewUnaryHandler(
+		UsersGetIdentityKeysProcedure,
+		svc.GetIdentityKeys,
+		connect.WithSchema(usersMethods.ByName("GetIdentityKeys")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Users/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case UsersMeProcedure:
@@ -238,6 +310,12 @@ func NewUsersHandler(svc UsersHandler, opts ...connect.HandlerOption) (string, h
 			usersListBlockedHandler.ServeHTTP(w, r)
 		case UsersGetPresenceProcedure:
 			usersGetPresenceHandler.ServeHTTP(w, r)
+		case UsersUploadIdentityKeyProcedure:
+			usersUploadIdentityKeyHandler.ServeHTTP(w, r)
+		case UsersGetIdentityKeyProcedure:
+			usersGetIdentityKeyHandler.ServeHTTP(w, r)
+		case UsersGetIdentityKeysProcedure:
+			usersGetIdentityKeysHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -273,4 +351,16 @@ func (UnimplementedUsersHandler) ListBlocked(context.Context, *connect.Request[v
 
 func (UnimplementedUsersHandler) GetPresence(context.Context, *connect.Request[v1.GetPresenceRequest]) (*connect.Response[v1.GetPresenceResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.GetPresence is not implemented"))
+}
+
+func (UnimplementedUsersHandler) UploadIdentityKey(context.Context, *connect.Request[v1.UploadIdentityKeyRequest]) (*connect.Response[v1.UploadIdentityKeyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.UploadIdentityKey is not implemented"))
+}
+
+func (UnimplementedUsersHandler) GetIdentityKey(context.Context, *connect.Request[v1.GetIdentityKeyRequest]) (*connect.Response[v1.GetIdentityKeyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.GetIdentityKey is not implemented"))
+}
+
+func (UnimplementedUsersHandler) GetIdentityKeys(context.Context, *connect.Request[v1.GetIdentityKeysRequest]) (*connect.Response[v1.GetIdentityKeysResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Users.GetIdentityKeys is not implemented"))
 }

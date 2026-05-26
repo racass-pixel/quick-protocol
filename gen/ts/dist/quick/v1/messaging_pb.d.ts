@@ -1,6 +1,7 @@
 import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import type { User } from "./users_pb.js";
+import type { EncryptedPayload, GroupKeyBundle } from "./crypto_pb.js";
 import type { Message as Message$1 } from "@bufbuild/protobuf";
 /**
  * Describes the file quick/v1/messaging.proto.
@@ -127,6 +128,15 @@ export type Message = Message$1<"quick.v1.Message"> & {
      * @generated from field: repeated quick.v1.Attachment attachments = 12;
      */
     attachments: Attachment[];
+    /**
+     * E2E encryption: when set, `body` is empty and the real payload is
+     * sealed inside `encrypted`. Voice messages use a parallel scheme — the
+     * audio blob itself is sealed pre-upload; the on-message Voice field
+     * carries only the (non-secret) duration + waveform + file id.
+     *
+     * @generated from field: quick.v1.EncryptedPayload encrypted = 13;
+     */
+    encrypted?: EncryptedPayload | undefined;
 };
 /**
  * Describes the message quick.v1.Message.
@@ -357,6 +367,10 @@ export type SendMessageRequest = Message$1<"quick.v1.SendMessageRequest"> & {
      */
     conversationId: string;
     /**
+     * Plaintext body. Kept for backward compat — old clients still send this.
+     * When `encrypted` is set, the server stores ciphertext only and leaves
+     * this column empty.
+     *
      * @generated from field: string body = 2;
      */
     body: string;
@@ -373,6 +387,12 @@ export type SendMessageRequest = Message$1<"quick.v1.SendMessageRequest"> & {
      * @generated from field: repeated string attachment_file_ids = 4;
      */
     attachmentFileIds: string[];
+    /**
+     * E2E sealed payload. When present, the server treats `body` as ignored.
+     *
+     * @generated from field: quick.v1.EncryptedPayload encrypted = 5;
+     */
+    encrypted?: EncryptedPayload | undefined;
 };
 /**
  * Describes the message quick.v1.SendMessageRequest.
@@ -652,6 +672,12 @@ export type EditMessageRequest = Message$1<"quick.v1.EditMessageRequest"> & {
      * @generated from field: string body = 2;
      */
     body: string;
+    /**
+     * E2E sealed replacement body. When present, `body` is ignored.
+     *
+     * @generated from field: quick.v1.EncryptedPayload encrypted = 3;
+     */
+    encrypted?: EncryptedPayload | undefined;
 };
 /**
  * Describes the message quick.v1.EditMessageRequest.
@@ -1058,6 +1084,71 @@ export type SearchMessagesResponse = Message$1<"quick.v1.SearchMessagesResponse"
  */
 export declare const SearchMessagesResponseSchema: GenMessage<SearchMessagesResponse>;
 /**
+ * @generated from message quick.v1.PutGroupKeyBundleRequest
+ */
+export type PutGroupKeyBundleRequest = Message$1<"quick.v1.PutGroupKeyBundleRequest"> & {
+    /**
+     * @generated from field: string conversation_id = 1;
+     */
+    conversationId: string;
+    /**
+     * ciphertext_per_member maps recipient user_id to the wrapped 32-byte
+     * group key. Every current member (including the uploader themselves)
+     * must have an entry.
+     *
+     * @generated from field: map<string, bytes> ciphertext_per_member = 2;
+     */
+    ciphertextPerMember: {
+        [key: string]: Uint8Array;
+    };
+    /**
+     * @generated from field: bytes nonce = 3;
+     */
+    nonce: Uint8Array;
+};
+/**
+ * Describes the message quick.v1.PutGroupKeyBundleRequest.
+ * Use `create(PutGroupKeyBundleRequestSchema)` to create a new message.
+ */
+export declare const PutGroupKeyBundleRequestSchema: GenMessage<PutGroupKeyBundleRequest>;
+/**
+ * @generated from message quick.v1.PutGroupKeyBundleResponse
+ */
+export type PutGroupKeyBundleResponse = Message$1<"quick.v1.PutGroupKeyBundleResponse"> & {};
+/**
+ * Describes the message quick.v1.PutGroupKeyBundleResponse.
+ * Use `create(PutGroupKeyBundleResponseSchema)` to create a new message.
+ */
+export declare const PutGroupKeyBundleResponseSchema: GenMessage<PutGroupKeyBundleResponse>;
+/**
+ * @generated from message quick.v1.GetGroupKeyBundleRequest
+ */
+export type GetGroupKeyBundleRequest = Message$1<"quick.v1.GetGroupKeyBundleRequest"> & {
+    /**
+     * @generated from field: string conversation_id = 1;
+     */
+    conversationId: string;
+};
+/**
+ * Describes the message quick.v1.GetGroupKeyBundleRequest.
+ * Use `create(GetGroupKeyBundleRequestSchema)` to create a new message.
+ */
+export declare const GetGroupKeyBundleRequestSchema: GenMessage<GetGroupKeyBundleRequest>;
+/**
+ * @generated from message quick.v1.GetGroupKeyBundleResponse
+ */
+export type GetGroupKeyBundleResponse = Message$1<"quick.v1.GetGroupKeyBundleResponse"> & {
+    /**
+     * @generated from field: quick.v1.GroupKeyBundle bundle = 1;
+     */
+    bundle?: GroupKeyBundle | undefined;
+};
+/**
+ * Describes the message quick.v1.GetGroupKeyBundleResponse.
+ * Use `create(GetGroupKeyBundleResponseSchema)` to create a new message.
+ */
+export declare const GetGroupKeyBundleResponseSchema: GenMessage<GetGroupKeyBundleResponse>;
+/**
  * @generated from service quick.v1.Messaging
  */
 export declare const Messaging: GenService<{
@@ -1277,5 +1368,26 @@ export declare const Messaging: GenService<{
         methodKind: "unary";
         input: typeof SearchMessagesRequestSchema;
         output: typeof SearchMessagesResponseSchema;
+    };
+    /**
+     * E2E group keys. Sender uploads the per-member wrapped key bundle when
+     * creating a group or when membership changes; recipients fetch it and
+     * decrypt their slot to recover the symmetric conversation key. DMs do
+     * NOT use bundles — both peers derive the shared key via ECDH on the fly.
+     *
+     * @generated from rpc quick.v1.Messaging.PutGroupKeyBundle
+     */
+    putGroupKeyBundle: {
+        methodKind: "unary";
+        input: typeof PutGroupKeyBundleRequestSchema;
+        output: typeof PutGroupKeyBundleResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.GetGroupKeyBundle
+     */
+    getGroupKeyBundle: {
+        methodKind: "unary";
+        input: typeof GetGroupKeyBundleRequestSchema;
+        output: typeof GetGroupKeyBundleResponseSchema;
     };
 }>;

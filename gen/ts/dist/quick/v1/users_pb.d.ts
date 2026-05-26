@@ -1,5 +1,6 @@
 import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { IdentityKey } from "./crypto_pb.js";
 import type { Message } from "@bufbuild/protobuf";
 /**
  * Describes the file quick/v1/users.proto.
@@ -250,6 +251,85 @@ export type GetPresenceResponse = Message<"quick.v1.GetPresenceResponse"> & {
  */
 export declare const GetPresenceResponseSchema: GenMessage<GetPresenceResponse>;
 /**
+ * @generated from message quick.v1.UploadIdentityKeyRequest
+ */
+export type UploadIdentityKeyRequest = Message<"quick.v1.UploadIdentityKeyRequest"> & {
+    /**
+     * @generated from field: bytes public_key = 1;
+     */
+    publicKey: Uint8Array;
+};
+/**
+ * Describes the message quick.v1.UploadIdentityKeyRequest.
+ * Use `create(UploadIdentityKeyRequestSchema)` to create a new message.
+ */
+export declare const UploadIdentityKeyRequestSchema: GenMessage<UploadIdentityKeyRequest>;
+/**
+ * @generated from message quick.v1.UploadIdentityKeyResponse
+ */
+export type UploadIdentityKeyResponse = Message<"quick.v1.UploadIdentityKeyResponse"> & {};
+/**
+ * Describes the message quick.v1.UploadIdentityKeyResponse.
+ * Use `create(UploadIdentityKeyResponseSchema)` to create a new message.
+ */
+export declare const UploadIdentityKeyResponseSchema: GenMessage<UploadIdentityKeyResponse>;
+/**
+ * @generated from message quick.v1.GetIdentityKeyRequest
+ */
+export type GetIdentityKeyRequest = Message<"quick.v1.GetIdentityKeyRequest"> & {
+    /**
+     * @generated from field: string user_id = 1;
+     */
+    userId: string;
+};
+/**
+ * Describes the message quick.v1.GetIdentityKeyRequest.
+ * Use `create(GetIdentityKeyRequestSchema)` to create a new message.
+ */
+export declare const GetIdentityKeyRequestSchema: GenMessage<GetIdentityKeyRequest>;
+/**
+ * @generated from message quick.v1.GetIdentityKeyResponse
+ */
+export type GetIdentityKeyResponse = Message<"quick.v1.GetIdentityKeyResponse"> & {
+    /**
+     * @generated from field: quick.v1.IdentityKey identity_key = 1;
+     */
+    identityKey?: IdentityKey | undefined;
+};
+/**
+ * Describes the message quick.v1.GetIdentityKeyResponse.
+ * Use `create(GetIdentityKeyResponseSchema)` to create a new message.
+ */
+export declare const GetIdentityKeyResponseSchema: GenMessage<GetIdentityKeyResponse>;
+/**
+ * @generated from message quick.v1.GetIdentityKeysRequest
+ */
+export type GetIdentityKeysRequest = Message<"quick.v1.GetIdentityKeysRequest"> & {
+    /**
+     * @generated from field: repeated string user_ids = 1;
+     */
+    userIds: string[];
+};
+/**
+ * Describes the message quick.v1.GetIdentityKeysRequest.
+ * Use `create(GetIdentityKeysRequestSchema)` to create a new message.
+ */
+export declare const GetIdentityKeysRequestSchema: GenMessage<GetIdentityKeysRequest>;
+/**
+ * @generated from message quick.v1.GetIdentityKeysResponse
+ */
+export type GetIdentityKeysResponse = Message<"quick.v1.GetIdentityKeysResponse"> & {
+    /**
+     * @generated from field: repeated quick.v1.IdentityKey identity_keys = 1;
+     */
+    identityKeys: IdentityKey[];
+};
+/**
+ * Describes the message quick.v1.GetIdentityKeysResponse.
+ * Use `create(GetIdentityKeysResponseSchema)` to create a new message.
+ */
+export declare const GetIdentityKeysResponseSchema: GenMessage<GetIdentityKeysResponse>;
+/**
  * @generated from service quick.v1.Users
  */
 export declare const Users: GenService<{
@@ -308,5 +388,33 @@ export declare const Users: GenService<{
         methodKind: "unary";
         input: typeof GetPresenceRequestSchema;
         output: typeof GetPresenceResponseSchema;
+    };
+    /**
+     * End-to-end encryption: identity key publishing + lookup.
+     * Clients call UploadIdentityKey once on first launch after key generation;
+     * re-upload only when the user wipes local storage and re-onboards.
+     *
+     * @generated from rpc quick.v1.Users.UploadIdentityKey
+     */
+    uploadIdentityKey: {
+        methodKind: "unary";
+        input: typeof UploadIdentityKeyRequestSchema;
+        output: typeof UploadIdentityKeyResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Users.GetIdentityKey
+     */
+    getIdentityKey: {
+        methodKind: "unary";
+        input: typeof GetIdentityKeyRequestSchema;
+        output: typeof GetIdentityKeyResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Users.GetIdentityKeys
+     */
+    getIdentityKeys: {
+        methodKind: "unary";
+        input: typeof GetIdentityKeysRequestSchema;
+        output: typeof GetIdentityKeysResponseSchema;
     };
 }>;

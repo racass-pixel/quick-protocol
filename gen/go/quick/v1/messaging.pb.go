@@ -164,7 +164,12 @@ type Message struct {
 	ForwardOriginText string `protobuf:"bytes,11,opt,name=forward_origin_text,json=forwardOriginText,proto3" json:"forward_origin_text,omitempty"`
 	// S13 — generic attachments (images, files). Voice still uses the dedicated
 	// Voice field for backward compatibility; attachments is for everything else.
-	Attachments   []*Attachment `protobuf:"bytes,12,rep,name=attachments,proto3" json:"attachments,omitempty"`
+	Attachments []*Attachment `protobuf:"bytes,12,rep,name=attachments,proto3" json:"attachments,omitempty"`
+	// E2E encryption: when set, `body` is empty and the real payload is
+	// sealed inside `encrypted`. Voice messages use a parallel scheme — the
+	// audio blob itself is sealed pre-upload; the on-message Voice field
+	// carries only the (non-secret) duration + waveform + file id.
+	Encrypted     *EncryptedPayload `protobuf:"bytes,13,opt,name=encrypted,proto3" json:"encrypted,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -279,6 +284,13 @@ func (x *Message) GetForwardOriginText() string {
 func (x *Message) GetAttachments() []*Attachment {
 	if x != nil {
 		return x.Attachments
+	}
+	return nil
+}
+
+func (x *Message) GetEncrypted() *EncryptedPayload {
+	if x != nil {
+		return x.Encrypted
 	}
 	return nil
 }
@@ -820,14 +832,19 @@ func (x *ListMessagesResponse) GetHasMore() bool {
 type SendMessageRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
-	Body           string                 `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
+	// Plaintext body. Kept for backward compat — old clients still send this.
+	// When `encrypted` is set, the server stores ciphertext only and leaves
+	// this column empty.
+	Body string `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
 	// S13. Optional. If set, must reference a message in the same conversation.
 	ReplyToMessageId string `protobuf:"bytes,3,opt,name=reply_to_message_id,json=replyToMessageId,proto3" json:"reply_to_message_id,omitempty"`
 	// S13. Optional. Ids of previously-uploaded media_attachments rows owned by
 	// the caller. Used for image/file attachments.
 	AttachmentFileIds []string `protobuf:"bytes,4,rep,name=attachment_file_ids,json=attachmentFileIds,proto3" json:"attachment_file_ids,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// E2E sealed payload. When present, the server treats `body` as ignored.
+	Encrypted     *EncryptedPayload `protobuf:"bytes,5,opt,name=encrypted,proto3" json:"encrypted,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SendMessageRequest) Reset() {
@@ -884,6 +901,13 @@ func (x *SendMessageRequest) GetReplyToMessageId() string {
 func (x *SendMessageRequest) GetAttachmentFileIds() []string {
 	if x != nil {
 		return x.AttachmentFileIds
+	}
+	return nil
+}
+
+func (x *SendMessageRequest) GetEncrypted() *EncryptedPayload {
+	if x != nil {
+		return x.Encrypted
 	}
 	return nil
 }
@@ -1705,9 +1729,11 @@ func (*DeleteConversationResponse) Descriptor() ([]byte, []int) {
 }
 
 type EditMessageRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	MessageId     string                 `protobuf:"bytes,1,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
-	Body          string                 `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	MessageId string                 `protobuf:"bytes,1,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
+	Body      string                 `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
+	// E2E sealed replacement body. When present, `body` is ignored.
+	Encrypted     *EncryptedPayload `protobuf:"bytes,3,opt,name=encrypted,proto3" json:"encrypted,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1754,6 +1780,13 @@ func (x *EditMessageRequest) GetBody() string {
 		return x.Body
 	}
 	return ""
+}
+
+func (x *EditMessageRequest) GetEncrypted() *EncryptedPayload {
+	if x != nil {
+		return x.Encrypted
+	}
+	return nil
 }
 
 type EditMessageResponse struct {
@@ -3007,11 +3040,198 @@ func (x *SearchMessagesResponse) GetHasMore() bool {
 	return false
 }
 
+type PutGroupKeyBundleRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	// ciphertext_per_member maps recipient user_id to the wrapped 32-byte
+	// group key. Every current member (including the uploader themselves)
+	// must have an entry.
+	CiphertextPerMember map[string][]byte `protobuf:"bytes,2,rep,name=ciphertext_per_member,json=ciphertextPerMember,proto3" json:"ciphertext_per_member,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Nonce               []byte            `protobuf:"bytes,3,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *PutGroupKeyBundleRequest) Reset() {
+	*x = PutGroupKeyBundleRequest{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[59]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PutGroupKeyBundleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PutGroupKeyBundleRequest) ProtoMessage() {}
+
+func (x *PutGroupKeyBundleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[59]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PutGroupKeyBundleRequest.ProtoReflect.Descriptor instead.
+func (*PutGroupKeyBundleRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{59}
+}
+
+func (x *PutGroupKeyBundleRequest) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+func (x *PutGroupKeyBundleRequest) GetCiphertextPerMember() map[string][]byte {
+	if x != nil {
+		return x.CiphertextPerMember
+	}
+	return nil
+}
+
+func (x *PutGroupKeyBundleRequest) GetNonce() []byte {
+	if x != nil {
+		return x.Nonce
+	}
+	return nil
+}
+
+type PutGroupKeyBundleResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PutGroupKeyBundleResponse) Reset() {
+	*x = PutGroupKeyBundleResponse{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[60]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PutGroupKeyBundleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PutGroupKeyBundleResponse) ProtoMessage() {}
+
+func (x *PutGroupKeyBundleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[60]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PutGroupKeyBundleResponse.ProtoReflect.Descriptor instead.
+func (*PutGroupKeyBundleResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{60}
+}
+
+type GetGroupKeyBundleRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetGroupKeyBundleRequest) Reset() {
+	*x = GetGroupKeyBundleRequest{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[61]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGroupKeyBundleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGroupKeyBundleRequest) ProtoMessage() {}
+
+func (x *GetGroupKeyBundleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[61]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGroupKeyBundleRequest.ProtoReflect.Descriptor instead.
+func (*GetGroupKeyBundleRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *GetGroupKeyBundleRequest) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+type GetGroupKeyBundleResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Bundle        *GroupKeyBundle        `protobuf:"bytes,1,opt,name=bundle,proto3" json:"bundle,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGroupKeyBundleResponse) Reset() {
+	*x = GetGroupKeyBundleResponse{}
+	mi := &file_quick_v1_messaging_proto_msgTypes[62]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGroupKeyBundleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGroupKeyBundleResponse) ProtoMessage() {}
+
+func (x *GetGroupKeyBundleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_messaging_proto_msgTypes[62]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGroupKeyBundleResponse.ProtoReflect.Descriptor instead.
+func (*GetGroupKeyBundleResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_messaging_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *GetGroupKeyBundleResponse) GetBundle() *GroupKeyBundle {
+	if x != nil {
+		return x.Bundle
+	}
+	return nil
+}
+
 var File_quick_v1_messaging_proto protoreflect.FileDescriptor
 
 const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\n" +
-	"\x18quick/v1/messaging.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x14quick/v1/users.proto\"\xdf\x02\n" +
+	"\x18quick/v1/messaging.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x14quick/v1/users.proto\x1a\x15quick/v1/crypto.proto\"\xdf\x02\n" +
 	"\fConversation\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x14\n" +
@@ -3023,7 +3243,7 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\fmember_count\x18\b \x01(\x05R\vmemberCount\x12!\n" +
 	"\favatar_color\x18\t \x01(\tR\vavatarColor\x12\x17\n" +
 	"\amy_role\x18\n" +
-	" \x01(\tR\x06myRole\"\x86\x04\n" +
+	" \x01(\tR\x06myRole\"\xc0\x04\n" +
 	"\aMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
 	"\x0fconversation_id\x18\x02 \x01(\tR\x0econversationId\x12\x1b\n" +
@@ -3038,7 +3258,8 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\x17forward_from_message_id\x18\n" +
 	" \x01(\tR\x14forwardFromMessageId\x12.\n" +
 	"\x13forward_origin_text\x18\v \x01(\tR\x11forwardOriginText\x126\n" +
-	"\vattachments\x18\f \x03(\v2\x14.quick.v1.AttachmentR\vattachments\"9\n" +
+	"\vattachments\x18\f \x03(\v2\x14.quick.v1.AttachmentR\vattachments\x128\n" +
+	"\tencrypted\x18\r \x01(\v2\x1a.quick.v1.EncryptedPayloadR\tencrypted\"9\n" +
 	"\bReaction\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x14\n" +
 	"\x05emoji\x18\x02 \x01(\tR\x05emoji\"\xed\x01\n" +
@@ -3075,12 +3296,13 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\bafter_id\x18\x04 \x01(\tR\aafterId\"`\n" +
 	"\x14ListMessagesResponse\x12-\n" +
 	"\bmessages\x18\x01 \x03(\v2\x11.quick.v1.MessageR\bmessages\x12\x19\n" +
-	"\bhas_more\x18\x02 \x01(\bR\ahasMore\"\xb0\x01\n" +
+	"\bhas_more\x18\x02 \x01(\bR\ahasMore\"\xea\x01\n" +
 	"\x12SendMessageRequest\x12'\n" +
 	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12\x12\n" +
 	"\x04body\x18\x02 \x01(\tR\x04body\x12-\n" +
 	"\x13reply_to_message_id\x18\x03 \x01(\tR\x10replyToMessageId\x12.\n" +
-	"\x13attachment_file_ids\x18\x04 \x03(\tR\x11attachmentFileIds\"B\n" +
+	"\x13attachment_file_ids\x18\x04 \x03(\tR\x11attachmentFileIds\x128\n" +
+	"\tencrypted\x18\x05 \x01(\v2\x1a.quick.v1.EncryptedPayloadR\tencrypted\"B\n" +
 	"\x13SendMessageResponse\x12+\n" +
 	"\amessage\x18\x01 \x01(\v2\x11.quick.v1.MessageR\amessage\"b\n" +
 	"\x0fMarkReadRequest\x12'\n" +
@@ -3119,11 +3341,12 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\x19DeleteConversationRequest\x12'\n" +
 	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12!\n" +
 	"\ffor_everyone\x18\x02 \x01(\bR\vforEveryone\"\x1c\n" +
-	"\x1aDeleteConversationResponse\"G\n" +
+	"\x1aDeleteConversationResponse\"\x81\x01\n" +
 	"\x12EditMessageRequest\x12\x1d\n" +
 	"\n" +
 	"message_id\x18\x01 \x01(\tR\tmessageId\x12\x12\n" +
-	"\x04body\x18\x02 \x01(\tR\x04body\"B\n" +
+	"\x04body\x18\x02 \x01(\tR\x04body\x128\n" +
+	"\tencrypted\x18\x03 \x01(\v2\x1a.quick.v1.EncryptedPayloadR\tencrypted\"B\n" +
 	"\x13EditMessageResponse\x12+\n" +
 	"\amessage\x18\x01 \x01(\v2\x11.quick.v1.MessageR\amessage\"X\n" +
 	"\x14DeleteMessageRequest\x12\x1d\n" +
@@ -3189,7 +3412,19 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\tbefore_id\x18\x04 \x01(\tR\bbeforeId\"b\n" +
 	"\x16SearchMessagesResponse\x12-\n" +
 	"\bmessages\x18\x01 \x03(\v2\x11.quick.v1.MessageR\bmessages\x12\x19\n" +
-	"\bhas_more\x18\x02 \x01(\bR\ahasMore2\x93\x11\n" +
+	"\bhas_more\x18\x02 \x01(\bR\ahasMore\"\x92\x02\n" +
+	"\x18PutGroupKeyBundleRequest\x12'\n" +
+	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12o\n" +
+	"\x15ciphertext_per_member\x18\x02 \x03(\v2;.quick.v1.PutGroupKeyBundleRequest.CiphertextPerMemberEntryR\x13ciphertextPerMember\x12\x14\n" +
+	"\x05nonce\x18\x03 \x01(\fR\x05nonce\x1aF\n" +
+	"\x18CiphertextPerMemberEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\fR\x05value:\x028\x01\"\x1b\n" +
+	"\x19PutGroupKeyBundleResponse\"C\n" +
+	"\x18GetGroupKeyBundleRequest\x12'\n" +
+	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\"M\n" +
+	"\x19GetGroupKeyBundleResponse\x120\n" +
+	"\x06bundle\x18\x01 \x01(\v2\x18.quick.v1.GroupKeyBundleR\x06bundle2\xd3\x12\n" +
 	"\tMessaging\x12^\n" +
 	"\x11ListConversations\x12\".quick.v1.ListConversationsRequest\x1a#.quick.v1.ListConversationsResponse\"\x00\x12=\n" +
 	"\x06OpenDM\x12\x17.quick.v1.OpenDMRequest\x1a\x18.quick.v1.OpenDMResponse\"\x00\x12O\n" +
@@ -3218,7 +3453,9 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\x0eRemoveReaction\x12\x1f.quick.v1.RemoveReactionRequest\x1a .quick.v1.RemoveReactionResponse\"\x00\x12R\n" +
 	"\rListReactions\x12\x1e.quick.v1.ListReactionsRequest\x1a\x1f.quick.v1.ListReactionsResponse\"\x00\x12U\n" +
 	"\x0eForwardMessage\x12\x1f.quick.v1.ForwardMessageRequest\x1a .quick.v1.ForwardMessageResponse\"\x00\x12U\n" +
-	"\x0eSearchMessages\x12\x1f.quick.v1.SearchMessagesRequest\x1a .quick.v1.SearchMessagesResponse\"\x00B\x9f\x01\n" +
+	"\x0eSearchMessages\x12\x1f.quick.v1.SearchMessagesRequest\x1a .quick.v1.SearchMessagesResponse\"\x00\x12^\n" +
+	"\x11PutGroupKeyBundle\x12\".quick.v1.PutGroupKeyBundleRequest\x1a#.quick.v1.PutGroupKeyBundleResponse\"\x00\x12^\n" +
+	"\x11GetGroupKeyBundle\x12\".quick.v1.GetGroupKeyBundleRequest\x1a#.quick.v1.GetGroupKeyBundleResponse\"\x00B\x9f\x01\n" +
 	"\fcom.quick.v1B\x0eMessagingProtoP\x01Z>github.com/racass-pixel/quick-protocol/gen/go/quick/v1;quickv1\xa2\x02\x03QXX\xaa\x02\bQuick.V1\xca\x02\bQuick\\V1\xe2\x02\x14Quick\\V1\\GPBMetadata\xea\x02\tQuick::V1b\x06proto3"
 
 var (
@@ -3233,7 +3470,7 @@ func file_quick_v1_messaging_proto_rawDescGZIP() []byte {
 	return file_quick_v1_messaging_proto_rawDescData
 }
 
-var file_quick_v1_messaging_proto_msgTypes = make([]protoimpl.MessageInfo, 59)
+var file_quick_v1_messaging_proto_msgTypes = make([]protoimpl.MessageInfo, 64)
 var file_quick_v1_messaging_proto_goTypes = []any{
 	(*Conversation)(nil),               // 0: quick.v1.Conversation
 	(*Message)(nil),                    // 1: quick.v1.Message
@@ -3294,91 +3531,107 @@ var file_quick_v1_messaging_proto_goTypes = []any{
 	(*ForwardMessageResponse)(nil),     // 56: quick.v1.ForwardMessageResponse
 	(*SearchMessagesRequest)(nil),      // 57: quick.v1.SearchMessagesRequest
 	(*SearchMessagesResponse)(nil),     // 58: quick.v1.SearchMessagesResponse
-	(*User)(nil),                       // 59: quick.v1.User
-	(*timestamppb.Timestamp)(nil),      // 60: google.protobuf.Timestamp
+	(*PutGroupKeyBundleRequest)(nil),   // 59: quick.v1.PutGroupKeyBundleRequest
+	(*PutGroupKeyBundleResponse)(nil),  // 60: quick.v1.PutGroupKeyBundleResponse
+	(*GetGroupKeyBundleRequest)(nil),   // 61: quick.v1.GetGroupKeyBundleRequest
+	(*GetGroupKeyBundleResponse)(nil),  // 62: quick.v1.GetGroupKeyBundleResponse
+	nil,                                // 63: quick.v1.PutGroupKeyBundleRequest.CiphertextPerMemberEntry
+	(*User)(nil),                       // 64: quick.v1.User
+	(*timestamppb.Timestamp)(nil),      // 65: google.protobuf.Timestamp
+	(*EncryptedPayload)(nil),           // 66: quick.v1.EncryptedPayload
+	(*GroupKeyBundle)(nil),             // 67: quick.v1.GroupKeyBundle
 }
 var file_quick_v1_messaging_proto_depIdxs = []int32{
-	59, // 0: quick.v1.Conversation.peer:type_name -> quick.v1.User
-	60, // 1: quick.v1.Conversation.last_message_at:type_name -> google.protobuf.Timestamp
+	64, // 0: quick.v1.Conversation.peer:type_name -> quick.v1.User
+	65, // 1: quick.v1.Conversation.last_message_at:type_name -> google.protobuf.Timestamp
 	1,  // 2: quick.v1.Conversation.preview:type_name -> quick.v1.Message
-	60, // 3: quick.v1.Message.created_at:type_name -> google.protobuf.Timestamp
+	65, // 3: quick.v1.Message.created_at:type_name -> google.protobuf.Timestamp
 	4,  // 4: quick.v1.Message.voice:type_name -> quick.v1.Voice
 	2,  // 5: quick.v1.Message.reactions:type_name -> quick.v1.Reaction
 	3,  // 6: quick.v1.Message.attachments:type_name -> quick.v1.Attachment
-	0,  // 7: quick.v1.OpenDMResponse.conversation:type_name -> quick.v1.Conversation
-	0,  // 8: quick.v1.ListConversationsResponse.conversations:type_name -> quick.v1.Conversation
-	1,  // 9: quick.v1.ListMessagesResponse.messages:type_name -> quick.v1.Message
-	1,  // 10: quick.v1.SendMessageResponse.message:type_name -> quick.v1.Message
-	0,  // 11: quick.v1.CreateGroupResponse.conversation:type_name -> quick.v1.Conversation
-	0,  // 12: quick.v1.CreateChannelResponse.conversation:type_name -> quick.v1.Conversation
-	27, // 13: quick.v1.ListMembersResponse.members:type_name -> quick.v1.Member
-	59, // 14: quick.v1.Member.user:type_name -> quick.v1.User
-	60, // 15: quick.v1.Member.joined_at:type_name -> google.protobuf.Timestamp
-	1,  // 16: quick.v1.EditMessageResponse.message:type_name -> quick.v1.Message
-	59, // 17: quick.v1.MessageReader.user:type_name -> quick.v1.User
-	60, // 18: quick.v1.MessageReader.read_at:type_name -> google.protobuf.Timestamp
-	38, // 19: quick.v1.GetMessageReadersResponse.readers:type_name -> quick.v1.MessageReader
-	1,  // 20: quick.v1.SendVoiceMessageResponse.message:type_name -> quick.v1.Message
-	2,  // 21: quick.v1.ListReactionsResponse.reactions:type_name -> quick.v1.Reaction
-	1,  // 22: quick.v1.ForwardMessageResponse.message:type_name -> quick.v1.Message
-	1,  // 23: quick.v1.SearchMessagesResponse.messages:type_name -> quick.v1.Message
-	7,  // 24: quick.v1.Messaging.ListConversations:input_type -> quick.v1.ListConversationsRequest
-	5,  // 25: quick.v1.Messaging.OpenDM:input_type -> quick.v1.OpenDMRequest
-	9,  // 26: quick.v1.Messaging.ListMessages:input_type -> quick.v1.ListMessagesRequest
-	11, // 27: quick.v1.Messaging.SendMessage:input_type -> quick.v1.SendMessageRequest
-	13, // 28: quick.v1.Messaging.MarkRead:input_type -> quick.v1.MarkReadRequest
-	15, // 29: quick.v1.Messaging.CreateGroup:input_type -> quick.v1.CreateGroupRequest
-	17, // 30: quick.v1.Messaging.CreateChannel:input_type -> quick.v1.CreateChannelRequest
-	19, // 31: quick.v1.Messaging.AddMembers:input_type -> quick.v1.AddMembersRequest
-	21, // 32: quick.v1.Messaging.RemoveMember:input_type -> quick.v1.RemoveMemberRequest
-	23, // 33: quick.v1.Messaging.LeaveConversation:input_type -> quick.v1.LeaveConversationRequest
-	25, // 34: quick.v1.Messaging.ListMembers:input_type -> quick.v1.ListMembersRequest
-	28, // 35: quick.v1.Messaging.DeleteConversation:input_type -> quick.v1.DeleteConversationRequest
-	30, // 36: quick.v1.Messaging.EditMessage:input_type -> quick.v1.EditMessageRequest
-	32, // 37: quick.v1.Messaging.DeleteMessage:input_type -> quick.v1.DeleteMessageRequest
-	34, // 38: quick.v1.Messaging.PinMessage:input_type -> quick.v1.PinMessageRequest
-	36, // 39: quick.v1.Messaging.UnpinMessage:input_type -> quick.v1.UnpinMessageRequest
-	39, // 40: quick.v1.Messaging.GetMessageReaders:input_type -> quick.v1.GetMessageReadersRequest
-	41, // 41: quick.v1.Messaging.PinConversation:input_type -> quick.v1.PinConversationRequest
-	43, // 42: quick.v1.Messaging.UnpinConversation:input_type -> quick.v1.UnpinConversationRequest
-	45, // 43: quick.v1.Messaging.SendVoiceMessage:input_type -> quick.v1.SendVoiceMessageRequest
-	47, // 44: quick.v1.Messaging.MarkVoicePlayed:input_type -> quick.v1.MarkVoicePlayedRequest
-	49, // 45: quick.v1.Messaging.AddReaction:input_type -> quick.v1.AddReactionRequest
-	51, // 46: quick.v1.Messaging.RemoveReaction:input_type -> quick.v1.RemoveReactionRequest
-	53, // 47: quick.v1.Messaging.ListReactions:input_type -> quick.v1.ListReactionsRequest
-	55, // 48: quick.v1.Messaging.ForwardMessage:input_type -> quick.v1.ForwardMessageRequest
-	57, // 49: quick.v1.Messaging.SearchMessages:input_type -> quick.v1.SearchMessagesRequest
-	8,  // 50: quick.v1.Messaging.ListConversations:output_type -> quick.v1.ListConversationsResponse
-	6,  // 51: quick.v1.Messaging.OpenDM:output_type -> quick.v1.OpenDMResponse
-	10, // 52: quick.v1.Messaging.ListMessages:output_type -> quick.v1.ListMessagesResponse
-	12, // 53: quick.v1.Messaging.SendMessage:output_type -> quick.v1.SendMessageResponse
-	14, // 54: quick.v1.Messaging.MarkRead:output_type -> quick.v1.MarkReadResponse
-	16, // 55: quick.v1.Messaging.CreateGroup:output_type -> quick.v1.CreateGroupResponse
-	18, // 56: quick.v1.Messaging.CreateChannel:output_type -> quick.v1.CreateChannelResponse
-	20, // 57: quick.v1.Messaging.AddMembers:output_type -> quick.v1.AddMembersResponse
-	22, // 58: quick.v1.Messaging.RemoveMember:output_type -> quick.v1.RemoveMemberResponse
-	24, // 59: quick.v1.Messaging.LeaveConversation:output_type -> quick.v1.LeaveConversationResponse
-	26, // 60: quick.v1.Messaging.ListMembers:output_type -> quick.v1.ListMembersResponse
-	29, // 61: quick.v1.Messaging.DeleteConversation:output_type -> quick.v1.DeleteConversationResponse
-	31, // 62: quick.v1.Messaging.EditMessage:output_type -> quick.v1.EditMessageResponse
-	33, // 63: quick.v1.Messaging.DeleteMessage:output_type -> quick.v1.DeleteMessageResponse
-	35, // 64: quick.v1.Messaging.PinMessage:output_type -> quick.v1.PinMessageResponse
-	37, // 65: quick.v1.Messaging.UnpinMessage:output_type -> quick.v1.UnpinMessageResponse
-	40, // 66: quick.v1.Messaging.GetMessageReaders:output_type -> quick.v1.GetMessageReadersResponse
-	42, // 67: quick.v1.Messaging.PinConversation:output_type -> quick.v1.PinConversationResponse
-	44, // 68: quick.v1.Messaging.UnpinConversation:output_type -> quick.v1.UnpinConversationResponse
-	46, // 69: quick.v1.Messaging.SendVoiceMessage:output_type -> quick.v1.SendVoiceMessageResponse
-	48, // 70: quick.v1.Messaging.MarkVoicePlayed:output_type -> quick.v1.MarkVoicePlayedResponse
-	50, // 71: quick.v1.Messaging.AddReaction:output_type -> quick.v1.AddReactionResponse
-	52, // 72: quick.v1.Messaging.RemoveReaction:output_type -> quick.v1.RemoveReactionResponse
-	54, // 73: quick.v1.Messaging.ListReactions:output_type -> quick.v1.ListReactionsResponse
-	56, // 74: quick.v1.Messaging.ForwardMessage:output_type -> quick.v1.ForwardMessageResponse
-	58, // 75: quick.v1.Messaging.SearchMessages:output_type -> quick.v1.SearchMessagesResponse
-	50, // [50:76] is the sub-list for method output_type
-	24, // [24:50] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	66, // 7: quick.v1.Message.encrypted:type_name -> quick.v1.EncryptedPayload
+	0,  // 8: quick.v1.OpenDMResponse.conversation:type_name -> quick.v1.Conversation
+	0,  // 9: quick.v1.ListConversationsResponse.conversations:type_name -> quick.v1.Conversation
+	1,  // 10: quick.v1.ListMessagesResponse.messages:type_name -> quick.v1.Message
+	66, // 11: quick.v1.SendMessageRequest.encrypted:type_name -> quick.v1.EncryptedPayload
+	1,  // 12: quick.v1.SendMessageResponse.message:type_name -> quick.v1.Message
+	0,  // 13: quick.v1.CreateGroupResponse.conversation:type_name -> quick.v1.Conversation
+	0,  // 14: quick.v1.CreateChannelResponse.conversation:type_name -> quick.v1.Conversation
+	27, // 15: quick.v1.ListMembersResponse.members:type_name -> quick.v1.Member
+	64, // 16: quick.v1.Member.user:type_name -> quick.v1.User
+	65, // 17: quick.v1.Member.joined_at:type_name -> google.protobuf.Timestamp
+	66, // 18: quick.v1.EditMessageRequest.encrypted:type_name -> quick.v1.EncryptedPayload
+	1,  // 19: quick.v1.EditMessageResponse.message:type_name -> quick.v1.Message
+	64, // 20: quick.v1.MessageReader.user:type_name -> quick.v1.User
+	65, // 21: quick.v1.MessageReader.read_at:type_name -> google.protobuf.Timestamp
+	38, // 22: quick.v1.GetMessageReadersResponse.readers:type_name -> quick.v1.MessageReader
+	1,  // 23: quick.v1.SendVoiceMessageResponse.message:type_name -> quick.v1.Message
+	2,  // 24: quick.v1.ListReactionsResponse.reactions:type_name -> quick.v1.Reaction
+	1,  // 25: quick.v1.ForwardMessageResponse.message:type_name -> quick.v1.Message
+	1,  // 26: quick.v1.SearchMessagesResponse.messages:type_name -> quick.v1.Message
+	63, // 27: quick.v1.PutGroupKeyBundleRequest.ciphertext_per_member:type_name -> quick.v1.PutGroupKeyBundleRequest.CiphertextPerMemberEntry
+	67, // 28: quick.v1.GetGroupKeyBundleResponse.bundle:type_name -> quick.v1.GroupKeyBundle
+	7,  // 29: quick.v1.Messaging.ListConversations:input_type -> quick.v1.ListConversationsRequest
+	5,  // 30: quick.v1.Messaging.OpenDM:input_type -> quick.v1.OpenDMRequest
+	9,  // 31: quick.v1.Messaging.ListMessages:input_type -> quick.v1.ListMessagesRequest
+	11, // 32: quick.v1.Messaging.SendMessage:input_type -> quick.v1.SendMessageRequest
+	13, // 33: quick.v1.Messaging.MarkRead:input_type -> quick.v1.MarkReadRequest
+	15, // 34: quick.v1.Messaging.CreateGroup:input_type -> quick.v1.CreateGroupRequest
+	17, // 35: quick.v1.Messaging.CreateChannel:input_type -> quick.v1.CreateChannelRequest
+	19, // 36: quick.v1.Messaging.AddMembers:input_type -> quick.v1.AddMembersRequest
+	21, // 37: quick.v1.Messaging.RemoveMember:input_type -> quick.v1.RemoveMemberRequest
+	23, // 38: quick.v1.Messaging.LeaveConversation:input_type -> quick.v1.LeaveConversationRequest
+	25, // 39: quick.v1.Messaging.ListMembers:input_type -> quick.v1.ListMembersRequest
+	28, // 40: quick.v1.Messaging.DeleteConversation:input_type -> quick.v1.DeleteConversationRequest
+	30, // 41: quick.v1.Messaging.EditMessage:input_type -> quick.v1.EditMessageRequest
+	32, // 42: quick.v1.Messaging.DeleteMessage:input_type -> quick.v1.DeleteMessageRequest
+	34, // 43: quick.v1.Messaging.PinMessage:input_type -> quick.v1.PinMessageRequest
+	36, // 44: quick.v1.Messaging.UnpinMessage:input_type -> quick.v1.UnpinMessageRequest
+	39, // 45: quick.v1.Messaging.GetMessageReaders:input_type -> quick.v1.GetMessageReadersRequest
+	41, // 46: quick.v1.Messaging.PinConversation:input_type -> quick.v1.PinConversationRequest
+	43, // 47: quick.v1.Messaging.UnpinConversation:input_type -> quick.v1.UnpinConversationRequest
+	45, // 48: quick.v1.Messaging.SendVoiceMessage:input_type -> quick.v1.SendVoiceMessageRequest
+	47, // 49: quick.v1.Messaging.MarkVoicePlayed:input_type -> quick.v1.MarkVoicePlayedRequest
+	49, // 50: quick.v1.Messaging.AddReaction:input_type -> quick.v1.AddReactionRequest
+	51, // 51: quick.v1.Messaging.RemoveReaction:input_type -> quick.v1.RemoveReactionRequest
+	53, // 52: quick.v1.Messaging.ListReactions:input_type -> quick.v1.ListReactionsRequest
+	55, // 53: quick.v1.Messaging.ForwardMessage:input_type -> quick.v1.ForwardMessageRequest
+	57, // 54: quick.v1.Messaging.SearchMessages:input_type -> quick.v1.SearchMessagesRequest
+	59, // 55: quick.v1.Messaging.PutGroupKeyBundle:input_type -> quick.v1.PutGroupKeyBundleRequest
+	61, // 56: quick.v1.Messaging.GetGroupKeyBundle:input_type -> quick.v1.GetGroupKeyBundleRequest
+	8,  // 57: quick.v1.Messaging.ListConversations:output_type -> quick.v1.ListConversationsResponse
+	6,  // 58: quick.v1.Messaging.OpenDM:output_type -> quick.v1.OpenDMResponse
+	10, // 59: quick.v1.Messaging.ListMessages:output_type -> quick.v1.ListMessagesResponse
+	12, // 60: quick.v1.Messaging.SendMessage:output_type -> quick.v1.SendMessageResponse
+	14, // 61: quick.v1.Messaging.MarkRead:output_type -> quick.v1.MarkReadResponse
+	16, // 62: quick.v1.Messaging.CreateGroup:output_type -> quick.v1.CreateGroupResponse
+	18, // 63: quick.v1.Messaging.CreateChannel:output_type -> quick.v1.CreateChannelResponse
+	20, // 64: quick.v1.Messaging.AddMembers:output_type -> quick.v1.AddMembersResponse
+	22, // 65: quick.v1.Messaging.RemoveMember:output_type -> quick.v1.RemoveMemberResponse
+	24, // 66: quick.v1.Messaging.LeaveConversation:output_type -> quick.v1.LeaveConversationResponse
+	26, // 67: quick.v1.Messaging.ListMembers:output_type -> quick.v1.ListMembersResponse
+	29, // 68: quick.v1.Messaging.DeleteConversation:output_type -> quick.v1.DeleteConversationResponse
+	31, // 69: quick.v1.Messaging.EditMessage:output_type -> quick.v1.EditMessageResponse
+	33, // 70: quick.v1.Messaging.DeleteMessage:output_type -> quick.v1.DeleteMessageResponse
+	35, // 71: quick.v1.Messaging.PinMessage:output_type -> quick.v1.PinMessageResponse
+	37, // 72: quick.v1.Messaging.UnpinMessage:output_type -> quick.v1.UnpinMessageResponse
+	40, // 73: quick.v1.Messaging.GetMessageReaders:output_type -> quick.v1.GetMessageReadersResponse
+	42, // 74: quick.v1.Messaging.PinConversation:output_type -> quick.v1.PinConversationResponse
+	44, // 75: quick.v1.Messaging.UnpinConversation:output_type -> quick.v1.UnpinConversationResponse
+	46, // 76: quick.v1.Messaging.SendVoiceMessage:output_type -> quick.v1.SendVoiceMessageResponse
+	48, // 77: quick.v1.Messaging.MarkVoicePlayed:output_type -> quick.v1.MarkVoicePlayedResponse
+	50, // 78: quick.v1.Messaging.AddReaction:output_type -> quick.v1.AddReactionResponse
+	52, // 79: quick.v1.Messaging.RemoveReaction:output_type -> quick.v1.RemoveReactionResponse
+	54, // 80: quick.v1.Messaging.ListReactions:output_type -> quick.v1.ListReactionsResponse
+	56, // 81: quick.v1.Messaging.ForwardMessage:output_type -> quick.v1.ForwardMessageResponse
+	58, // 82: quick.v1.Messaging.SearchMessages:output_type -> quick.v1.SearchMessagesResponse
+	60, // 83: quick.v1.Messaging.PutGroupKeyBundle:output_type -> quick.v1.PutGroupKeyBundleResponse
+	62, // 84: quick.v1.Messaging.GetGroupKeyBundle:output_type -> quick.v1.GetGroupKeyBundleResponse
+	57, // [57:85] is the sub-list for method output_type
+	29, // [29:57] is the sub-list for method input_type
+	29, // [29:29] is the sub-list for extension type_name
+	29, // [29:29] is the sub-list for extension extendee
+	0,  // [0:29] is the sub-list for field type_name
 }
 
 func init() { file_quick_v1_messaging_proto_init() }
@@ -3387,13 +3640,14 @@ func file_quick_v1_messaging_proto_init() {
 		return
 	}
 	file_quick_v1_users_proto_init()
+	file_quick_v1_crypto_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_quick_v1_messaging_proto_rawDesc), len(file_quick_v1_messaging_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   59,
+			NumMessages:   64,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -6,13 +6,15 @@ import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegen
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
+import type { IdentityKey } from "./crypto_pb.js";
+import { file_quick_v1_crypto } from "./crypto_pb.js";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file quick/v1/users.proto.
  */
 export const file_quick_v1_users: GenFile = /*@__PURE__*/
-  fileDesc("ChRxdWljay92MS91c2Vycy5wcm90bxIIcXVpY2sudjEijQEKBFVzZXISCgoCaWQYASABKAkSDgoGaGFuZGxlGAIgASgJEhQKDGRpc3BsYXlfbmFtZRgDIAEoCRIUCgxhdmF0YXJfY29sb3IYBCABKAkSMAoMbGFzdF9zZWVuX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBILCgNiaW8YBiABKAkiCwoJTWVSZXF1ZXN0IioKCk1lUmVzcG9uc2USHAoEdXNlchgBIAEoCzIOLnF1aWNrLnYxLlVzZXIifAoUVXBkYXRlUHJvZmlsZVJlcXVlc3QSGQoMZGlzcGxheV9uYW1lGAEgASgJSACIAQESEwoGaGFuZGxlGAIgASgJSAGIAQESEAoDYmlvGAMgASgJSAKIAQFCDwoNX2Rpc3BsYXlfbmFtZUIJCgdfaGFuZGxlQgYKBF9iaW8iNQoVVXBkYXRlUHJvZmlsZVJlc3BvbnNlEhwKBHVzZXIYASABKAsyDi5xdWljay52MS5Vc2VyIjUKDVNlYXJjaFJlcXVlc3QSFQoNaGFuZGxlX3ByZWZpeBgBIAEoCRINCgVsaW1pdBgCIAEoBSIvCg5TZWFyY2hSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIiHwoMQmxvY2tSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkiDwoNQmxvY2tSZXNwb25zZSIhCg5VbmJsb2NrUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgJIhEKD1VuYmxvY2tSZXNwb25zZSIUChJMaXN0QmxvY2tlZFJlcXVlc3QiNAoTTGlzdEJsb2NrZWRSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIiXQoIUHJlc2VuY2USDwoHdXNlcl9pZBgBIAEoCRIOCgZvbmxpbmUYAiABKAgSMAoMbGFzdF9zZWVuX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCImChJHZXRQcmVzZW5jZVJlcXVlc3QSEAoIdXNlcl9pZHMYASADKAkiOwoTR2V0UHJlc2VuY2VSZXNwb25zZRIkCghwcmVzZW5jZRgBIAMoCzISLnF1aWNrLnYxLlByZXNlbmNlMucDCgVVc2VycxIxCgJNZRITLnF1aWNrLnYxLk1lUmVxdWVzdBoULnF1aWNrLnYxLk1lUmVzcG9uc2UiABJSCg1VcGRhdGVQcm9maWxlEh4ucXVpY2sudjEuVXBkYXRlUHJvZmlsZVJlcXVlc3QaHy5xdWljay52MS5VcGRhdGVQcm9maWxlUmVzcG9uc2UiABI9CgZTZWFyY2gSFy5xdWljay52MS5TZWFyY2hSZXF1ZXN0GhgucXVpY2sudjEuU2VhcmNoUmVzcG9uc2UiABI6CgVCbG9jaxIWLnF1aWNrLnYxLkJsb2NrUmVxdWVzdBoXLnF1aWNrLnYxLkJsb2NrUmVzcG9uc2UiABJACgdVbmJsb2NrEhgucXVpY2sudjEuVW5ibG9ja1JlcXVlc3QaGS5xdWljay52MS5VbmJsb2NrUmVzcG9uc2UiABJMCgtMaXN0QmxvY2tlZBIcLnF1aWNrLnYxLkxpc3RCbG9ja2VkUmVxdWVzdBodLnF1aWNrLnYxLkxpc3RCbG9ja2VkUmVzcG9uc2UiABJMCgtHZXRQcmVzZW5jZRIcLnF1aWNrLnYxLkdldFByZXNlbmNlUmVxdWVzdBodLnF1aWNrLnYxLkdldFByZXNlbmNlUmVzcG9uc2UiAEKbAQoMY29tLnF1aWNrLnYxQgpVc2Vyc1Byb3RvUAFaPmdpdGh1Yi5jb20vcmFjYXNzLXBpeGVsL3F1aWNrLXByb3RvY29sL2dlbi9nby9xdWljay92MTtxdWlja3YxogIDUVhYqgIIUXVpY2suVjHKAghRdWlja1xWMeICFFF1aWNrXFYxXEdQQk1ldGFkYXRh6gIJUXVpY2s6OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
+  fileDesc("ChRxdWljay92MS91c2Vycy5wcm90bxIIcXVpY2sudjEijQEKBFVzZXISCgoCaWQYASABKAkSDgoGaGFuZGxlGAIgASgJEhQKDGRpc3BsYXlfbmFtZRgDIAEoCRIUCgxhdmF0YXJfY29sb3IYBCABKAkSMAoMbGFzdF9zZWVuX2F0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBILCgNiaW8YBiABKAkiCwoJTWVSZXF1ZXN0IioKCk1lUmVzcG9uc2USHAoEdXNlchgBIAEoCzIOLnF1aWNrLnYxLlVzZXIifAoUVXBkYXRlUHJvZmlsZVJlcXVlc3QSGQoMZGlzcGxheV9uYW1lGAEgASgJSACIAQESEwoGaGFuZGxlGAIgASgJSAGIAQESEAoDYmlvGAMgASgJSAKIAQFCDwoNX2Rpc3BsYXlfbmFtZUIJCgdfaGFuZGxlQgYKBF9iaW8iNQoVVXBkYXRlUHJvZmlsZVJlc3BvbnNlEhwKBHVzZXIYASABKAsyDi5xdWljay52MS5Vc2VyIjUKDVNlYXJjaFJlcXVlc3QSFQoNaGFuZGxlX3ByZWZpeBgBIAEoCRINCgVsaW1pdBgCIAEoBSIvCg5TZWFyY2hSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIiHwoMQmxvY2tSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkiDwoNQmxvY2tSZXNwb25zZSIhCg5VbmJsb2NrUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgJIhEKD1VuYmxvY2tSZXNwb25zZSIUChJMaXN0QmxvY2tlZFJlcXVlc3QiNAoTTGlzdEJsb2NrZWRSZXNwb25zZRIdCgV1c2VycxgBIAMoCzIOLnF1aWNrLnYxLlVzZXIiXQoIUHJlc2VuY2USDwoHdXNlcl9pZBgBIAEoCRIOCgZvbmxpbmUYAiABKAgSMAoMbGFzdF9zZWVuX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCImChJHZXRQcmVzZW5jZVJlcXVlc3QSEAoIdXNlcl9pZHMYASADKAkiOwoTR2V0UHJlc2VuY2VSZXNwb25zZRIkCghwcmVzZW5jZRgBIAMoCzISLnF1aWNrLnYxLlByZXNlbmNlIi4KGFVwbG9hZElkZW50aXR5S2V5UmVxdWVzdBISCgpwdWJsaWNfa2V5GAEgASgMIhsKGVVwbG9hZElkZW50aXR5S2V5UmVzcG9uc2UiKAoVR2V0SWRlbnRpdHlLZXlSZXF1ZXN0Eg8KB3VzZXJfaWQYASABKAkiRQoWR2V0SWRlbnRpdHlLZXlSZXNwb25zZRIrCgxpZGVudGl0eV9rZXkYASABKAsyFS5xdWljay52MS5JZGVudGl0eUtleSIqChZHZXRJZGVudGl0eUtleXNSZXF1ZXN0EhAKCHVzZXJfaWRzGAEgAygJIkcKF0dldElkZW50aXR5S2V5c1Jlc3BvbnNlEiwKDWlkZW50aXR5X2tleXMYASADKAsyFS5xdWljay52MS5JZGVudGl0eUtleTL4BQoFVXNlcnMSMQoCTWUSEy5xdWljay52MS5NZVJlcXVlc3QaFC5xdWljay52MS5NZVJlc3BvbnNlIgASUgoNVXBkYXRlUHJvZmlsZRIeLnF1aWNrLnYxLlVwZGF0ZVByb2ZpbGVSZXF1ZXN0Gh8ucXVpY2sudjEuVXBkYXRlUHJvZmlsZVJlc3BvbnNlIgASPQoGU2VhcmNoEhcucXVpY2sudjEuU2VhcmNoUmVxdWVzdBoYLnF1aWNrLnYxLlNlYXJjaFJlc3BvbnNlIgASOgoFQmxvY2sSFi5xdWljay52MS5CbG9ja1JlcXVlc3QaFy5xdWljay52MS5CbG9ja1Jlc3BvbnNlIgASQAoHVW5ibG9jaxIYLnF1aWNrLnYxLlVuYmxvY2tSZXF1ZXN0GhkucXVpY2sudjEuVW5ibG9ja1Jlc3BvbnNlIgASTAoLTGlzdEJsb2NrZWQSHC5xdWljay52MS5MaXN0QmxvY2tlZFJlcXVlc3QaHS5xdWljay52MS5MaXN0QmxvY2tlZFJlc3BvbnNlIgASTAoLR2V0UHJlc2VuY2USHC5xdWljay52MS5HZXRQcmVzZW5jZVJlcXVlc3QaHS5xdWljay52MS5HZXRQcmVzZW5jZVJlc3BvbnNlIgASXgoRVXBsb2FkSWRlbnRpdHlLZXkSIi5xdWljay52MS5VcGxvYWRJZGVudGl0eUtleVJlcXVlc3QaIy5xdWljay52MS5VcGxvYWRJZGVudGl0eUtleVJlc3BvbnNlIgASVQoOR2V0SWRlbnRpdHlLZXkSHy5xdWljay52MS5HZXRJZGVudGl0eUtleVJlcXVlc3QaIC5xdWljay52MS5HZXRJZGVudGl0eUtleVJlc3BvbnNlIgASWAoPR2V0SWRlbnRpdHlLZXlzEiAucXVpY2sudjEuR2V0SWRlbnRpdHlLZXlzUmVxdWVzdBohLnF1aWNrLnYxLkdldElkZW50aXR5S2V5c1Jlc3BvbnNlIgBCmwEKDGNvbS5xdWljay52MUIKVXNlcnNQcm90b1ABWj5naXRodWIuY29tL3JhY2Fzcy1waXhlbC9xdWljay1wcm90b2NvbC9nZW4vZ28vcXVpY2svdjE7cXVpY2t2MaICA1FYWKoCCFF1aWNrLlYxygIIUXVpY2tcVjHiAhRRdWlja1xWMVxHUEJNZXRhZGF0YeoCCVF1aWNrOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp, file_quick_v1_crypto]);
 
 /**
  * @generated from message quick.v1.User
@@ -321,6 +323,104 @@ export const GetPresenceResponseSchema: GenMessage<GetPresenceResponse> = /*@__P
   messageDesc(file_quick_v1_users, 15);
 
 /**
+ * @generated from message quick.v1.UploadIdentityKeyRequest
+ */
+export type UploadIdentityKeyRequest = Message<"quick.v1.UploadIdentityKeyRequest"> & {
+  /**
+   * @generated from field: bytes public_key = 1;
+   */
+  publicKey: Uint8Array;
+};
+
+/**
+ * Describes the message quick.v1.UploadIdentityKeyRequest.
+ * Use `create(UploadIdentityKeyRequestSchema)` to create a new message.
+ */
+export const UploadIdentityKeyRequestSchema: GenMessage<UploadIdentityKeyRequest> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 16);
+
+/**
+ * @generated from message quick.v1.UploadIdentityKeyResponse
+ */
+export type UploadIdentityKeyResponse = Message<"quick.v1.UploadIdentityKeyResponse"> & {
+};
+
+/**
+ * Describes the message quick.v1.UploadIdentityKeyResponse.
+ * Use `create(UploadIdentityKeyResponseSchema)` to create a new message.
+ */
+export const UploadIdentityKeyResponseSchema: GenMessage<UploadIdentityKeyResponse> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 17);
+
+/**
+ * @generated from message quick.v1.GetIdentityKeyRequest
+ */
+export type GetIdentityKeyRequest = Message<"quick.v1.GetIdentityKeyRequest"> & {
+  /**
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+};
+
+/**
+ * Describes the message quick.v1.GetIdentityKeyRequest.
+ * Use `create(GetIdentityKeyRequestSchema)` to create a new message.
+ */
+export const GetIdentityKeyRequestSchema: GenMessage<GetIdentityKeyRequest> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 18);
+
+/**
+ * @generated from message quick.v1.GetIdentityKeyResponse
+ */
+export type GetIdentityKeyResponse = Message<"quick.v1.GetIdentityKeyResponse"> & {
+  /**
+   * @generated from field: quick.v1.IdentityKey identity_key = 1;
+   */
+  identityKey?: IdentityKey | undefined;
+};
+
+/**
+ * Describes the message quick.v1.GetIdentityKeyResponse.
+ * Use `create(GetIdentityKeyResponseSchema)` to create a new message.
+ */
+export const GetIdentityKeyResponseSchema: GenMessage<GetIdentityKeyResponse> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 19);
+
+/**
+ * @generated from message quick.v1.GetIdentityKeysRequest
+ */
+export type GetIdentityKeysRequest = Message<"quick.v1.GetIdentityKeysRequest"> & {
+  /**
+   * @generated from field: repeated string user_ids = 1;
+   */
+  userIds: string[];
+};
+
+/**
+ * Describes the message quick.v1.GetIdentityKeysRequest.
+ * Use `create(GetIdentityKeysRequestSchema)` to create a new message.
+ */
+export const GetIdentityKeysRequestSchema: GenMessage<GetIdentityKeysRequest> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 20);
+
+/**
+ * @generated from message quick.v1.GetIdentityKeysResponse
+ */
+export type GetIdentityKeysResponse = Message<"quick.v1.GetIdentityKeysResponse"> & {
+  /**
+   * @generated from field: repeated quick.v1.IdentityKey identity_keys = 1;
+   */
+  identityKeys: IdentityKey[];
+};
+
+/**
+ * Describes the message quick.v1.GetIdentityKeysResponse.
+ * Use `create(GetIdentityKeysResponseSchema)` to create a new message.
+ */
+export const GetIdentityKeysResponseSchema: GenMessage<GetIdentityKeysResponse> = /*@__PURE__*/
+  messageDesc(file_quick_v1_users, 21);
+
+/**
  * @generated from service quick.v1.Users
  */
 export const Users: GenService<{
@@ -379,6 +479,34 @@ export const Users: GenService<{
     methodKind: "unary";
     input: typeof GetPresenceRequestSchema;
     output: typeof GetPresenceResponseSchema;
+  },
+  /**
+   * End-to-end encryption: identity key publishing + lookup.
+   * Clients call UploadIdentityKey once on first launch after key generation;
+   * re-upload only when the user wipes local storage and re-onboards.
+   *
+   * @generated from rpc quick.v1.Users.UploadIdentityKey
+   */
+  uploadIdentityKey: {
+    methodKind: "unary";
+    input: typeof UploadIdentityKeyRequestSchema;
+    output: typeof UploadIdentityKeyResponseSchema;
+  },
+  /**
+   * @generated from rpc quick.v1.Users.GetIdentityKey
+   */
+  getIdentityKey: {
+    methodKind: "unary";
+    input: typeof GetIdentityKeyRequestSchema;
+    output: typeof GetIdentityKeyResponseSchema;
+  },
+  /**
+   * @generated from rpc quick.v1.Users.GetIdentityKeys
+   */
+  getIdentityKeys: {
+    methodKind: "unary";
+    input: typeof GetIdentityKeysRequestSchema;
+    output: typeof GetIdentityKeysResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_quick_v1_users, 0);

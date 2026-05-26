@@ -2,6 +2,7 @@ syntax = "proto3";
 package quick.v1;
 
 import "google/protobuf/timestamp.proto";
+import "quick/v1/crypto.proto";
 
 service Users {
   rpc Me(MeRequest)                       returns (MeResponse)            {}
@@ -11,6 +12,13 @@ service Users {
   rpc Unblock(UnblockRequest)             returns (UnblockResponse)       {}
   rpc ListBlocked(ListBlockedRequest)     returns (ListBlockedResponse)   {}
   rpc GetPresence(GetPresenceRequest)     returns (GetPresenceResponse)   {}
+
+  // End-to-end encryption: identity key publishing + lookup.
+  // Clients call UploadIdentityKey once on first launch after key generation;
+  // re-upload only when the user wipes local storage and re-onboards.
+  rpc UploadIdentityKey(UploadIdentityKeyRequest) returns (UploadIdentityKeyResponse) {}
+  rpc GetIdentityKey(GetIdentityKeyRequest)       returns (GetIdentityKeyResponse)   {}
+  rpc GetIdentityKeys(GetIdentityKeysRequest)     returns (GetIdentityKeysResponse)  {}
 }
 
 message User {
@@ -50,3 +58,14 @@ message Presence {
 
 message GetPresenceRequest  { repeated string user_ids = 1; }
 message GetPresenceResponse { repeated Presence presence = 1; }
+
+// --- E2E identity key RPCs ---
+
+message UploadIdentityKeyRequest  { bytes public_key = 1; }
+message UploadIdentityKeyResponse {}
+
+message GetIdentityKeyRequest  { string user_id = 1; }
+message GetIdentityKeyResponse { IdentityKey identity_key = 1; }
+
+message GetIdentityKeysRequest  { repeated string user_ids = 1; }
+message GetIdentityKeysResponse { repeated IdentityKey identity_keys = 1; }

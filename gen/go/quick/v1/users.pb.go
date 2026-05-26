@@ -774,11 +774,267 @@ func (x *GetPresenceResponse) GetPresence() []*Presence {
 	return nil
 }
 
+type UploadIdentityKeyRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PublicKey     []byte                 `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadIdentityKeyRequest) Reset() {
+	*x = UploadIdentityKeyRequest{}
+	mi := &file_quick_v1_users_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadIdentityKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadIdentityKeyRequest) ProtoMessage() {}
+
+func (x *UploadIdentityKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadIdentityKeyRequest.ProtoReflect.Descriptor instead.
+func (*UploadIdentityKeyRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *UploadIdentityKeyRequest) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
+type UploadIdentityKeyResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadIdentityKeyResponse) Reset() {
+	*x = UploadIdentityKeyResponse{}
+	mi := &file_quick_v1_users_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadIdentityKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadIdentityKeyResponse) ProtoMessage() {}
+
+func (x *UploadIdentityKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadIdentityKeyResponse.ProtoReflect.Descriptor instead.
+func (*UploadIdentityKeyResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{17}
+}
+
+type GetIdentityKeyRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIdentityKeyRequest) Reset() {
+	*x = GetIdentityKeyRequest{}
+	mi := &file_quick_v1_users_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIdentityKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIdentityKeyRequest) ProtoMessage() {}
+
+func (x *GetIdentityKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIdentityKeyRequest.ProtoReflect.Descriptor instead.
+func (*GetIdentityKeyRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GetIdentityKeyRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type GetIdentityKeyResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IdentityKey   *IdentityKey           `protobuf:"bytes,1,opt,name=identity_key,json=identityKey,proto3" json:"identity_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIdentityKeyResponse) Reset() {
+	*x = GetIdentityKeyResponse{}
+	mi := &file_quick_v1_users_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIdentityKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIdentityKeyResponse) ProtoMessage() {}
+
+func (x *GetIdentityKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIdentityKeyResponse.ProtoReflect.Descriptor instead.
+func (*GetIdentityKeyResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GetIdentityKeyResponse) GetIdentityKey() *IdentityKey {
+	if x != nil {
+		return x.IdentityKey
+	}
+	return nil
+}
+
+type GetIdentityKeysRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserIds       []string               `protobuf:"bytes,1,rep,name=user_ids,json=userIds,proto3" json:"user_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIdentityKeysRequest) Reset() {
+	*x = GetIdentityKeysRequest{}
+	mi := &file_quick_v1_users_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIdentityKeysRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIdentityKeysRequest) ProtoMessage() {}
+
+func (x *GetIdentityKeysRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIdentityKeysRequest.ProtoReflect.Descriptor instead.
+func (*GetIdentityKeysRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *GetIdentityKeysRequest) GetUserIds() []string {
+	if x != nil {
+		return x.UserIds
+	}
+	return nil
+}
+
+type GetIdentityKeysResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IdentityKeys  []*IdentityKey         `protobuf:"bytes,1,rep,name=identity_keys,json=identityKeys,proto3" json:"identity_keys,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIdentityKeysResponse) Reset() {
+	*x = GetIdentityKeysResponse{}
+	mi := &file_quick_v1_users_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIdentityKeysResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIdentityKeysResponse) ProtoMessage() {}
+
+func (x *GetIdentityKeysResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_users_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIdentityKeysResponse.ProtoReflect.Descriptor instead.
+func (*GetIdentityKeysResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_users_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *GetIdentityKeysResponse) GetIdentityKeys() []*IdentityKey {
+	if x != nil {
+		return x.IdentityKeys
+	}
+	return nil
+}
+
 var File_quick_v1_users_proto protoreflect.FileDescriptor
 
 const file_quick_v1_users_proto_rawDesc = "" +
 	"\n" +
-	"\x14quick/v1/users.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc4\x01\n" +
+	"\x14quick/v1/users.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x15quick/v1/crypto.proto\"\xc4\x01\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06handle\x18\x02 \x01(\tR\x06handle\x12!\n" +
@@ -822,7 +1078,19 @@ const file_quick_v1_users_proto_rawDesc = "" +
 	"\x12GetPresenceRequest\x12\x19\n" +
 	"\buser_ids\x18\x01 \x03(\tR\auserIds\"E\n" +
 	"\x13GetPresenceResponse\x12.\n" +
-	"\bpresence\x18\x01 \x03(\v2\x12.quick.v1.PresenceR\bpresence2\xe7\x03\n" +
+	"\bpresence\x18\x01 \x03(\v2\x12.quick.v1.PresenceR\bpresence\"9\n" +
+	"\x18UploadIdentityKeyRequest\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\x01 \x01(\fR\tpublicKey\"\x1b\n" +
+	"\x19UploadIdentityKeyResponse\"0\n" +
+	"\x15GetIdentityKeyRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"R\n" +
+	"\x16GetIdentityKeyResponse\x128\n" +
+	"\fidentity_key\x18\x01 \x01(\v2\x15.quick.v1.IdentityKeyR\videntityKey\"3\n" +
+	"\x16GetIdentityKeysRequest\x12\x19\n" +
+	"\buser_ids\x18\x01 \x03(\tR\auserIds\"U\n" +
+	"\x17GetIdentityKeysResponse\x12:\n" +
+	"\ridentity_keys\x18\x01 \x03(\v2\x15.quick.v1.IdentityKeyR\fidentityKeys2\xf8\x05\n" +
 	"\x05Users\x121\n" +
 	"\x02Me\x12\x13.quick.v1.MeRequest\x1a\x14.quick.v1.MeResponse\"\x00\x12R\n" +
 	"\rUpdateProfile\x12\x1e.quick.v1.UpdateProfileRequest\x1a\x1f.quick.v1.UpdateProfileResponse\"\x00\x12=\n" +
@@ -830,7 +1098,10 @@ const file_quick_v1_users_proto_rawDesc = "" +
 	"\x05Block\x12\x16.quick.v1.BlockRequest\x1a\x17.quick.v1.BlockResponse\"\x00\x12@\n" +
 	"\aUnblock\x12\x18.quick.v1.UnblockRequest\x1a\x19.quick.v1.UnblockResponse\"\x00\x12L\n" +
 	"\vListBlocked\x12\x1c.quick.v1.ListBlockedRequest\x1a\x1d.quick.v1.ListBlockedResponse\"\x00\x12L\n" +
-	"\vGetPresence\x12\x1c.quick.v1.GetPresenceRequest\x1a\x1d.quick.v1.GetPresenceResponse\"\x00B\x9b\x01\n" +
+	"\vGetPresence\x12\x1c.quick.v1.GetPresenceRequest\x1a\x1d.quick.v1.GetPresenceResponse\"\x00\x12^\n" +
+	"\x11UploadIdentityKey\x12\".quick.v1.UploadIdentityKeyRequest\x1a#.quick.v1.UploadIdentityKeyResponse\"\x00\x12U\n" +
+	"\x0eGetIdentityKey\x12\x1f.quick.v1.GetIdentityKeyRequest\x1a .quick.v1.GetIdentityKeyResponse\"\x00\x12X\n" +
+	"\x0fGetIdentityKeys\x12 .quick.v1.GetIdentityKeysRequest\x1a!.quick.v1.GetIdentityKeysResponse\"\x00B\x9b\x01\n" +
 	"\fcom.quick.v1B\n" +
 	"UsersProtoP\x01Z>github.com/racass-pixel/quick-protocol/gen/go/quick/v1;quickv1\xa2\x02\x03QXX\xaa\x02\bQuick.V1\xca\x02\bQuick\\V1\xe2\x02\x14Quick\\V1\\GPBMetadata\xea\x02\tQuick::V1b\x06proto3"
 
@@ -846,53 +1117,68 @@ func file_quick_v1_users_proto_rawDescGZIP() []byte {
 	return file_quick_v1_users_proto_rawDescData
 }
 
-var file_quick_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_quick_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_quick_v1_users_proto_goTypes = []any{
-	(*User)(nil),                  // 0: quick.v1.User
-	(*MeRequest)(nil),             // 1: quick.v1.MeRequest
-	(*MeResponse)(nil),            // 2: quick.v1.MeResponse
-	(*UpdateProfileRequest)(nil),  // 3: quick.v1.UpdateProfileRequest
-	(*UpdateProfileResponse)(nil), // 4: quick.v1.UpdateProfileResponse
-	(*SearchRequest)(nil),         // 5: quick.v1.SearchRequest
-	(*SearchResponse)(nil),        // 6: quick.v1.SearchResponse
-	(*BlockRequest)(nil),          // 7: quick.v1.BlockRequest
-	(*BlockResponse)(nil),         // 8: quick.v1.BlockResponse
-	(*UnblockRequest)(nil),        // 9: quick.v1.UnblockRequest
-	(*UnblockResponse)(nil),       // 10: quick.v1.UnblockResponse
-	(*ListBlockedRequest)(nil),    // 11: quick.v1.ListBlockedRequest
-	(*ListBlockedResponse)(nil),   // 12: quick.v1.ListBlockedResponse
-	(*Presence)(nil),              // 13: quick.v1.Presence
-	(*GetPresenceRequest)(nil),    // 14: quick.v1.GetPresenceRequest
-	(*GetPresenceResponse)(nil),   // 15: quick.v1.GetPresenceResponse
-	(*timestamppb.Timestamp)(nil), // 16: google.protobuf.Timestamp
+	(*User)(nil),                      // 0: quick.v1.User
+	(*MeRequest)(nil),                 // 1: quick.v1.MeRequest
+	(*MeResponse)(nil),                // 2: quick.v1.MeResponse
+	(*UpdateProfileRequest)(nil),      // 3: quick.v1.UpdateProfileRequest
+	(*UpdateProfileResponse)(nil),     // 4: quick.v1.UpdateProfileResponse
+	(*SearchRequest)(nil),             // 5: quick.v1.SearchRequest
+	(*SearchResponse)(nil),            // 6: quick.v1.SearchResponse
+	(*BlockRequest)(nil),              // 7: quick.v1.BlockRequest
+	(*BlockResponse)(nil),             // 8: quick.v1.BlockResponse
+	(*UnblockRequest)(nil),            // 9: quick.v1.UnblockRequest
+	(*UnblockResponse)(nil),           // 10: quick.v1.UnblockResponse
+	(*ListBlockedRequest)(nil),        // 11: quick.v1.ListBlockedRequest
+	(*ListBlockedResponse)(nil),       // 12: quick.v1.ListBlockedResponse
+	(*Presence)(nil),                  // 13: quick.v1.Presence
+	(*GetPresenceRequest)(nil),        // 14: quick.v1.GetPresenceRequest
+	(*GetPresenceResponse)(nil),       // 15: quick.v1.GetPresenceResponse
+	(*UploadIdentityKeyRequest)(nil),  // 16: quick.v1.UploadIdentityKeyRequest
+	(*UploadIdentityKeyResponse)(nil), // 17: quick.v1.UploadIdentityKeyResponse
+	(*GetIdentityKeyRequest)(nil),     // 18: quick.v1.GetIdentityKeyRequest
+	(*GetIdentityKeyResponse)(nil),    // 19: quick.v1.GetIdentityKeyResponse
+	(*GetIdentityKeysRequest)(nil),    // 20: quick.v1.GetIdentityKeysRequest
+	(*GetIdentityKeysResponse)(nil),   // 21: quick.v1.GetIdentityKeysResponse
+	(*timestamppb.Timestamp)(nil),     // 22: google.protobuf.Timestamp
+	(*IdentityKey)(nil),               // 23: quick.v1.IdentityKey
 }
 var file_quick_v1_users_proto_depIdxs = []int32{
-	16, // 0: quick.v1.User.last_seen_at:type_name -> google.protobuf.Timestamp
+	22, // 0: quick.v1.User.last_seen_at:type_name -> google.protobuf.Timestamp
 	0,  // 1: quick.v1.MeResponse.user:type_name -> quick.v1.User
 	0,  // 2: quick.v1.UpdateProfileResponse.user:type_name -> quick.v1.User
 	0,  // 3: quick.v1.SearchResponse.users:type_name -> quick.v1.User
 	0,  // 4: quick.v1.ListBlockedResponse.users:type_name -> quick.v1.User
-	16, // 5: quick.v1.Presence.last_seen_at:type_name -> google.protobuf.Timestamp
+	22, // 5: quick.v1.Presence.last_seen_at:type_name -> google.protobuf.Timestamp
 	13, // 6: quick.v1.GetPresenceResponse.presence:type_name -> quick.v1.Presence
-	1,  // 7: quick.v1.Users.Me:input_type -> quick.v1.MeRequest
-	3,  // 8: quick.v1.Users.UpdateProfile:input_type -> quick.v1.UpdateProfileRequest
-	5,  // 9: quick.v1.Users.Search:input_type -> quick.v1.SearchRequest
-	7,  // 10: quick.v1.Users.Block:input_type -> quick.v1.BlockRequest
-	9,  // 11: quick.v1.Users.Unblock:input_type -> quick.v1.UnblockRequest
-	11, // 12: quick.v1.Users.ListBlocked:input_type -> quick.v1.ListBlockedRequest
-	14, // 13: quick.v1.Users.GetPresence:input_type -> quick.v1.GetPresenceRequest
-	2,  // 14: quick.v1.Users.Me:output_type -> quick.v1.MeResponse
-	4,  // 15: quick.v1.Users.UpdateProfile:output_type -> quick.v1.UpdateProfileResponse
-	6,  // 16: quick.v1.Users.Search:output_type -> quick.v1.SearchResponse
-	8,  // 17: quick.v1.Users.Block:output_type -> quick.v1.BlockResponse
-	10, // 18: quick.v1.Users.Unblock:output_type -> quick.v1.UnblockResponse
-	12, // 19: quick.v1.Users.ListBlocked:output_type -> quick.v1.ListBlockedResponse
-	15, // 20: quick.v1.Users.GetPresence:output_type -> quick.v1.GetPresenceResponse
-	14, // [14:21] is the sub-list for method output_type
-	7,  // [7:14] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	23, // 7: quick.v1.GetIdentityKeyResponse.identity_key:type_name -> quick.v1.IdentityKey
+	23, // 8: quick.v1.GetIdentityKeysResponse.identity_keys:type_name -> quick.v1.IdentityKey
+	1,  // 9: quick.v1.Users.Me:input_type -> quick.v1.MeRequest
+	3,  // 10: quick.v1.Users.UpdateProfile:input_type -> quick.v1.UpdateProfileRequest
+	5,  // 11: quick.v1.Users.Search:input_type -> quick.v1.SearchRequest
+	7,  // 12: quick.v1.Users.Block:input_type -> quick.v1.BlockRequest
+	9,  // 13: quick.v1.Users.Unblock:input_type -> quick.v1.UnblockRequest
+	11, // 14: quick.v1.Users.ListBlocked:input_type -> quick.v1.ListBlockedRequest
+	14, // 15: quick.v1.Users.GetPresence:input_type -> quick.v1.GetPresenceRequest
+	16, // 16: quick.v1.Users.UploadIdentityKey:input_type -> quick.v1.UploadIdentityKeyRequest
+	18, // 17: quick.v1.Users.GetIdentityKey:input_type -> quick.v1.GetIdentityKeyRequest
+	20, // 18: quick.v1.Users.GetIdentityKeys:input_type -> quick.v1.GetIdentityKeysRequest
+	2,  // 19: quick.v1.Users.Me:output_type -> quick.v1.MeResponse
+	4,  // 20: quick.v1.Users.UpdateProfile:output_type -> quick.v1.UpdateProfileResponse
+	6,  // 21: quick.v1.Users.Search:output_type -> quick.v1.SearchResponse
+	8,  // 22: quick.v1.Users.Block:output_type -> quick.v1.BlockResponse
+	10, // 23: quick.v1.Users.Unblock:output_type -> quick.v1.UnblockResponse
+	12, // 24: quick.v1.Users.ListBlocked:output_type -> quick.v1.ListBlockedResponse
+	15, // 25: quick.v1.Users.GetPresence:output_type -> quick.v1.GetPresenceResponse
+	17, // 26: quick.v1.Users.UploadIdentityKey:output_type -> quick.v1.UploadIdentityKeyResponse
+	19, // 27: quick.v1.Users.GetIdentityKey:output_type -> quick.v1.GetIdentityKeyResponse
+	21, // 28: quick.v1.Users.GetIdentityKeys:output_type -> quick.v1.GetIdentityKeysResponse
+	19, // [19:29] is the sub-list for method output_type
+	9,  // [9:19] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_quick_v1_users_proto_init() }
@@ -900,6 +1186,7 @@ func file_quick_v1_users_proto_init() {
 	if File_quick_v1_users_proto != nil {
 		return
 	}
+	file_quick_v1_crypto_proto_init()
 	file_quick_v1_users_proto_msgTypes[3].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -907,7 +1194,7 @@ func file_quick_v1_users_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_quick_v1_users_proto_rawDesc), len(file_quick_v1_users_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
