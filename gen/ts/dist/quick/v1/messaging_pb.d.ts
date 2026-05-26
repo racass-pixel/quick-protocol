@@ -80,12 +80,59 @@ export type Message = Message$1<"quick.v1.Message"> & {
      * @generated from field: google.protobuf.Timestamp created_at = 5;
      */
     createdAt?: Timestamp | undefined;
+    /**
+     * Voice attachment, populated by backend when this is a voice message.
+     * body is empty in that case. S11.
+     *
+     * @generated from field: quick.v1.Voice voice = 6;
+     */
+    voice?: Voice | undefined;
 };
 /**
  * Describes the message quick.v1.Message.
  * Use `create(MessageSchema)` to create a new message.
  */
 export declare const MessageSchema: GenMessage<Message>;
+/**
+ * @generated from message quick.v1.Voice
+ */
+export type Voice = Message$1<"quick.v1.Voice"> & {
+    /**
+     * immutable id for the underlying media row
+     *
+     * @generated from field: string file_id = 1;
+     */
+    fileId: string;
+    /**
+     * signed/scoped URL the client fetches the blob from
+     *
+     * @generated from field: string url = 2;
+     */
+    url: string;
+    /**
+     * total length in milliseconds
+     *
+     * @generated from field: int32 duration_ms = 3;
+     */
+    durationMs: number;
+    /**
+     * 64 normalised amplitude values 0-255 for the waveform
+     *
+     * @generated from field: repeated int32 peaks = 4;
+     */
+    peaks: number[];
+    /**
+     * server view: true if THIS reader has already played it
+     *
+     * @generated from field: bool played = 5;
+     */
+    played: boolean;
+};
+/**
+ * Describes the message quick.v1.Voice.
+ * Use `create(VoiceSchema)` to create a new message.
+ */
+export declare const VoiceSchema: GenMessage<Voice>;
 /**
  * @generated from message quick.v1.OpenDMRequest
  */
@@ -663,6 +710,63 @@ export type UnpinConversationResponse = Message$1<"quick.v1.UnpinConversationRes
  */
 export declare const UnpinConversationResponseSchema: GenMessage<UnpinConversationResponse>;
 /**
+ * @generated from message quick.v1.SendVoiceMessageRequest
+ */
+export type SendVoiceMessageRequest = Message$1<"quick.v1.SendVoiceMessageRequest"> & {
+    /**
+     * @generated from field: string conversation_id = 1;
+     */
+    conversationId: string;
+    /**
+     * returned by POST /v1/media/voice
+     *
+     * @generated from field: string voice_file_id = 2;
+     */
+    voiceFileId: string;
+};
+/**
+ * Describes the message quick.v1.SendVoiceMessageRequest.
+ * Use `create(SendVoiceMessageRequestSchema)` to create a new message.
+ */
+export declare const SendVoiceMessageRequestSchema: GenMessage<SendVoiceMessageRequest>;
+/**
+ * @generated from message quick.v1.SendVoiceMessageResponse
+ */
+export type SendVoiceMessageResponse = Message$1<"quick.v1.SendVoiceMessageResponse"> & {
+    /**
+     * @generated from field: quick.v1.Message message = 1;
+     */
+    message?: Message | undefined;
+};
+/**
+ * Describes the message quick.v1.SendVoiceMessageResponse.
+ * Use `create(SendVoiceMessageResponseSchema)` to create a new message.
+ */
+export declare const SendVoiceMessageResponseSchema: GenMessage<SendVoiceMessageResponse>;
+/**
+ * @generated from message quick.v1.MarkVoicePlayedRequest
+ */
+export type MarkVoicePlayedRequest = Message$1<"quick.v1.MarkVoicePlayedRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+};
+/**
+ * Describes the message quick.v1.MarkVoicePlayedRequest.
+ * Use `create(MarkVoicePlayedRequestSchema)` to create a new message.
+ */
+export declare const MarkVoicePlayedRequestSchema: GenMessage<MarkVoicePlayedRequest>;
+/**
+ * @generated from message quick.v1.MarkVoicePlayedResponse
+ */
+export type MarkVoicePlayedResponse = Message$1<"quick.v1.MarkVoicePlayedResponse"> & {};
+/**
+ * Describes the message quick.v1.MarkVoicePlayedResponse.
+ * Use `create(MarkVoicePlayedResponseSchema)` to create a new message.
+ */
+export declare const MarkVoicePlayedResponseSchema: GenMessage<MarkVoicePlayedResponse>;
+/**
  * @generated from service quick.v1.Messaging
  */
 export declare const Messaging: GenService<{
@@ -819,5 +923,26 @@ export declare const Messaging: GenService<{
         methodKind: "unary";
         input: typeof UnpinConversationRequestSchema;
         output: typeof UnpinConversationResponseSchema;
+    };
+    /**
+     * S11 — voice messages. Upload itself is a multipart HTTP POST to /v1/media/voice
+     * (not RPC — Connect-RPC is awkward for binary streams). That endpoint returns
+     * {file_id, url, duration_ms, peaks}. Then the client calls SendVoiceMessage
+     * which writes a kind='voice' message into the thread referencing the file_id.
+     *
+     * @generated from rpc quick.v1.Messaging.SendVoiceMessage
+     */
+    sendVoiceMessage: {
+        methodKind: "unary";
+        input: typeof SendVoiceMessageRequestSchema;
+        output: typeof SendVoiceMessageResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.MarkVoicePlayed
+     */
+    markVoicePlayed: {
+        methodKind: "unary";
+        input: typeof MarkVoicePlayedRequestSchema;
+        output: typeof MarkVoicePlayedResponseSchema;
     };
 }>;

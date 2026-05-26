@@ -25,6 +25,13 @@ service Messaging {
   rpc GetMessageReaders(GetMessageReadersRequest)     returns (GetMessageReadersResponse)     {}
   rpc PinConversation(PinConversationRequest)         returns (PinConversationResponse)       {}
   rpc UnpinConversation(UnpinConversationRequest)     returns (UnpinConversationResponse)     {}
+
+  // S11 — voice messages. Upload itself is a multipart HTTP POST to /v1/media/voice
+  // (not RPC — Connect-RPC is awkward for binary streams). That endpoint returns
+  // {file_id, url, duration_ms, peaks}. Then the client calls SendVoiceMessage
+  // which writes a kind='voice' message into the thread referencing the file_id.
+  rpc SendVoiceMessage(SendVoiceMessageRequest)       returns (SendVoiceMessageResponse)       {}
+  rpc MarkVoicePlayed(MarkVoicePlayedRequest)         returns (MarkVoicePlayedResponse)        {}
 }
 
 message Conversation {
@@ -46,6 +53,18 @@ message Message {
   string sender_id       = 3;
   string body            = 4;
   google.protobuf.Timestamp created_at = 5;
+
+  // Voice attachment, populated by backend when this is a voice message.
+  // body is empty in that case. S11.
+  Voice voice = 6;
+}
+
+message Voice {
+  string file_id     = 1;     // immutable id for the underlying media row
+  string url         = 2;     // signed/scoped URL the client fetches the blob from
+  int32  duration_ms = 3;     // total length in milliseconds
+  repeated int32 peaks = 4;   // 64 normalised amplitude values 0-255 for the waveform
+  bool   played      = 5;     // server view: true if THIS reader has already played it
 }
 
 message OpenDMRequest  { string user_id = 1; }
@@ -139,3 +158,14 @@ message PinConversationResponse {}
 
 message UnpinConversationRequest  { string conversation_id = 1; }
 message UnpinConversationResponse {}
+
+// --- S11 — voice messages ---
+
+message SendVoiceMessageRequest {
+  string conversation_id = 1;
+  string voice_file_id   = 2;  // returned by POST /v1/media/voice
+}
+message SendVoiceMessageResponse { Message message = 1; }
+
+message MarkVoicePlayedRequest  { string message_id = 1; }
+message MarkVoicePlayedResponse {}

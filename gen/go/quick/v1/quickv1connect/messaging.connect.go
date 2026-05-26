@@ -77,6 +77,12 @@ const (
 	// MessagingUnpinConversationProcedure is the fully-qualified name of the Messaging's
 	// UnpinConversation RPC.
 	MessagingUnpinConversationProcedure = "/quick.v1.Messaging/UnpinConversation"
+	// MessagingSendVoiceMessageProcedure is the fully-qualified name of the Messaging's
+	// SendVoiceMessage RPC.
+	MessagingSendVoiceMessageProcedure = "/quick.v1.Messaging/SendVoiceMessage"
+	// MessagingMarkVoicePlayedProcedure is the fully-qualified name of the Messaging's MarkVoicePlayed
+	// RPC.
+	MessagingMarkVoicePlayedProcedure = "/quick.v1.Messaging/MarkVoicePlayed"
 )
 
 // MessagingClient is a client for the quick.v1.Messaging service.
@@ -101,6 +107,12 @@ type MessagingClient interface {
 	GetMessageReaders(context.Context, *connect.Request[v1.GetMessageReadersRequest]) (*connect.Response[v1.GetMessageReadersResponse], error)
 	PinConversation(context.Context, *connect.Request[v1.PinConversationRequest]) (*connect.Response[v1.PinConversationResponse], error)
 	UnpinConversation(context.Context, *connect.Request[v1.UnpinConversationRequest]) (*connect.Response[v1.UnpinConversationResponse], error)
+	// S11 — voice messages. Upload itself is a multipart HTTP POST to /v1/media/voice
+	// (not RPC — Connect-RPC is awkward for binary streams). That endpoint returns
+	// {file_id, url, duration_ms, peaks}. Then the client calls SendVoiceMessage
+	// which writes a kind='voice' message into the thread referencing the file_id.
+	SendVoiceMessage(context.Context, *connect.Request[v1.SendVoiceMessageRequest]) (*connect.Response[v1.SendVoiceMessageResponse], error)
+	MarkVoicePlayed(context.Context, *connect.Request[v1.MarkVoicePlayedRequest]) (*connect.Response[v1.MarkVoicePlayedResponse], error)
 }
 
 // NewMessagingClient constructs a client for the quick.v1.Messaging service. By default, it uses
@@ -228,6 +240,18 @@ func NewMessagingClient(httpClient connect.HTTPClient, baseURL string, opts ...c
 			connect.WithSchema(messagingMethods.ByName("UnpinConversation")),
 			connect.WithClientOptions(opts...),
 		),
+		sendVoiceMessage: connect.NewClient[v1.SendVoiceMessageRequest, v1.SendVoiceMessageResponse](
+			httpClient,
+			baseURL+MessagingSendVoiceMessageProcedure,
+			connect.WithSchema(messagingMethods.ByName("SendVoiceMessage")),
+			connect.WithClientOptions(opts...),
+		),
+		markVoicePlayed: connect.NewClient[v1.MarkVoicePlayedRequest, v1.MarkVoicePlayedResponse](
+			httpClient,
+			baseURL+MessagingMarkVoicePlayedProcedure,
+			connect.WithSchema(messagingMethods.ByName("MarkVoicePlayed")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -252,6 +276,8 @@ type messagingClient struct {
 	getMessageReaders  *connect.Client[v1.GetMessageReadersRequest, v1.GetMessageReadersResponse]
 	pinConversation    *connect.Client[v1.PinConversationRequest, v1.PinConversationResponse]
 	unpinConversation  *connect.Client[v1.UnpinConversationRequest, v1.UnpinConversationResponse]
+	sendVoiceMessage   *connect.Client[v1.SendVoiceMessageRequest, v1.SendVoiceMessageResponse]
+	markVoicePlayed    *connect.Client[v1.MarkVoicePlayedRequest, v1.MarkVoicePlayedResponse]
 }
 
 // ListConversations calls quick.v1.Messaging.ListConversations.
@@ -349,6 +375,16 @@ func (c *messagingClient) UnpinConversation(ctx context.Context, req *connect.Re
 	return c.unpinConversation.CallUnary(ctx, req)
 }
 
+// SendVoiceMessage calls quick.v1.Messaging.SendVoiceMessage.
+func (c *messagingClient) SendVoiceMessage(ctx context.Context, req *connect.Request[v1.SendVoiceMessageRequest]) (*connect.Response[v1.SendVoiceMessageResponse], error) {
+	return c.sendVoiceMessage.CallUnary(ctx, req)
+}
+
+// MarkVoicePlayed calls quick.v1.Messaging.MarkVoicePlayed.
+func (c *messagingClient) MarkVoicePlayed(ctx context.Context, req *connect.Request[v1.MarkVoicePlayedRequest]) (*connect.Response[v1.MarkVoicePlayedResponse], error) {
+	return c.markVoicePlayed.CallUnary(ctx, req)
+}
+
 // MessagingHandler is an implementation of the quick.v1.Messaging service.
 type MessagingHandler interface {
 	ListConversations(context.Context, *connect.Request[v1.ListConversationsRequest]) (*connect.Response[v1.ListConversationsResponse], error)
@@ -371,6 +407,12 @@ type MessagingHandler interface {
 	GetMessageReaders(context.Context, *connect.Request[v1.GetMessageReadersRequest]) (*connect.Response[v1.GetMessageReadersResponse], error)
 	PinConversation(context.Context, *connect.Request[v1.PinConversationRequest]) (*connect.Response[v1.PinConversationResponse], error)
 	UnpinConversation(context.Context, *connect.Request[v1.UnpinConversationRequest]) (*connect.Response[v1.UnpinConversationResponse], error)
+	// S11 — voice messages. Upload itself is a multipart HTTP POST to /v1/media/voice
+	// (not RPC — Connect-RPC is awkward for binary streams). That endpoint returns
+	// {file_id, url, duration_ms, peaks}. Then the client calls SendVoiceMessage
+	// which writes a kind='voice' message into the thread referencing the file_id.
+	SendVoiceMessage(context.Context, *connect.Request[v1.SendVoiceMessageRequest]) (*connect.Response[v1.SendVoiceMessageResponse], error)
+	MarkVoicePlayed(context.Context, *connect.Request[v1.MarkVoicePlayedRequest]) (*connect.Response[v1.MarkVoicePlayedResponse], error)
 }
 
 // NewMessagingHandler builds an HTTP handler from the service implementation. It returns the path
@@ -494,6 +536,18 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 		connect.WithSchema(messagingMethods.ByName("UnpinConversation")),
 		connect.WithHandlerOptions(opts...),
 	)
+	messagingSendVoiceMessageHandler := connect.NewUnaryHandler(
+		MessagingSendVoiceMessageProcedure,
+		svc.SendVoiceMessage,
+		connect.WithSchema(messagingMethods.ByName("SendVoiceMessage")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingMarkVoicePlayedHandler := connect.NewUnaryHandler(
+		MessagingMarkVoicePlayedProcedure,
+		svc.MarkVoicePlayed,
+		connect.WithSchema(messagingMethods.ByName("MarkVoicePlayed")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Messaging/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case MessagingListConversationsProcedure:
@@ -534,6 +588,10 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 			messagingPinConversationHandler.ServeHTTP(w, r)
 		case MessagingUnpinConversationProcedure:
 			messagingUnpinConversationHandler.ServeHTTP(w, r)
+		case MessagingSendVoiceMessageProcedure:
+			messagingSendVoiceMessageHandler.ServeHTTP(w, r)
+		case MessagingMarkVoicePlayedProcedure:
+			messagingMarkVoicePlayedHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -617,4 +675,12 @@ func (UnimplementedMessagingHandler) PinConversation(context.Context, *connect.R
 
 func (UnimplementedMessagingHandler) UnpinConversation(context.Context, *connect.Request[v1.UnpinConversationRequest]) (*connect.Response[v1.UnpinConversationResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.UnpinConversation is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) SendVoiceMessage(context.Context, *connect.Request[v1.SendVoiceMessageRequest]) (*connect.Response[v1.SendVoiceMessageResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.SendVoiceMessage is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) MarkVoicePlayed(context.Context, *connect.Request[v1.MarkVoicePlayedRequest]) (*connect.Response[v1.MarkVoicePlayedResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.MarkVoicePlayed is not implemented"))
 }

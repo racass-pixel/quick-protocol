@@ -14,7 +14,7 @@ import type { Message as Message$1 } from "@bufbuild/protobuf";
  * Describes the file quick/v1/messaging.proto.
  */
 export const file_quick_v1_messaging: GenFile = /*@__PURE__*/
-  fileDesc("ChhxdWljay92MS9tZXNzYWdpbmcucHJvdG8SCHF1aWNrLnYxIoECCgxDb252ZXJzYXRpb24SCgoCaWQYASABKAkSDAoEdHlwZRgCIAEoCRINCgV0aXRsZRgDIAEoCRIcCgRwZWVyGAQgASgLMg4ucXVpY2sudjEuVXNlchIzCg9sYXN0X21lc3NhZ2VfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiIKB3ByZXZpZXcYBiABKAsyES5xdWljay52MS5NZXNzYWdlEhQKDHVucmVhZF9jb3VudBgHIAEoBRIUCgxtZW1iZXJfY291bnQYCCABKAUSFAoMYXZhdGFyX2NvbG9yGAkgASgJEg8KB215X3JvbGUYCiABKAkifwoHTWVzc2FnZRIKCgJpZBgBIAEoCRIXCg9jb252ZXJzYXRpb25faWQYAiABKAkSEQoJc2VuZGVyX2lkGAMgASgJEgwKBGJvZHkYBCABKAkSLgoKY3JlYXRlZF9hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiIAoNT3BlbkRNUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgJIj4KDk9wZW5ETVJlc3BvbnNlEiwKDGNvbnZlcnNhdGlvbhgBIAEoCzIWLnF1aWNrLnYxLkNvbnZlcnNhdGlvbiIaChhMaXN0Q29udmVyc2F0aW9uc1JlcXVlc3QiSgoZTGlzdENvbnZlcnNhdGlvbnNSZXNwb25zZRItCg1jb252ZXJzYXRpb25zGAEgAygLMhYucXVpY2sudjEuQ29udmVyc2F0aW9uImIKE0xpc3RNZXNzYWdlc1JlcXVlc3QSFwoPY29udmVyc2F0aW9uX2lkGAEgASgJEhEKCWJlZm9yZV9pZBgCIAEoCRINCgVsaW1pdBgDIAEoBRIQCghhZnRlcl9pZBgEIAEoCSJNChRMaXN0TWVzc2FnZXNSZXNwb25zZRIjCghtZXNzYWdlcxgBIAMoCzIRLnF1aWNrLnYxLk1lc3NhZ2USEAoIaGFzX21vcmUYAiABKAgiOwoSU2VuZE1lc3NhZ2VSZXF1ZXN0EhcKD2NvbnZlcnNhdGlvbl9pZBgBIAEoCRIMCgRib2R5GAIgASgJIjkKE1NlbmRNZXNzYWdlUmVzcG9uc2USIgoHbWVzc2FnZRgBIAEoCzIRLnF1aWNrLnYxLk1lc3NhZ2UiQwoPTWFya1JlYWRSZXF1ZXN0EhcKD2NvbnZlcnNhdGlvbl9pZBgBIAEoCRIXCg9sYXN0X21lc3NhZ2VfaWQYAiABKAkiEgoQTWFya1JlYWRSZXNwb25zZSI8ChJDcmVhdGVHcm91cFJlcXVlc3QSDQoFdGl0bGUYASABKAkSFwoPbWVtYmVyX3VzZXJfaWRzGAIgAygJIkMKE0NyZWF0ZUdyb3VwUmVzcG9uc2USLAoMY29udmVyc2F0aW9uGAEgASgLMhYucXVpY2sudjEuQ29udmVyc2F0aW9uIkIKFENyZWF0ZUNoYW5uZWxSZXF1ZXN0Eg0KBXRpdGxlGAEgASgJEhsKE3N1YnNjcmliZXJfdXNlcl9pZHMYAiADKAkiRQoVQ3JlYXRlQ2hhbm5lbFJlc3BvbnNlEiwKDGNvbnZlcnNhdGlvbhgBIAEoCzIWLnF1aWNrLnYxLkNvbnZlcnNhdGlvbiI+ChFBZGRNZW1iZXJzUmVxdWVzdBIXCg9jb252ZXJzYXRpb25faWQYASABKAkSEAoIdXNlcl9pZHMYAiADKAkiFAoSQWRkTWVtYmVyc1Jlc3BvbnNlIj8KE1JlbW92ZU1lbWJlclJlcXVlc3QSFwoPY29udmVyc2F0aW9uX2lkGAEgASgJEg8KB3VzZXJfaWQYAiABKAkiFgoUUmVtb3ZlTWVtYmVyUmVzcG9uc2UiMwoYTGVhdmVDb252ZXJzYXRpb25SZXF1ZXN0EhcKD2NvbnZlcnNhdGlvbl9pZBgBIAEoCSIbChlMZWF2ZUNvbnZlcnNhdGlvblJlc3BvbnNlIi0KEkxpc3RNZW1iZXJzUmVxdWVzdBIXCg9jb252ZXJzYXRpb25faWQYASABKAkiOAoTTGlzdE1lbWJlcnNSZXNwb25zZRIhCgdtZW1iZXJzGAEgAygLMhAucXVpY2sudjEuTWVtYmVyImMKBk1lbWJlchIcCgR1c2VyGAEgASgLMg4ucXVpY2sudjEuVXNlchIMCgRyb2xlGAIgASgJEi0KCWpvaW5lZF9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiSgoZRGVsZXRlQ29udmVyc2F0aW9uUmVxdWVzdBIXCg9jb252ZXJzYXRpb25faWQYASABKAkSFAoMZm9yX2V2ZXJ5b25lGAIgASgIIhwKGkRlbGV0ZUNvbnZlcnNhdGlvblJlc3BvbnNlIjYKEkVkaXRNZXNzYWdlUmVxdWVzdBISCgptZXNzYWdlX2lkGAEgASgJEgwKBGJvZHkYAiABKAkiOQoTRWRpdE1lc3NhZ2VSZXNwb25zZRIiCgdtZXNzYWdlGAEgASgLMhEucXVpY2sudjEuTWVzc2FnZSJAChREZWxldGVNZXNzYWdlUmVxdWVzdBISCgptZXNzYWdlX2lkGAEgASgJEhQKDGZvcl9ldmVyeW9uZRgCIAEoCCIXChVEZWxldGVNZXNzYWdlUmVzcG9uc2UiJwoRUGluTWVzc2FnZVJlcXVlc3QSEgoKbWVzc2FnZV9pZBgBIAEoCSIUChJQaW5NZXNzYWdlUmVzcG9uc2UiKQoTVW5waW5NZXNzYWdlUmVxdWVzdBISCgptZXNzYWdlX2lkGAEgASgJIhYKFFVucGluTWVzc2FnZVJlc3BvbnNlIloKDU1lc3NhZ2VSZWFkZXISHAoEdXNlchgBIAEoCzIOLnF1aWNrLnYxLlVzZXISKwoHcmVhZF9hdBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiLgoYR2V0TWVzc2FnZVJlYWRlcnNSZXF1ZXN0EhIKCm1lc3NhZ2VfaWQYASABKAkiRQoZR2V0TWVzc2FnZVJlYWRlcnNSZXNwb25zZRIoCgdyZWFkZXJzGAEgAygLMhcucXVpY2sudjEuTWVzc2FnZVJlYWRlciIxChZQaW5Db252ZXJzYXRpb25SZXF1ZXN0EhcKD2NvbnZlcnNhdGlvbl9pZBgBIAEoCSIZChdQaW5Db252ZXJzYXRpb25SZXNwb25zZSIzChhVbnBpbkNvbnZlcnNhdGlvblJlcXVlc3QSFwoPY29udmVyc2F0aW9uX2lkGAEgASgJIhsKGVVucGluQ29udmVyc2F0aW9uUmVzcG9uc2UytQwKCU1lc3NhZ2luZxJeChFMaXN0Q29udmVyc2F0aW9ucxIiLnF1aWNrLnYxLkxpc3RDb252ZXJzYXRpb25zUmVxdWVzdBojLnF1aWNrLnYxLkxpc3RDb252ZXJzYXRpb25zUmVzcG9uc2UiABI9CgZPcGVuRE0SFy5xdWljay52MS5PcGVuRE1SZXF1ZXN0GhgucXVpY2sudjEuT3BlbkRNUmVzcG9uc2UiABJPCgxMaXN0TWVzc2FnZXMSHS5xdWljay52MS5MaXN0TWVzc2FnZXNSZXF1ZXN0Gh4ucXVpY2sudjEuTGlzdE1lc3NhZ2VzUmVzcG9uc2UiABJMCgtTZW5kTWVzc2FnZRIcLnF1aWNrLnYxLlNlbmRNZXNzYWdlUmVxdWVzdBodLnF1aWNrLnYxLlNlbmRNZXNzYWdlUmVzcG9uc2UiABJDCghNYXJrUmVhZBIZLnF1aWNrLnYxLk1hcmtSZWFkUmVxdWVzdBoaLnF1aWNrLnYxLk1hcmtSZWFkUmVzcG9uc2UiABJMCgtDcmVhdGVHcm91cBIcLnF1aWNrLnYxLkNyZWF0ZUdyb3VwUmVxdWVzdBodLnF1aWNrLnYxLkNyZWF0ZUdyb3VwUmVzcG9uc2UiABJSCg1DcmVhdGVDaGFubmVsEh4ucXVpY2sudjEuQ3JlYXRlQ2hhbm5lbFJlcXVlc3QaHy5xdWljay52MS5DcmVhdGVDaGFubmVsUmVzcG9uc2UiABJJCgpBZGRNZW1iZXJzEhsucXVpY2sudjEuQWRkTWVtYmVyc1JlcXVlc3QaHC5xdWljay52MS5BZGRNZW1iZXJzUmVzcG9uc2UiABJPCgxSZW1vdmVNZW1iZXISHS5xdWljay52MS5SZW1vdmVNZW1iZXJSZXF1ZXN0Gh4ucXVpY2sudjEuUmVtb3ZlTWVtYmVyUmVzcG9uc2UiABJeChFMZWF2ZUNvbnZlcnNhdGlvbhIiLnF1aWNrLnYxLkxlYXZlQ29udmVyc2F0aW9uUmVxdWVzdBojLnF1aWNrLnYxLkxlYXZlQ29udmVyc2F0aW9uUmVzcG9uc2UiABJMCgtMaXN0TWVtYmVycxIcLnF1aWNrLnYxLkxpc3RNZW1iZXJzUmVxdWVzdBodLnF1aWNrLnYxLkxpc3RNZW1iZXJzUmVzcG9uc2UiABJhChJEZWxldGVDb252ZXJzYXRpb24SIy5xdWljay52MS5EZWxldGVDb252ZXJzYXRpb25SZXF1ZXN0GiQucXVpY2sudjEuRGVsZXRlQ29udmVyc2F0aW9uUmVzcG9uc2UiABJMCgtFZGl0TWVzc2FnZRIcLnF1aWNrLnYxLkVkaXRNZXNzYWdlUmVxdWVzdBodLnF1aWNrLnYxLkVkaXRNZXNzYWdlUmVzcG9uc2UiABJSCg1EZWxldGVNZXNzYWdlEh4ucXVpY2sudjEuRGVsZXRlTWVzc2FnZVJlcXVlc3QaHy5xdWljay52MS5EZWxldGVNZXNzYWdlUmVzcG9uc2UiABJJCgpQaW5NZXNzYWdlEhsucXVpY2sudjEuUGluTWVzc2FnZVJlcXVlc3QaHC5xdWljay52MS5QaW5NZXNzYWdlUmVzcG9uc2UiABJPCgxVbnBpbk1lc3NhZ2USHS5xdWljay52MS5VbnBpbk1lc3NhZ2VSZXF1ZXN0Gh4ucXVpY2sudjEuVW5waW5NZXNzYWdlUmVzcG9uc2UiABJeChFHZXRNZXNzYWdlUmVhZGVycxIiLnF1aWNrLnYxLkdldE1lc3NhZ2VSZWFkZXJzUmVxdWVzdBojLnF1aWNrLnYxLkdldE1lc3NhZ2VSZWFkZXJzUmVzcG9uc2UiABJYCg9QaW5Db252ZXJzYXRpb24SIC5xdWljay52MS5QaW5Db252ZXJzYXRpb25SZXF1ZXN0GiEucXVpY2sudjEuUGluQ29udmVyc2F0aW9uUmVzcG9uc2UiABJeChFVbnBpbkNvbnZlcnNhdGlvbhIiLnF1aWNrLnYxLlVucGluQ29udmVyc2F0aW9uUmVxdWVzdBojLnF1aWNrLnYxLlVucGluQ29udmVyc2F0aW9uUmVzcG9uc2UiAEKfAQoMY29tLnF1aWNrLnYxQg5NZXNzYWdpbmdQcm90b1ABWj5naXRodWIuY29tL3JhY2Fzcy1waXhlbC9xdWljay1wcm90b2NvbC9nZW4vZ28vcXVpY2svdjE7cXVpY2t2MaICA1FYWKoCCFF1aWNrLlYxygIIUXVpY2tcVjHiAhRRdWlja1xWMVxHUEJNZXRhZGF0YeoCCVF1aWNrOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp, file_quick_v1_users]);
+  fileDesc("ChhxdWljay92MS9tZXNzYWdpbmcucHJvdG8SCHF1aWNrLnYxIoECCgxDb252ZXJzYXRpb24SCgoCaWQYASABKAkSDAoEdHlwZRgCIAEoCRINCgV0aXRsZRgDIAEoCRIcCgRwZWVyGAQgASgLMg4ucXVpY2sudjEuVXNlchIzCg9sYXN0X21lc3NhZ2VfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiIKB3ByZXZpZXcYBiABKAsyES5xdWljay52MS5NZXNzYWdlEhQKDHVucmVhZF9jb3VudBgHIAEoBRIUCgxtZW1iZXJfY291bnQYCCABKAUSFAoMYXZhdGFyX2NvbG9yGAkgASgJEg8KB215X3JvbGUYCiABKAkinwEKB01lc3NhZ2USCgoCaWQYASABKAkSFwoPY29udmVyc2F0aW9uX2lkGAIgASgJEhEKCXNlbmRlcl9pZBgDIAEoCRIMCgRib2R5GAQgASgJEi4KCmNyZWF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEh4KBXZvaWNlGAYgASgLMg8ucXVpY2sudjEuVm9pY2UiWQoFVm9pY2USDwoHZmlsZV9pZBgBIAEoCRILCgN1cmwYAiABKAkSEwoLZHVyYXRpb25fbXMYAyABKAUSDQoFcGVha3MYBCADKAUSDgoGcGxheWVkGAUgASgIIiAKDU9wZW5ETVJlcXVlc3QSDwoHdXNlcl9pZBgBIAEoCSI+Cg5PcGVuRE1SZXNwb25zZRIsCgxjb252ZXJzYXRpb24YASABKAsyFi5xdWljay52MS5Db252ZXJzYXRpb24iGgoYTGlzdENvbnZlcnNhdGlvbnNSZXF1ZXN0IkoKGUxpc3RDb252ZXJzYXRpb25zUmVzcG9uc2USLQoNY29udmVyc2F0aW9ucxgBIAMoCzIWLnF1aWNrLnYxLkNvbnZlcnNhdGlvbiJiChNMaXN0TWVzc2FnZXNSZXF1ZXN0EhcKD2NvbnZlcnNhdGlvbl9pZBgBIAEoCRIRCgliZWZvcmVfaWQYAiABKAkSDQoFbGltaXQYAyABKAUSEAoIYWZ0ZXJfaWQYBCABKAkiTQoUTGlzdE1lc3NhZ2VzUmVzcG9uc2USIwoIbWVzc2FnZXMYASADKAsyES5xdWljay52MS5NZXNzYWdlEhAKCGhhc19tb3JlGAIgASgIIjsKElNlbmRNZXNzYWdlUmVxdWVzdBIXCg9jb252ZXJzYXRpb25faWQYASABKAkSDAoEYm9keRgCIAEoCSI5ChNTZW5kTWVzc2FnZVJlc3BvbnNlEiIKB21lc3NhZ2UYASABKAsyES5xdWljay52MS5NZXNzYWdlIkMKD01hcmtSZWFkUmVxdWVzdBIXCg9jb252ZXJzYXRpb25faWQYASABKAkSFwoPbGFzdF9tZXNzYWdlX2lkGAIgASgJIhIKEE1hcmtSZWFkUmVzcG9uc2UiPAoSQ3JlYXRlR3JvdXBSZXF1ZXN0Eg0KBXRpdGxlGAEgASgJEhcKD21lbWJlcl91c2VyX2lkcxgCIAMoCSJDChNDcmVhdGVHcm91cFJlc3BvbnNlEiwKDGNvbnZlcnNhdGlvbhgBIAEoCzIWLnF1aWNrLnYxLkNvbnZlcnNhdGlvbiJCChRDcmVhdGVDaGFubmVsUmVxdWVzdBINCgV0aXRsZRgBIAEoCRIbChNzdWJzY3JpYmVyX3VzZXJfaWRzGAIgAygJIkUKFUNyZWF0ZUNoYW5uZWxSZXNwb25zZRIsCgxjb252ZXJzYXRpb24YASABKAsyFi5xdWljay52MS5Db252ZXJzYXRpb24iPgoRQWRkTWVtYmVyc1JlcXVlc3QSFwoPY29udmVyc2F0aW9uX2lkGAEgASgJEhAKCHVzZXJfaWRzGAIgAygJIhQKEkFkZE1lbWJlcnNSZXNwb25zZSI/ChNSZW1vdmVNZW1iZXJSZXF1ZXN0EhcKD2NvbnZlcnNhdGlvbl9pZBgBIAEoCRIPCgd1c2VyX2lkGAIgASgJIhYKFFJlbW92ZU1lbWJlclJlc3BvbnNlIjMKGExlYXZlQ29udmVyc2F0aW9uUmVxdWVzdBIXCg9jb252ZXJzYXRpb25faWQYASABKAkiGwoZTGVhdmVDb252ZXJzYXRpb25SZXNwb25zZSItChJMaXN0TWVtYmVyc1JlcXVlc3QSFwoPY29udmVyc2F0aW9uX2lkGAEgASgJIjgKE0xpc3RNZW1iZXJzUmVzcG9uc2USIQoHbWVtYmVycxgBIAMoCzIQLnF1aWNrLnYxLk1lbWJlciJjCgZNZW1iZXISHAoEdXNlchgBIAEoCzIOLnF1aWNrLnYxLlVzZXISDAoEcm9sZRgCIAEoCRItCglqb2luZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIkoKGURlbGV0ZUNvbnZlcnNhdGlvblJlcXVlc3QSFwoPY29udmVyc2F0aW9uX2lkGAEgASgJEhQKDGZvcl9ldmVyeW9uZRgCIAEoCCIcChpEZWxldGVDb252ZXJzYXRpb25SZXNwb25zZSI2ChJFZGl0TWVzc2FnZVJlcXVlc3QSEgoKbWVzc2FnZV9pZBgBIAEoCRIMCgRib2R5GAIgASgJIjkKE0VkaXRNZXNzYWdlUmVzcG9uc2USIgoHbWVzc2FnZRgBIAEoCzIRLnF1aWNrLnYxLk1lc3NhZ2UiQAoURGVsZXRlTWVzc2FnZVJlcXVlc3QSEgoKbWVzc2FnZV9pZBgBIAEoCRIUCgxmb3JfZXZlcnlvbmUYAiABKAgiFwoVRGVsZXRlTWVzc2FnZVJlc3BvbnNlIicKEVBpbk1lc3NhZ2VSZXF1ZXN0EhIKCm1lc3NhZ2VfaWQYASABKAkiFAoSUGluTWVzc2FnZVJlc3BvbnNlIikKE1VucGluTWVzc2FnZVJlcXVlc3QSEgoKbWVzc2FnZV9pZBgBIAEoCSIWChRVbnBpbk1lc3NhZ2VSZXNwb25zZSJaCg1NZXNzYWdlUmVhZGVyEhwKBHVzZXIYASABKAsyDi5xdWljay52MS5Vc2VyEisKB3JlYWRfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIi4KGEdldE1lc3NhZ2VSZWFkZXJzUmVxdWVzdBISCgptZXNzYWdlX2lkGAEgASgJIkUKGUdldE1lc3NhZ2VSZWFkZXJzUmVzcG9uc2USKAoHcmVhZGVycxgBIAMoCzIXLnF1aWNrLnYxLk1lc3NhZ2VSZWFkZXIiMQoWUGluQ29udmVyc2F0aW9uUmVxdWVzdBIXCg9jb252ZXJzYXRpb25faWQYASABKAkiGQoXUGluQ29udmVyc2F0aW9uUmVzcG9uc2UiMwoYVW5waW5Db252ZXJzYXRpb25SZXF1ZXN0EhcKD2NvbnZlcnNhdGlvbl9pZBgBIAEoCSIbChlVbnBpbkNvbnZlcnNhdGlvblJlc3BvbnNlIkkKF1NlbmRWb2ljZU1lc3NhZ2VSZXF1ZXN0EhcKD2NvbnZlcnNhdGlvbl9pZBgBIAEoCRIVCg12b2ljZV9maWxlX2lkGAIgASgJIj4KGFNlbmRWb2ljZU1lc3NhZ2VSZXNwb25zZRIiCgdtZXNzYWdlGAEgASgLMhEucXVpY2sudjEuTWVzc2FnZSIsChZNYXJrVm9pY2VQbGF5ZWRSZXF1ZXN0EhIKCm1lc3NhZ2VfaWQYASABKAkiGQoXTWFya1ZvaWNlUGxheWVkUmVzcG9uc2Uy7A0KCU1lc3NhZ2luZxJeChFMaXN0Q29udmVyc2F0aW9ucxIiLnF1aWNrLnYxLkxpc3RDb252ZXJzYXRpb25zUmVxdWVzdBojLnF1aWNrLnYxLkxpc3RDb252ZXJzYXRpb25zUmVzcG9uc2UiABI9CgZPcGVuRE0SFy5xdWljay52MS5PcGVuRE1SZXF1ZXN0GhgucXVpY2sudjEuT3BlbkRNUmVzcG9uc2UiABJPCgxMaXN0TWVzc2FnZXMSHS5xdWljay52MS5MaXN0TWVzc2FnZXNSZXF1ZXN0Gh4ucXVpY2sudjEuTGlzdE1lc3NhZ2VzUmVzcG9uc2UiABJMCgtTZW5kTWVzc2FnZRIcLnF1aWNrLnYxLlNlbmRNZXNzYWdlUmVxdWVzdBodLnF1aWNrLnYxLlNlbmRNZXNzYWdlUmVzcG9uc2UiABJDCghNYXJrUmVhZBIZLnF1aWNrLnYxLk1hcmtSZWFkUmVxdWVzdBoaLnF1aWNrLnYxLk1hcmtSZWFkUmVzcG9uc2UiABJMCgtDcmVhdGVHcm91cBIcLnF1aWNrLnYxLkNyZWF0ZUdyb3VwUmVxdWVzdBodLnF1aWNrLnYxLkNyZWF0ZUdyb3VwUmVzcG9uc2UiABJSCg1DcmVhdGVDaGFubmVsEh4ucXVpY2sudjEuQ3JlYXRlQ2hhbm5lbFJlcXVlc3QaHy5xdWljay52MS5DcmVhdGVDaGFubmVsUmVzcG9uc2UiABJJCgpBZGRNZW1iZXJzEhsucXVpY2sudjEuQWRkTWVtYmVyc1JlcXVlc3QaHC5xdWljay52MS5BZGRNZW1iZXJzUmVzcG9uc2UiABJPCgxSZW1vdmVNZW1iZXISHS5xdWljay52MS5SZW1vdmVNZW1iZXJSZXF1ZXN0Gh4ucXVpY2sudjEuUmVtb3ZlTWVtYmVyUmVzcG9uc2UiABJeChFMZWF2ZUNvbnZlcnNhdGlvbhIiLnF1aWNrLnYxLkxlYXZlQ29udmVyc2F0aW9uUmVxdWVzdBojLnF1aWNrLnYxLkxlYXZlQ29udmVyc2F0aW9uUmVzcG9uc2UiABJMCgtMaXN0TWVtYmVycxIcLnF1aWNrLnYxLkxpc3RNZW1iZXJzUmVxdWVzdBodLnF1aWNrLnYxLkxpc3RNZW1iZXJzUmVzcG9uc2UiABJhChJEZWxldGVDb252ZXJzYXRpb24SIy5xdWljay52MS5EZWxldGVDb252ZXJzYXRpb25SZXF1ZXN0GiQucXVpY2sudjEuRGVsZXRlQ29udmVyc2F0aW9uUmVzcG9uc2UiABJMCgtFZGl0TWVzc2FnZRIcLnF1aWNrLnYxLkVkaXRNZXNzYWdlUmVxdWVzdBodLnF1aWNrLnYxLkVkaXRNZXNzYWdlUmVzcG9uc2UiABJSCg1EZWxldGVNZXNzYWdlEh4ucXVpY2sudjEuRGVsZXRlTWVzc2FnZVJlcXVlc3QaHy5xdWljay52MS5EZWxldGVNZXNzYWdlUmVzcG9uc2UiABJJCgpQaW5NZXNzYWdlEhsucXVpY2sudjEuUGluTWVzc2FnZVJlcXVlc3QaHC5xdWljay52MS5QaW5NZXNzYWdlUmVzcG9uc2UiABJPCgxVbnBpbk1lc3NhZ2USHS5xdWljay52MS5VbnBpbk1lc3NhZ2VSZXF1ZXN0Gh4ucXVpY2sudjEuVW5waW5NZXNzYWdlUmVzcG9uc2UiABJeChFHZXRNZXNzYWdlUmVhZGVycxIiLnF1aWNrLnYxLkdldE1lc3NhZ2VSZWFkZXJzUmVxdWVzdBojLnF1aWNrLnYxLkdldE1lc3NhZ2VSZWFkZXJzUmVzcG9uc2UiABJYCg9QaW5Db252ZXJzYXRpb24SIC5xdWljay52MS5QaW5Db252ZXJzYXRpb25SZXF1ZXN0GiEucXVpY2sudjEuUGluQ29udmVyc2F0aW9uUmVzcG9uc2UiABJeChFVbnBpbkNvbnZlcnNhdGlvbhIiLnF1aWNrLnYxLlVucGluQ29udmVyc2F0aW9uUmVxdWVzdBojLnF1aWNrLnYxLlVucGluQ29udmVyc2F0aW9uUmVzcG9uc2UiABJbChBTZW5kVm9pY2VNZXNzYWdlEiEucXVpY2sudjEuU2VuZFZvaWNlTWVzc2FnZVJlcXVlc3QaIi5xdWljay52MS5TZW5kVm9pY2VNZXNzYWdlUmVzcG9uc2UiABJYCg9NYXJrVm9pY2VQbGF5ZWQSIC5xdWljay52MS5NYXJrVm9pY2VQbGF5ZWRSZXF1ZXN0GiEucXVpY2sudjEuTWFya1ZvaWNlUGxheWVkUmVzcG9uc2UiAEKfAQoMY29tLnF1aWNrLnYxQg5NZXNzYWdpbmdQcm90b1ABWj5naXRodWIuY29tL3JhY2Fzcy1waXhlbC9xdWljay1wcm90b2NvbC9nZW4vZ28vcXVpY2svdjE7cXVpY2t2MaICA1FYWKoCCFF1aWNrLlYxygIIUXVpY2tcVjHiAhRRdWlja1xWMVxHUEJNZXRhZGF0YeoCCVF1aWNrOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp, file_quick_v1_users]);
 
 /**
  * @generated from message quick.v1.Conversation
@@ -106,6 +106,14 @@ export type Message = Message$1<"quick.v1.Message"> & {
    * @generated from field: google.protobuf.Timestamp created_at = 5;
    */
   createdAt?: Timestamp | undefined;
+
+  /**
+   * Voice attachment, populated by backend when this is a voice message.
+   * body is empty in that case. S11.
+   *
+   * @generated from field: quick.v1.Voice voice = 6;
+   */
+  voice?: Voice | undefined;
 };
 
 /**
@@ -114,6 +122,53 @@ export type Message = Message$1<"quick.v1.Message"> & {
  */
 export const MessageSchema: GenMessage<Message> = /*@__PURE__*/
   messageDesc(file_quick_v1_messaging, 1);
+
+/**
+ * @generated from message quick.v1.Voice
+ */
+export type Voice = Message$1<"quick.v1.Voice"> & {
+  /**
+   * immutable id for the underlying media row
+   *
+   * @generated from field: string file_id = 1;
+   */
+  fileId: string;
+
+  /**
+   * signed/scoped URL the client fetches the blob from
+   *
+   * @generated from field: string url = 2;
+   */
+  url: string;
+
+  /**
+   * total length in milliseconds
+   *
+   * @generated from field: int32 duration_ms = 3;
+   */
+  durationMs: number;
+
+  /**
+   * 64 normalised amplitude values 0-255 for the waveform
+   *
+   * @generated from field: repeated int32 peaks = 4;
+   */
+  peaks: number[];
+
+  /**
+   * server view: true if THIS reader has already played it
+   *
+   * @generated from field: bool played = 5;
+   */
+  played: boolean;
+};
+
+/**
+ * Describes the message quick.v1.Voice.
+ * Use `create(VoiceSchema)` to create a new message.
+ */
+export const VoiceSchema: GenMessage<Voice> = /*@__PURE__*/
+  messageDesc(file_quick_v1_messaging, 2);
 
 /**
  * @generated from message quick.v1.OpenDMRequest
@@ -130,7 +185,7 @@ export type OpenDMRequest = Message$1<"quick.v1.OpenDMRequest"> & {
  * Use `create(OpenDMRequestSchema)` to create a new message.
  */
 export const OpenDMRequestSchema: GenMessage<OpenDMRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 2);
+  messageDesc(file_quick_v1_messaging, 3);
 
 /**
  * @generated from message quick.v1.OpenDMResponse
@@ -147,7 +202,7 @@ export type OpenDMResponse = Message$1<"quick.v1.OpenDMResponse"> & {
  * Use `create(OpenDMResponseSchema)` to create a new message.
  */
 export const OpenDMResponseSchema: GenMessage<OpenDMResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 3);
+  messageDesc(file_quick_v1_messaging, 4);
 
 /**
  * @generated from message quick.v1.ListConversationsRequest
@@ -160,7 +215,7 @@ export type ListConversationsRequest = Message$1<"quick.v1.ListConversationsRequ
  * Use `create(ListConversationsRequestSchema)` to create a new message.
  */
 export const ListConversationsRequestSchema: GenMessage<ListConversationsRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 4);
+  messageDesc(file_quick_v1_messaging, 5);
 
 /**
  * @generated from message quick.v1.ListConversationsResponse
@@ -177,7 +232,7 @@ export type ListConversationsResponse = Message$1<"quick.v1.ListConversationsRes
  * Use `create(ListConversationsResponseSchema)` to create a new message.
  */
 export const ListConversationsResponseSchema: GenMessage<ListConversationsResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 5);
+  messageDesc(file_quick_v1_messaging, 6);
 
 /**
  * before_id and after_id are mutually exclusive cursor controls.
@@ -214,7 +269,7 @@ export type ListMessagesRequest = Message$1<"quick.v1.ListMessagesRequest"> & {
  * Use `create(ListMessagesRequestSchema)` to create a new message.
  */
 export const ListMessagesRequestSchema: GenMessage<ListMessagesRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 6);
+  messageDesc(file_quick_v1_messaging, 7);
 
 /**
  * @generated from message quick.v1.ListMessagesResponse
@@ -236,7 +291,7 @@ export type ListMessagesResponse = Message$1<"quick.v1.ListMessagesResponse"> & 
  * Use `create(ListMessagesResponseSchema)` to create a new message.
  */
 export const ListMessagesResponseSchema: GenMessage<ListMessagesResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 7);
+  messageDesc(file_quick_v1_messaging, 8);
 
 /**
  * @generated from message quick.v1.SendMessageRequest
@@ -258,7 +313,7 @@ export type SendMessageRequest = Message$1<"quick.v1.SendMessageRequest"> & {
  * Use `create(SendMessageRequestSchema)` to create a new message.
  */
 export const SendMessageRequestSchema: GenMessage<SendMessageRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 8);
+  messageDesc(file_quick_v1_messaging, 9);
 
 /**
  * @generated from message quick.v1.SendMessageResponse
@@ -275,7 +330,7 @@ export type SendMessageResponse = Message$1<"quick.v1.SendMessageResponse"> & {
  * Use `create(SendMessageResponseSchema)` to create a new message.
  */
 export const SendMessageResponseSchema: GenMessage<SendMessageResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 9);
+  messageDesc(file_quick_v1_messaging, 10);
 
 /**
  * @generated from message quick.v1.MarkReadRequest
@@ -297,7 +352,7 @@ export type MarkReadRequest = Message$1<"quick.v1.MarkReadRequest"> & {
  * Use `create(MarkReadRequestSchema)` to create a new message.
  */
 export const MarkReadRequestSchema: GenMessage<MarkReadRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 10);
+  messageDesc(file_quick_v1_messaging, 11);
 
 /**
  * @generated from message quick.v1.MarkReadResponse
@@ -310,7 +365,7 @@ export type MarkReadResponse = Message$1<"quick.v1.MarkReadResponse"> & {
  * Use `create(MarkReadResponseSchema)` to create a new message.
  */
 export const MarkReadResponseSchema: GenMessage<MarkReadResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 11);
+  messageDesc(file_quick_v1_messaging, 12);
 
 /**
  * @generated from message quick.v1.CreateGroupRequest
@@ -332,7 +387,7 @@ export type CreateGroupRequest = Message$1<"quick.v1.CreateGroupRequest"> & {
  * Use `create(CreateGroupRequestSchema)` to create a new message.
  */
 export const CreateGroupRequestSchema: GenMessage<CreateGroupRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 12);
+  messageDesc(file_quick_v1_messaging, 13);
 
 /**
  * @generated from message quick.v1.CreateGroupResponse
@@ -349,7 +404,7 @@ export type CreateGroupResponse = Message$1<"quick.v1.CreateGroupResponse"> & {
  * Use `create(CreateGroupResponseSchema)` to create a new message.
  */
 export const CreateGroupResponseSchema: GenMessage<CreateGroupResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 13);
+  messageDesc(file_quick_v1_messaging, 14);
 
 /**
  * @generated from message quick.v1.CreateChannelRequest
@@ -371,7 +426,7 @@ export type CreateChannelRequest = Message$1<"quick.v1.CreateChannelRequest"> & 
  * Use `create(CreateChannelRequestSchema)` to create a new message.
  */
 export const CreateChannelRequestSchema: GenMessage<CreateChannelRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 14);
+  messageDesc(file_quick_v1_messaging, 15);
 
 /**
  * @generated from message quick.v1.CreateChannelResponse
@@ -388,7 +443,7 @@ export type CreateChannelResponse = Message$1<"quick.v1.CreateChannelResponse"> 
  * Use `create(CreateChannelResponseSchema)` to create a new message.
  */
 export const CreateChannelResponseSchema: GenMessage<CreateChannelResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 15);
+  messageDesc(file_quick_v1_messaging, 16);
 
 /**
  * @generated from message quick.v1.AddMembersRequest
@@ -410,7 +465,7 @@ export type AddMembersRequest = Message$1<"quick.v1.AddMembersRequest"> & {
  * Use `create(AddMembersRequestSchema)` to create a new message.
  */
 export const AddMembersRequestSchema: GenMessage<AddMembersRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 16);
+  messageDesc(file_quick_v1_messaging, 17);
 
 /**
  * @generated from message quick.v1.AddMembersResponse
@@ -423,7 +478,7 @@ export type AddMembersResponse = Message$1<"quick.v1.AddMembersResponse"> & {
  * Use `create(AddMembersResponseSchema)` to create a new message.
  */
 export const AddMembersResponseSchema: GenMessage<AddMembersResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 17);
+  messageDesc(file_quick_v1_messaging, 18);
 
 /**
  * @generated from message quick.v1.RemoveMemberRequest
@@ -445,7 +500,7 @@ export type RemoveMemberRequest = Message$1<"quick.v1.RemoveMemberRequest"> & {
  * Use `create(RemoveMemberRequestSchema)` to create a new message.
  */
 export const RemoveMemberRequestSchema: GenMessage<RemoveMemberRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 18);
+  messageDesc(file_quick_v1_messaging, 19);
 
 /**
  * @generated from message quick.v1.RemoveMemberResponse
@@ -458,7 +513,7 @@ export type RemoveMemberResponse = Message$1<"quick.v1.RemoveMemberResponse"> & 
  * Use `create(RemoveMemberResponseSchema)` to create a new message.
  */
 export const RemoveMemberResponseSchema: GenMessage<RemoveMemberResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 19);
+  messageDesc(file_quick_v1_messaging, 20);
 
 /**
  * @generated from message quick.v1.LeaveConversationRequest
@@ -475,7 +530,7 @@ export type LeaveConversationRequest = Message$1<"quick.v1.LeaveConversationRequ
  * Use `create(LeaveConversationRequestSchema)` to create a new message.
  */
 export const LeaveConversationRequestSchema: GenMessage<LeaveConversationRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 20);
+  messageDesc(file_quick_v1_messaging, 21);
 
 /**
  * @generated from message quick.v1.LeaveConversationResponse
@@ -488,7 +543,7 @@ export type LeaveConversationResponse = Message$1<"quick.v1.LeaveConversationRes
  * Use `create(LeaveConversationResponseSchema)` to create a new message.
  */
 export const LeaveConversationResponseSchema: GenMessage<LeaveConversationResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 21);
+  messageDesc(file_quick_v1_messaging, 22);
 
 /**
  * @generated from message quick.v1.ListMembersRequest
@@ -505,7 +560,7 @@ export type ListMembersRequest = Message$1<"quick.v1.ListMembersRequest"> & {
  * Use `create(ListMembersRequestSchema)` to create a new message.
  */
 export const ListMembersRequestSchema: GenMessage<ListMembersRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 22);
+  messageDesc(file_quick_v1_messaging, 23);
 
 /**
  * @generated from message quick.v1.ListMembersResponse
@@ -522,7 +577,7 @@ export type ListMembersResponse = Message$1<"quick.v1.ListMembersResponse"> & {
  * Use `create(ListMembersResponseSchema)` to create a new message.
  */
 export const ListMembersResponseSchema: GenMessage<ListMembersResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 23);
+  messageDesc(file_quick_v1_messaging, 24);
 
 /**
  * @generated from message quick.v1.Member
@@ -549,7 +604,7 @@ export type Member = Message$1<"quick.v1.Member"> & {
  * Use `create(MemberSchema)` to create a new message.
  */
 export const MemberSchema: GenMessage<Member> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 24);
+  messageDesc(file_quick_v1_messaging, 25);
 
 /**
  * @generated from message quick.v1.DeleteConversationRequest
@@ -573,7 +628,7 @@ export type DeleteConversationRequest = Message$1<"quick.v1.DeleteConversationRe
  * Use `create(DeleteConversationRequestSchema)` to create a new message.
  */
 export const DeleteConversationRequestSchema: GenMessage<DeleteConversationRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 25);
+  messageDesc(file_quick_v1_messaging, 26);
 
 /**
  * @generated from message quick.v1.DeleteConversationResponse
@@ -586,7 +641,7 @@ export type DeleteConversationResponse = Message$1<"quick.v1.DeleteConversationR
  * Use `create(DeleteConversationResponseSchema)` to create a new message.
  */
 export const DeleteConversationResponseSchema: GenMessage<DeleteConversationResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 26);
+  messageDesc(file_quick_v1_messaging, 27);
 
 /**
  * @generated from message quick.v1.EditMessageRequest
@@ -608,7 +663,7 @@ export type EditMessageRequest = Message$1<"quick.v1.EditMessageRequest"> & {
  * Use `create(EditMessageRequestSchema)` to create a new message.
  */
 export const EditMessageRequestSchema: GenMessage<EditMessageRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 27);
+  messageDesc(file_quick_v1_messaging, 28);
 
 /**
  * @generated from message quick.v1.EditMessageResponse
@@ -625,7 +680,7 @@ export type EditMessageResponse = Message$1<"quick.v1.EditMessageResponse"> & {
  * Use `create(EditMessageResponseSchema)` to create a new message.
  */
 export const EditMessageResponseSchema: GenMessage<EditMessageResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 28);
+  messageDesc(file_quick_v1_messaging, 29);
 
 /**
  * @generated from message quick.v1.DeleteMessageRequest
@@ -647,7 +702,7 @@ export type DeleteMessageRequest = Message$1<"quick.v1.DeleteMessageRequest"> & 
  * Use `create(DeleteMessageRequestSchema)` to create a new message.
  */
 export const DeleteMessageRequestSchema: GenMessage<DeleteMessageRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 29);
+  messageDesc(file_quick_v1_messaging, 30);
 
 /**
  * @generated from message quick.v1.DeleteMessageResponse
@@ -660,7 +715,7 @@ export type DeleteMessageResponse = Message$1<"quick.v1.DeleteMessageResponse"> 
  * Use `create(DeleteMessageResponseSchema)` to create a new message.
  */
 export const DeleteMessageResponseSchema: GenMessage<DeleteMessageResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 30);
+  messageDesc(file_quick_v1_messaging, 31);
 
 /**
  * @generated from message quick.v1.PinMessageRequest
@@ -677,7 +732,7 @@ export type PinMessageRequest = Message$1<"quick.v1.PinMessageRequest"> & {
  * Use `create(PinMessageRequestSchema)` to create a new message.
  */
 export const PinMessageRequestSchema: GenMessage<PinMessageRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 31);
+  messageDesc(file_quick_v1_messaging, 32);
 
 /**
  * @generated from message quick.v1.PinMessageResponse
@@ -690,7 +745,7 @@ export type PinMessageResponse = Message$1<"quick.v1.PinMessageResponse"> & {
  * Use `create(PinMessageResponseSchema)` to create a new message.
  */
 export const PinMessageResponseSchema: GenMessage<PinMessageResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 32);
+  messageDesc(file_quick_v1_messaging, 33);
 
 /**
  * @generated from message quick.v1.UnpinMessageRequest
@@ -707,7 +762,7 @@ export type UnpinMessageRequest = Message$1<"quick.v1.UnpinMessageRequest"> & {
  * Use `create(UnpinMessageRequestSchema)` to create a new message.
  */
 export const UnpinMessageRequestSchema: GenMessage<UnpinMessageRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 33);
+  messageDesc(file_quick_v1_messaging, 34);
 
 /**
  * @generated from message quick.v1.UnpinMessageResponse
@@ -720,7 +775,7 @@ export type UnpinMessageResponse = Message$1<"quick.v1.UnpinMessageResponse"> & 
  * Use `create(UnpinMessageResponseSchema)` to create a new message.
  */
 export const UnpinMessageResponseSchema: GenMessage<UnpinMessageResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 34);
+  messageDesc(file_quick_v1_messaging, 35);
 
 /**
  * @generated from message quick.v1.MessageReader
@@ -742,7 +797,7 @@ export type MessageReader = Message$1<"quick.v1.MessageReader"> & {
  * Use `create(MessageReaderSchema)` to create a new message.
  */
 export const MessageReaderSchema: GenMessage<MessageReader> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 35);
+  messageDesc(file_quick_v1_messaging, 36);
 
 /**
  * @generated from message quick.v1.GetMessageReadersRequest
@@ -759,7 +814,7 @@ export type GetMessageReadersRequest = Message$1<"quick.v1.GetMessageReadersRequ
  * Use `create(GetMessageReadersRequestSchema)` to create a new message.
  */
 export const GetMessageReadersRequestSchema: GenMessage<GetMessageReadersRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 36);
+  messageDesc(file_quick_v1_messaging, 37);
 
 /**
  * @generated from message quick.v1.GetMessageReadersResponse
@@ -776,7 +831,7 @@ export type GetMessageReadersResponse = Message$1<"quick.v1.GetMessageReadersRes
  * Use `create(GetMessageReadersResponseSchema)` to create a new message.
  */
 export const GetMessageReadersResponseSchema: GenMessage<GetMessageReadersResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 37);
+  messageDesc(file_quick_v1_messaging, 38);
 
 /**
  * @generated from message quick.v1.PinConversationRequest
@@ -793,7 +848,7 @@ export type PinConversationRequest = Message$1<"quick.v1.PinConversationRequest"
  * Use `create(PinConversationRequestSchema)` to create a new message.
  */
 export const PinConversationRequestSchema: GenMessage<PinConversationRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 38);
+  messageDesc(file_quick_v1_messaging, 39);
 
 /**
  * @generated from message quick.v1.PinConversationResponse
@@ -806,7 +861,7 @@ export type PinConversationResponse = Message$1<"quick.v1.PinConversationRespons
  * Use `create(PinConversationResponseSchema)` to create a new message.
  */
 export const PinConversationResponseSchema: GenMessage<PinConversationResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 39);
+  messageDesc(file_quick_v1_messaging, 40);
 
 /**
  * @generated from message quick.v1.UnpinConversationRequest
@@ -823,7 +878,7 @@ export type UnpinConversationRequest = Message$1<"quick.v1.UnpinConversationRequ
  * Use `create(UnpinConversationRequestSchema)` to create a new message.
  */
 export const UnpinConversationRequestSchema: GenMessage<UnpinConversationRequest> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 40);
+  messageDesc(file_quick_v1_messaging, 41);
 
 /**
  * @generated from message quick.v1.UnpinConversationResponse
@@ -836,7 +891,78 @@ export type UnpinConversationResponse = Message$1<"quick.v1.UnpinConversationRes
  * Use `create(UnpinConversationResponseSchema)` to create a new message.
  */
 export const UnpinConversationResponseSchema: GenMessage<UnpinConversationResponse> = /*@__PURE__*/
-  messageDesc(file_quick_v1_messaging, 41);
+  messageDesc(file_quick_v1_messaging, 42);
+
+/**
+ * @generated from message quick.v1.SendVoiceMessageRequest
+ */
+export type SendVoiceMessageRequest = Message$1<"quick.v1.SendVoiceMessageRequest"> & {
+  /**
+   * @generated from field: string conversation_id = 1;
+   */
+  conversationId: string;
+
+  /**
+   * returned by POST /v1/media/voice
+   *
+   * @generated from field: string voice_file_id = 2;
+   */
+  voiceFileId: string;
+};
+
+/**
+ * Describes the message quick.v1.SendVoiceMessageRequest.
+ * Use `create(SendVoiceMessageRequestSchema)` to create a new message.
+ */
+export const SendVoiceMessageRequestSchema: GenMessage<SendVoiceMessageRequest> = /*@__PURE__*/
+  messageDesc(file_quick_v1_messaging, 43);
+
+/**
+ * @generated from message quick.v1.SendVoiceMessageResponse
+ */
+export type SendVoiceMessageResponse = Message$1<"quick.v1.SendVoiceMessageResponse"> & {
+  /**
+   * @generated from field: quick.v1.Message message = 1;
+   */
+  message?: Message | undefined;
+};
+
+/**
+ * Describes the message quick.v1.SendVoiceMessageResponse.
+ * Use `create(SendVoiceMessageResponseSchema)` to create a new message.
+ */
+export const SendVoiceMessageResponseSchema: GenMessage<SendVoiceMessageResponse> = /*@__PURE__*/
+  messageDesc(file_quick_v1_messaging, 44);
+
+/**
+ * @generated from message quick.v1.MarkVoicePlayedRequest
+ */
+export type MarkVoicePlayedRequest = Message$1<"quick.v1.MarkVoicePlayedRequest"> & {
+  /**
+   * @generated from field: string message_id = 1;
+   */
+  messageId: string;
+};
+
+/**
+ * Describes the message quick.v1.MarkVoicePlayedRequest.
+ * Use `create(MarkVoicePlayedRequestSchema)` to create a new message.
+ */
+export const MarkVoicePlayedRequestSchema: GenMessage<MarkVoicePlayedRequest> = /*@__PURE__*/
+  messageDesc(file_quick_v1_messaging, 45);
+
+/**
+ * @generated from message quick.v1.MarkVoicePlayedResponse
+ */
+export type MarkVoicePlayedResponse = Message$1<"quick.v1.MarkVoicePlayedResponse"> & {
+};
+
+/**
+ * Describes the message quick.v1.MarkVoicePlayedResponse.
+ * Use `create(MarkVoicePlayedResponseSchema)` to create a new message.
+ */
+export const MarkVoicePlayedResponseSchema: GenMessage<MarkVoicePlayedResponse> = /*@__PURE__*/
+  messageDesc(file_quick_v1_messaging, 46);
 
 /**
  * @generated from service quick.v1.Messaging
@@ -995,6 +1121,27 @@ export const Messaging: GenService<{
     methodKind: "unary";
     input: typeof UnpinConversationRequestSchema;
     output: typeof UnpinConversationResponseSchema;
+  },
+  /**
+   * S11 — voice messages. Upload itself is a multipart HTTP POST to /v1/media/voice
+   * (not RPC — Connect-RPC is awkward for binary streams). That endpoint returns
+   * {file_id, url, duration_ms, peaks}. Then the client calls SendVoiceMessage
+   * which writes a kind='voice' message into the thread referencing the file_id.
+   *
+   * @generated from rpc quick.v1.Messaging.SendVoiceMessage
+   */
+  sendVoiceMessage: {
+    methodKind: "unary";
+    input: typeof SendVoiceMessageRequestSchema;
+    output: typeof SendVoiceMessageResponseSchema;
+  },
+  /**
+   * @generated from rpc quick.v1.Messaging.MarkVoicePlayed
+   */
+  markVoicePlayed: {
+    methodKind: "unary";
+    input: typeof MarkVoicePlayedRequestSchema;
+    output: typeof MarkVoicePlayedResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_quick_v1_messaging, 0);
