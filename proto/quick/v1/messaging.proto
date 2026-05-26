@@ -32,6 +32,13 @@ service Messaging {
   // which writes a kind='voice' message into the thread referencing the file_id.
   rpc SendVoiceMessage(SendVoiceMessageRequest)       returns (SendVoiceMessageResponse)       {}
   rpc MarkVoicePlayed(MarkVoicePlayedRequest)         returns (MarkVoicePlayedResponse)        {}
+
+  // S13 — replies, reactions, forwards, attachments, full-text search.
+  rpc AddReaction(AddReactionRequest)                 returns (AddReactionResponse)            {}
+  rpc RemoveReaction(RemoveReactionRequest)           returns (RemoveReactionResponse)         {}
+  rpc ListReactions(ListReactionsRequest)             returns (ListReactionsResponse)          {}
+  rpc ForwardMessage(ForwardMessageRequest)           returns (ForwardMessageResponse)         {}
+  rpc SearchMessages(SearchMessagesRequest)           returns (SearchMessagesResponse)         {}
 }
 
 message Conversation {
@@ -57,6 +64,50 @@ message Message {
   // Voice attachment, populated by backend when this is a voice message.
   // body is empty in that case. S11.
   Voice voice = 6;
+
+  // S13 — reply quote. When set, this message is a reply to another message
+  // in the same conversation. Client renders an inline preview.
+  string reply_to_message_id = 7;
+
+  // S13 — reactions on this message. Populated by ListMessages / SendMessage
+  // / WS message envelopes. One entry per (user_id, emoji) pair.
+  repeated Reaction reactions = 8;
+
+  // S13 — forward attribution. Populated when this message was forwarded from
+  // another message. Telegram-style: only one level deep — forwarding an
+  // already-forwarded message preserves the ORIGINAL forward_from_* values.
+  string forward_from_user_id    = 9;
+  string forward_from_message_id = 10;
+  // forward_origin_text is a pre-formatted attribution string the client can
+  // render directly (e.g. "Forwarded from @handle"). Empty when not a forward.
+  string forward_origin_text     = 11;
+
+  // S13 — generic attachments (images, files). Voice still uses the dedicated
+  // Voice field for backward compatibility; attachments is for everything else.
+  repeated Attachment attachments = 12;
+}
+
+message Reaction {
+  string user_id = 1;
+  string emoji   = 2;
+}
+
+message Attachment {
+  string file_id        = 1;
+  // kind: "image" | "file" | "voice" (voice mirrored here for completeness).
+  string kind           = 2;
+  string mime           = 3;
+  int64  size_bytes     = 4;
+  // Set for kind="image". Original-image dimensions in pixels.
+  int32  width          = 5;
+  int32  height         = 6;
+  // Signed URL for the original blob (used by client to render / download).
+  string url            = 7;
+  // Signed URL of the 256-wide JPEG thumbnail. Only set for kind="image".
+  string thumbnail_url  = 8;
+  // Display filename (the original upload filename). Set primarily for
+  // kind="file".
+  string filename       = 9;
 }
 
 message Voice {
@@ -85,7 +136,15 @@ message ListMessagesRequest  {
 }
 message ListMessagesResponse { repeated Message messages = 1; bool has_more = 2; }
 
-message SendMessageRequest  { string conversation_id = 1; string body = 2; }
+message SendMessageRequest  {
+  string conversation_id = 1;
+  string body            = 2;
+  // S13. Optional. If set, must reference a message in the same conversation.
+  string reply_to_message_id = 3;
+  // S13. Optional. Ids of previously-uploaded media_attachments rows owned by
+  // the caller. Used for image/file attachments.
+  repeated string attachment_file_ids = 4;
+}
 message SendMessageResponse { Message message = 1; }
 
 message MarkReadRequest  { string conversation_id = 1; string last_message_id = 2; }
@@ -169,3 +228,37 @@ message SendVoiceMessageResponse { Message message = 1; }
 
 message MarkVoicePlayedRequest  { string message_id = 1; }
 message MarkVoicePlayedResponse {}
+
+// --- S13 — reactions, forwards, search ---
+
+message AddReactionRequest {
+  string message_id = 1;
+  string emoji      = 2;
+}
+message AddReactionResponse {}
+
+message RemoveReactionRequest {
+  string message_id = 1;
+  string emoji      = 2;
+}
+message RemoveReactionResponse {}
+
+message ListReactionsRequest  { string message_id = 1; }
+message ListReactionsResponse { repeated Reaction reactions = 1; }
+
+message ForwardMessageRequest {
+  string source_message_id      = 1;
+  string target_conversation_id = 2;
+}
+message ForwardMessageResponse { Message message = 1; }
+
+message SearchMessagesRequest {
+  string query = 1;
+  // Optional. If set, search is scoped to this conversation. Otherwise the
+  // search covers every conversation the caller is a member of.
+  string conversation_id = 2;
+  int32  limit           = 3;
+  // Cursor for paging older matches. Returns rows older than this message id.
+  string before_id       = 4;
+}
+message SearchMessagesResponse { repeated Message messages = 1; bool has_more = 2; }

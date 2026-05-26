@@ -1,0 +1,49 @@
+syntax = "proto3";
+package quick.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// IdentityKey is the per-user long-term X25519 public key. The matching
+// private key never leaves the device — it's stored client-side in OS
+// keyring (flutter_secure_storage on desktop, IndexedDB on web).
+//
+// Backend stores only the public key; it cannot read any message ciphertext.
+message IdentityKey {
+  string user_id    = 1;
+  bytes  public_key = 2;     // 32-byte raw X25519 public key
+  google.protobuf.Timestamp created_at = 3;
+}
+
+// EncryptedPayload is the wire shape for AES-256-GCM-sealed message bodies.
+// AAD binds the sender_id + conversation_id + created_at so a replay or
+// cross-conversation splice is rejected by the recipient's GCM verifier.
+//
+// nonce is 12 bytes (random per message). ciphertext includes the 16-byte
+// GCM tag at the tail.
+//
+// sender_key_id is a short opaque label identifying which key bundle slot
+// this payload was sealed against — clients keep a small LRU and rotate by
+// re-uploading a new bundle when needed.
+message EncryptedPayload {
+  bytes  ciphertext     = 1;
+  bytes  nonce          = 2;
+  string sender_key_id  = 3;
+}
+
+// GroupKeyBundle is the per-conversation symmetric key wrapped to every
+// member's identity public key. Each `ciphertext_per_member` value is the
+// AES-GCM ciphertext + GCM tag of the 32-byte group key, sealed under a
+// key derived via ECDH(uploader_priv, member_pub).
+//
+// nonce is shared across all per-member slots (each slot uses a fresh
+// derived key, so the same nonce reuse across slots is safe).
+//
+// The uploader must be a current member with a known identity key. The
+// bundle is replaced wholesale on membership changes — there's no
+// incremental update RPC in this iteration.
+message GroupKeyBundle {
+  string conversation_id              = 1;
+  map<string, bytes> ciphertext_per_member = 2;   // key=user_id, value=wrapped-32B-key
+  bytes  nonce                        = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}

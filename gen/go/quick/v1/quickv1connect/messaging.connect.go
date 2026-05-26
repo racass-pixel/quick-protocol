@@ -83,6 +83,19 @@ const (
 	// MessagingMarkVoicePlayedProcedure is the fully-qualified name of the Messaging's MarkVoicePlayed
 	// RPC.
 	MessagingMarkVoicePlayedProcedure = "/quick.v1.Messaging/MarkVoicePlayed"
+	// MessagingAddReactionProcedure is the fully-qualified name of the Messaging's AddReaction RPC.
+	MessagingAddReactionProcedure = "/quick.v1.Messaging/AddReaction"
+	// MessagingRemoveReactionProcedure is the fully-qualified name of the Messaging's RemoveReaction
+	// RPC.
+	MessagingRemoveReactionProcedure = "/quick.v1.Messaging/RemoveReaction"
+	// MessagingListReactionsProcedure is the fully-qualified name of the Messaging's ListReactions RPC.
+	MessagingListReactionsProcedure = "/quick.v1.Messaging/ListReactions"
+	// MessagingForwardMessageProcedure is the fully-qualified name of the Messaging's ForwardMessage
+	// RPC.
+	MessagingForwardMessageProcedure = "/quick.v1.Messaging/ForwardMessage"
+	// MessagingSearchMessagesProcedure is the fully-qualified name of the Messaging's SearchMessages
+	// RPC.
+	MessagingSearchMessagesProcedure = "/quick.v1.Messaging/SearchMessages"
 )
 
 // MessagingClient is a client for the quick.v1.Messaging service.
@@ -113,6 +126,12 @@ type MessagingClient interface {
 	// which writes a kind='voice' message into the thread referencing the file_id.
 	SendVoiceMessage(context.Context, *connect.Request[v1.SendVoiceMessageRequest]) (*connect.Response[v1.SendVoiceMessageResponse], error)
 	MarkVoicePlayed(context.Context, *connect.Request[v1.MarkVoicePlayedRequest]) (*connect.Response[v1.MarkVoicePlayedResponse], error)
+	// S13 — replies, reactions, forwards, attachments, full-text search.
+	AddReaction(context.Context, *connect.Request[v1.AddReactionRequest]) (*connect.Response[v1.AddReactionResponse], error)
+	RemoveReaction(context.Context, *connect.Request[v1.RemoveReactionRequest]) (*connect.Response[v1.RemoveReactionResponse], error)
+	ListReactions(context.Context, *connect.Request[v1.ListReactionsRequest]) (*connect.Response[v1.ListReactionsResponse], error)
+	ForwardMessage(context.Context, *connect.Request[v1.ForwardMessageRequest]) (*connect.Response[v1.ForwardMessageResponse], error)
+	SearchMessages(context.Context, *connect.Request[v1.SearchMessagesRequest]) (*connect.Response[v1.SearchMessagesResponse], error)
 }
 
 // NewMessagingClient constructs a client for the quick.v1.Messaging service. By default, it uses
@@ -252,6 +271,36 @@ func NewMessagingClient(httpClient connect.HTTPClient, baseURL string, opts ...c
 			connect.WithSchema(messagingMethods.ByName("MarkVoicePlayed")),
 			connect.WithClientOptions(opts...),
 		),
+		addReaction: connect.NewClient[v1.AddReactionRequest, v1.AddReactionResponse](
+			httpClient,
+			baseURL+MessagingAddReactionProcedure,
+			connect.WithSchema(messagingMethods.ByName("AddReaction")),
+			connect.WithClientOptions(opts...),
+		),
+		removeReaction: connect.NewClient[v1.RemoveReactionRequest, v1.RemoveReactionResponse](
+			httpClient,
+			baseURL+MessagingRemoveReactionProcedure,
+			connect.WithSchema(messagingMethods.ByName("RemoveReaction")),
+			connect.WithClientOptions(opts...),
+		),
+		listReactions: connect.NewClient[v1.ListReactionsRequest, v1.ListReactionsResponse](
+			httpClient,
+			baseURL+MessagingListReactionsProcedure,
+			connect.WithSchema(messagingMethods.ByName("ListReactions")),
+			connect.WithClientOptions(opts...),
+		),
+		forwardMessage: connect.NewClient[v1.ForwardMessageRequest, v1.ForwardMessageResponse](
+			httpClient,
+			baseURL+MessagingForwardMessageProcedure,
+			connect.WithSchema(messagingMethods.ByName("ForwardMessage")),
+			connect.WithClientOptions(opts...),
+		),
+		searchMessages: connect.NewClient[v1.SearchMessagesRequest, v1.SearchMessagesResponse](
+			httpClient,
+			baseURL+MessagingSearchMessagesProcedure,
+			connect.WithSchema(messagingMethods.ByName("SearchMessages")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -278,6 +327,11 @@ type messagingClient struct {
 	unpinConversation  *connect.Client[v1.UnpinConversationRequest, v1.UnpinConversationResponse]
 	sendVoiceMessage   *connect.Client[v1.SendVoiceMessageRequest, v1.SendVoiceMessageResponse]
 	markVoicePlayed    *connect.Client[v1.MarkVoicePlayedRequest, v1.MarkVoicePlayedResponse]
+	addReaction        *connect.Client[v1.AddReactionRequest, v1.AddReactionResponse]
+	removeReaction     *connect.Client[v1.RemoveReactionRequest, v1.RemoveReactionResponse]
+	listReactions      *connect.Client[v1.ListReactionsRequest, v1.ListReactionsResponse]
+	forwardMessage     *connect.Client[v1.ForwardMessageRequest, v1.ForwardMessageResponse]
+	searchMessages     *connect.Client[v1.SearchMessagesRequest, v1.SearchMessagesResponse]
 }
 
 // ListConversations calls quick.v1.Messaging.ListConversations.
@@ -385,6 +439,31 @@ func (c *messagingClient) MarkVoicePlayed(ctx context.Context, req *connect.Requ
 	return c.markVoicePlayed.CallUnary(ctx, req)
 }
 
+// AddReaction calls quick.v1.Messaging.AddReaction.
+func (c *messagingClient) AddReaction(ctx context.Context, req *connect.Request[v1.AddReactionRequest]) (*connect.Response[v1.AddReactionResponse], error) {
+	return c.addReaction.CallUnary(ctx, req)
+}
+
+// RemoveReaction calls quick.v1.Messaging.RemoveReaction.
+func (c *messagingClient) RemoveReaction(ctx context.Context, req *connect.Request[v1.RemoveReactionRequest]) (*connect.Response[v1.RemoveReactionResponse], error) {
+	return c.removeReaction.CallUnary(ctx, req)
+}
+
+// ListReactions calls quick.v1.Messaging.ListReactions.
+func (c *messagingClient) ListReactions(ctx context.Context, req *connect.Request[v1.ListReactionsRequest]) (*connect.Response[v1.ListReactionsResponse], error) {
+	return c.listReactions.CallUnary(ctx, req)
+}
+
+// ForwardMessage calls quick.v1.Messaging.ForwardMessage.
+func (c *messagingClient) ForwardMessage(ctx context.Context, req *connect.Request[v1.ForwardMessageRequest]) (*connect.Response[v1.ForwardMessageResponse], error) {
+	return c.forwardMessage.CallUnary(ctx, req)
+}
+
+// SearchMessages calls quick.v1.Messaging.SearchMessages.
+func (c *messagingClient) SearchMessages(ctx context.Context, req *connect.Request[v1.SearchMessagesRequest]) (*connect.Response[v1.SearchMessagesResponse], error) {
+	return c.searchMessages.CallUnary(ctx, req)
+}
+
 // MessagingHandler is an implementation of the quick.v1.Messaging service.
 type MessagingHandler interface {
 	ListConversations(context.Context, *connect.Request[v1.ListConversationsRequest]) (*connect.Response[v1.ListConversationsResponse], error)
@@ -413,6 +492,12 @@ type MessagingHandler interface {
 	// which writes a kind='voice' message into the thread referencing the file_id.
 	SendVoiceMessage(context.Context, *connect.Request[v1.SendVoiceMessageRequest]) (*connect.Response[v1.SendVoiceMessageResponse], error)
 	MarkVoicePlayed(context.Context, *connect.Request[v1.MarkVoicePlayedRequest]) (*connect.Response[v1.MarkVoicePlayedResponse], error)
+	// S13 — replies, reactions, forwards, attachments, full-text search.
+	AddReaction(context.Context, *connect.Request[v1.AddReactionRequest]) (*connect.Response[v1.AddReactionResponse], error)
+	RemoveReaction(context.Context, *connect.Request[v1.RemoveReactionRequest]) (*connect.Response[v1.RemoveReactionResponse], error)
+	ListReactions(context.Context, *connect.Request[v1.ListReactionsRequest]) (*connect.Response[v1.ListReactionsResponse], error)
+	ForwardMessage(context.Context, *connect.Request[v1.ForwardMessageRequest]) (*connect.Response[v1.ForwardMessageResponse], error)
+	SearchMessages(context.Context, *connect.Request[v1.SearchMessagesRequest]) (*connect.Response[v1.SearchMessagesResponse], error)
 }
 
 // NewMessagingHandler builds an HTTP handler from the service implementation. It returns the path
@@ -548,6 +633,36 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 		connect.WithSchema(messagingMethods.ByName("MarkVoicePlayed")),
 		connect.WithHandlerOptions(opts...),
 	)
+	messagingAddReactionHandler := connect.NewUnaryHandler(
+		MessagingAddReactionProcedure,
+		svc.AddReaction,
+		connect.WithSchema(messagingMethods.ByName("AddReaction")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingRemoveReactionHandler := connect.NewUnaryHandler(
+		MessagingRemoveReactionProcedure,
+		svc.RemoveReaction,
+		connect.WithSchema(messagingMethods.ByName("RemoveReaction")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingListReactionsHandler := connect.NewUnaryHandler(
+		MessagingListReactionsProcedure,
+		svc.ListReactions,
+		connect.WithSchema(messagingMethods.ByName("ListReactions")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingForwardMessageHandler := connect.NewUnaryHandler(
+		MessagingForwardMessageProcedure,
+		svc.ForwardMessage,
+		connect.WithSchema(messagingMethods.ByName("ForwardMessage")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingSearchMessagesHandler := connect.NewUnaryHandler(
+		MessagingSearchMessagesProcedure,
+		svc.SearchMessages,
+		connect.WithSchema(messagingMethods.ByName("SearchMessages")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Messaging/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case MessagingListConversationsProcedure:
@@ -592,6 +707,16 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 			messagingSendVoiceMessageHandler.ServeHTTP(w, r)
 		case MessagingMarkVoicePlayedProcedure:
 			messagingMarkVoicePlayedHandler.ServeHTTP(w, r)
+		case MessagingAddReactionProcedure:
+			messagingAddReactionHandler.ServeHTTP(w, r)
+		case MessagingRemoveReactionProcedure:
+			messagingRemoveReactionHandler.ServeHTTP(w, r)
+		case MessagingListReactionsProcedure:
+			messagingListReactionsHandler.ServeHTTP(w, r)
+		case MessagingForwardMessageProcedure:
+			messagingForwardMessageHandler.ServeHTTP(w, r)
+		case MessagingSearchMessagesProcedure:
+			messagingSearchMessagesHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -683,4 +808,24 @@ func (UnimplementedMessagingHandler) SendVoiceMessage(context.Context, *connect.
 
 func (UnimplementedMessagingHandler) MarkVoicePlayed(context.Context, *connect.Request[v1.MarkVoicePlayedRequest]) (*connect.Response[v1.MarkVoicePlayedResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.MarkVoicePlayed is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) AddReaction(context.Context, *connect.Request[v1.AddReactionRequest]) (*connect.Response[v1.AddReactionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.AddReaction is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) RemoveReaction(context.Context, *connect.Request[v1.RemoveReactionRequest]) (*connect.Response[v1.RemoveReactionResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.RemoveReaction is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) ListReactions(context.Context, *connect.Request[v1.ListReactionsRequest]) (*connect.Response[v1.ListReactionsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.ListReactions is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) ForwardMessage(context.Context, *connect.Request[v1.ForwardMessageRequest]) (*connect.Response[v1.ForwardMessageResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.ForwardMessage is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) SearchMessages(context.Context, *connect.Request[v1.SearchMessagesRequest]) (*connect.Response[v1.SearchMessagesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.SearchMessages is not implemented"))
 }

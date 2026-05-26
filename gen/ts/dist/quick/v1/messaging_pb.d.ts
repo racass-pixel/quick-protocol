@@ -87,12 +87,127 @@ export type Message = Message$1<"quick.v1.Message"> & {
      * @generated from field: quick.v1.Voice voice = 6;
      */
     voice?: Voice | undefined;
+    /**
+     * S13 — reply quote. When set, this message is a reply to another message
+     * in the same conversation. Client renders an inline preview.
+     *
+     * @generated from field: string reply_to_message_id = 7;
+     */
+    replyToMessageId: string;
+    /**
+     * S13 — reactions on this message. Populated by ListMessages / SendMessage
+     * / WS message envelopes. One entry per (user_id, emoji) pair.
+     *
+     * @generated from field: repeated quick.v1.Reaction reactions = 8;
+     */
+    reactions: Reaction[];
+    /**
+     * S13 — forward attribution. Populated when this message was forwarded from
+     * another message. Telegram-style: only one level deep — forwarding an
+     * already-forwarded message preserves the ORIGINAL forward_from_* values.
+     *
+     * @generated from field: string forward_from_user_id = 9;
+     */
+    forwardFromUserId: string;
+    /**
+     * @generated from field: string forward_from_message_id = 10;
+     */
+    forwardFromMessageId: string;
+    /**
+     * forward_origin_text is a pre-formatted attribution string the client can
+     * render directly (e.g. "Forwarded from @handle"). Empty when not a forward.
+     *
+     * @generated from field: string forward_origin_text = 11;
+     */
+    forwardOriginText: string;
+    /**
+     * S13 — generic attachments (images, files). Voice still uses the dedicated
+     * Voice field for backward compatibility; attachments is for everything else.
+     *
+     * @generated from field: repeated quick.v1.Attachment attachments = 12;
+     */
+    attachments: Attachment[];
 };
 /**
  * Describes the message quick.v1.Message.
  * Use `create(MessageSchema)` to create a new message.
  */
 export declare const MessageSchema: GenMessage<Message>;
+/**
+ * @generated from message quick.v1.Reaction
+ */
+export type Reaction = Message$1<"quick.v1.Reaction"> & {
+    /**
+     * @generated from field: string user_id = 1;
+     */
+    userId: string;
+    /**
+     * @generated from field: string emoji = 2;
+     */
+    emoji: string;
+};
+/**
+ * Describes the message quick.v1.Reaction.
+ * Use `create(ReactionSchema)` to create a new message.
+ */
+export declare const ReactionSchema: GenMessage<Reaction>;
+/**
+ * @generated from message quick.v1.Attachment
+ */
+export type Attachment = Message$1<"quick.v1.Attachment"> & {
+    /**
+     * @generated from field: string file_id = 1;
+     */
+    fileId: string;
+    /**
+     * kind: "image" | "file" | "voice" (voice mirrored here for completeness).
+     *
+     * @generated from field: string kind = 2;
+     */
+    kind: string;
+    /**
+     * @generated from field: string mime = 3;
+     */
+    mime: string;
+    /**
+     * @generated from field: int64 size_bytes = 4;
+     */
+    sizeBytes: bigint;
+    /**
+     * Set for kind="image". Original-image dimensions in pixels.
+     *
+     * @generated from field: int32 width = 5;
+     */
+    width: number;
+    /**
+     * @generated from field: int32 height = 6;
+     */
+    height: number;
+    /**
+     * Signed URL for the original blob (used by client to render / download).
+     *
+     * @generated from field: string url = 7;
+     */
+    url: string;
+    /**
+     * Signed URL of the 256-wide JPEG thumbnail. Only set for kind="image".
+     *
+     * @generated from field: string thumbnail_url = 8;
+     */
+    thumbnailUrl: string;
+    /**
+     * Display filename (the original upload filename). Set primarily for
+     * kind="file".
+     *
+     * @generated from field: string filename = 9;
+     */
+    filename: string;
+};
+/**
+ * Describes the message quick.v1.Attachment.
+ * Use `create(AttachmentSchema)` to create a new message.
+ */
+export declare const AttachmentSchema: GenMessage<Attachment>;
 /**
  * @generated from message quick.v1.Voice
  */
@@ -245,6 +360,19 @@ export type SendMessageRequest = Message$1<"quick.v1.SendMessageRequest"> & {
      * @generated from field: string body = 2;
      */
     body: string;
+    /**
+     * S13. Optional. If set, must reference a message in the same conversation.
+     *
+     * @generated from field: string reply_to_message_id = 3;
+     */
+    replyToMessageId: string;
+    /**
+     * S13. Optional. Ids of previously-uploaded media_attachments rows owned by
+     * the caller. Used for image/file attachments.
+     *
+     * @generated from field: repeated string attachment_file_ids = 4;
+     */
+    attachmentFileIds: string[];
 };
 /**
  * Describes the message quick.v1.SendMessageRequest.
@@ -767,6 +895,169 @@ export type MarkVoicePlayedResponse = Message$1<"quick.v1.MarkVoicePlayedRespons
  */
 export declare const MarkVoicePlayedResponseSchema: GenMessage<MarkVoicePlayedResponse>;
 /**
+ * @generated from message quick.v1.AddReactionRequest
+ */
+export type AddReactionRequest = Message$1<"quick.v1.AddReactionRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+    /**
+     * @generated from field: string emoji = 2;
+     */
+    emoji: string;
+};
+/**
+ * Describes the message quick.v1.AddReactionRequest.
+ * Use `create(AddReactionRequestSchema)` to create a new message.
+ */
+export declare const AddReactionRequestSchema: GenMessage<AddReactionRequest>;
+/**
+ * @generated from message quick.v1.AddReactionResponse
+ */
+export type AddReactionResponse = Message$1<"quick.v1.AddReactionResponse"> & {};
+/**
+ * Describes the message quick.v1.AddReactionResponse.
+ * Use `create(AddReactionResponseSchema)` to create a new message.
+ */
+export declare const AddReactionResponseSchema: GenMessage<AddReactionResponse>;
+/**
+ * @generated from message quick.v1.RemoveReactionRequest
+ */
+export type RemoveReactionRequest = Message$1<"quick.v1.RemoveReactionRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+    /**
+     * @generated from field: string emoji = 2;
+     */
+    emoji: string;
+};
+/**
+ * Describes the message quick.v1.RemoveReactionRequest.
+ * Use `create(RemoveReactionRequestSchema)` to create a new message.
+ */
+export declare const RemoveReactionRequestSchema: GenMessage<RemoveReactionRequest>;
+/**
+ * @generated from message quick.v1.RemoveReactionResponse
+ */
+export type RemoveReactionResponse = Message$1<"quick.v1.RemoveReactionResponse"> & {};
+/**
+ * Describes the message quick.v1.RemoveReactionResponse.
+ * Use `create(RemoveReactionResponseSchema)` to create a new message.
+ */
+export declare const RemoveReactionResponseSchema: GenMessage<RemoveReactionResponse>;
+/**
+ * @generated from message quick.v1.ListReactionsRequest
+ */
+export type ListReactionsRequest = Message$1<"quick.v1.ListReactionsRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+};
+/**
+ * Describes the message quick.v1.ListReactionsRequest.
+ * Use `create(ListReactionsRequestSchema)` to create a new message.
+ */
+export declare const ListReactionsRequestSchema: GenMessage<ListReactionsRequest>;
+/**
+ * @generated from message quick.v1.ListReactionsResponse
+ */
+export type ListReactionsResponse = Message$1<"quick.v1.ListReactionsResponse"> & {
+    /**
+     * @generated from field: repeated quick.v1.Reaction reactions = 1;
+     */
+    reactions: Reaction[];
+};
+/**
+ * Describes the message quick.v1.ListReactionsResponse.
+ * Use `create(ListReactionsResponseSchema)` to create a new message.
+ */
+export declare const ListReactionsResponseSchema: GenMessage<ListReactionsResponse>;
+/**
+ * @generated from message quick.v1.ForwardMessageRequest
+ */
+export type ForwardMessageRequest = Message$1<"quick.v1.ForwardMessageRequest"> & {
+    /**
+     * @generated from field: string source_message_id = 1;
+     */
+    sourceMessageId: string;
+    /**
+     * @generated from field: string target_conversation_id = 2;
+     */
+    targetConversationId: string;
+};
+/**
+ * Describes the message quick.v1.ForwardMessageRequest.
+ * Use `create(ForwardMessageRequestSchema)` to create a new message.
+ */
+export declare const ForwardMessageRequestSchema: GenMessage<ForwardMessageRequest>;
+/**
+ * @generated from message quick.v1.ForwardMessageResponse
+ */
+export type ForwardMessageResponse = Message$1<"quick.v1.ForwardMessageResponse"> & {
+    /**
+     * @generated from field: quick.v1.Message message = 1;
+     */
+    message?: Message | undefined;
+};
+/**
+ * Describes the message quick.v1.ForwardMessageResponse.
+ * Use `create(ForwardMessageResponseSchema)` to create a new message.
+ */
+export declare const ForwardMessageResponseSchema: GenMessage<ForwardMessageResponse>;
+/**
+ * @generated from message quick.v1.SearchMessagesRequest
+ */
+export type SearchMessagesRequest = Message$1<"quick.v1.SearchMessagesRequest"> & {
+    /**
+     * @generated from field: string query = 1;
+     */
+    query: string;
+    /**
+     * Optional. If set, search is scoped to this conversation. Otherwise the
+     * search covers every conversation the caller is a member of.
+     *
+     * @generated from field: string conversation_id = 2;
+     */
+    conversationId: string;
+    /**
+     * @generated from field: int32 limit = 3;
+     */
+    limit: number;
+    /**
+     * Cursor for paging older matches. Returns rows older than this message id.
+     *
+     * @generated from field: string before_id = 4;
+     */
+    beforeId: string;
+};
+/**
+ * Describes the message quick.v1.SearchMessagesRequest.
+ * Use `create(SearchMessagesRequestSchema)` to create a new message.
+ */
+export declare const SearchMessagesRequestSchema: GenMessage<SearchMessagesRequest>;
+/**
+ * @generated from message quick.v1.SearchMessagesResponse
+ */
+export type SearchMessagesResponse = Message$1<"quick.v1.SearchMessagesResponse"> & {
+    /**
+     * @generated from field: repeated quick.v1.Message messages = 1;
+     */
+    messages: Message[];
+    /**
+     * @generated from field: bool has_more = 2;
+     */
+    hasMore: boolean;
+};
+/**
+ * Describes the message quick.v1.SearchMessagesResponse.
+ * Use `create(SearchMessagesResponseSchema)` to create a new message.
+ */
+export declare const SearchMessagesResponseSchema: GenMessage<SearchMessagesResponse>;
+/**
  * @generated from service quick.v1.Messaging
  */
 export declare const Messaging: GenService<{
@@ -944,5 +1235,47 @@ export declare const Messaging: GenService<{
         methodKind: "unary";
         input: typeof MarkVoicePlayedRequestSchema;
         output: typeof MarkVoicePlayedResponseSchema;
+    };
+    /**
+     * S13 — replies, reactions, forwards, attachments, full-text search.
+     *
+     * @generated from rpc quick.v1.Messaging.AddReaction
+     */
+    addReaction: {
+        methodKind: "unary";
+        input: typeof AddReactionRequestSchema;
+        output: typeof AddReactionResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.RemoveReaction
+     */
+    removeReaction: {
+        methodKind: "unary";
+        input: typeof RemoveReactionRequestSchema;
+        output: typeof RemoveReactionResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.ListReactions
+     */
+    listReactions: {
+        methodKind: "unary";
+        input: typeof ListReactionsRequestSchema;
+        output: typeof ListReactionsResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.ForwardMessage
+     */
+    forwardMessage: {
+        methodKind: "unary";
+        input: typeof ForwardMessageRequestSchema;
+        output: typeof ForwardMessageResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.SearchMessages
+     */
+    searchMessages: {
+        methodKind: "unary";
+        input: typeof SearchMessagesRequestSchema;
+        output: typeof SearchMessagesResponseSchema;
     };
 }>;
