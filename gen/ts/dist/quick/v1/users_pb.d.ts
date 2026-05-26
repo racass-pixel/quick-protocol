@@ -29,6 +29,10 @@ export type User = Message<"quick.v1.User"> & {
      * @generated from field: google.protobuf.Timestamp last_seen_at = 5;
      */
     lastSeenAt?: Timestamp | undefined;
+    /**
+     * @generated from field: string bio = 6;
+     */
+    bio: string;
 };
 /**
  * Describes the message quick.v1.User.
@@ -70,6 +74,10 @@ export type UpdateProfileRequest = Message<"quick.v1.UpdateProfileRequest"> & {
      * @generated from field: optional string handle = 2;
      */
     handle?: string | undefined;
+    /**
+     * @generated from field: optional string bio = 3;
+     */
+    bio?: string | undefined;
 };
 /**
  * Describes the message quick.v1.UpdateProfileRequest.
