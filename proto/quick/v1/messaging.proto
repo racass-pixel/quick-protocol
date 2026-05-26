@@ -44,7 +44,16 @@ message OpenDMResponse { Conversation conversation = 1; }
 message ListConversationsRequest  {}
 message ListConversationsResponse { repeated Conversation conversations = 1; }
 
-message ListMessagesRequest  { string conversation_id = 1; string before_id = 2; int32 limit = 3; }
+// before_id and after_id are mutually exclusive cursor controls.
+// before_id loads older messages (paging upward through history).
+// after_id loads newer messages (catching up on missed messages).
+// Both absent = newest page.
+message ListMessagesRequest  {
+  string conversation_id = 1;
+  string before_id       = 2;
+  int32  limit           = 3;
+  string after_id        = 4;
+}
 message ListMessagesResponse { repeated Message messages = 1; bool has_more = 2; }
 
 message SendMessageRequest  { string conversation_id = 1; string body = 2; }

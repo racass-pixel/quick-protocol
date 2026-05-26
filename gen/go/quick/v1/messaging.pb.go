@@ -382,11 +382,16 @@ func (x *ListConversationsResponse) GetConversations() []*Conversation {
 	return nil
 }
 
+// before_id and after_id are mutually exclusive cursor controls.
+// before_id loads older messages (paging upward through history).
+// after_id loads newer messages (catching up on missed messages).
+// Both absent = newest page.
 type ListMessagesRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
 	BeforeId       string                 `protobuf:"bytes,2,opt,name=before_id,json=beforeId,proto3" json:"before_id,omitempty"`
 	Limit          int32                  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	AfterId        string                 `protobuf:"bytes,4,opt,name=after_id,json=afterId,proto3" json:"after_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -440,6 +445,13 @@ func (x *ListMessagesRequest) GetLimit() int32 {
 		return x.Limit
 	}
 	return 0
+}
+
+func (x *ListMessagesRequest) GetAfterId() string {
+	if x != nil {
+		return x.AfterId
+	}
+	return ""
 }
 
 type ListMessagesResponse struct {
@@ -1304,11 +1316,12 @@ const file_quick_v1_messaging_proto_rawDesc = "" +
 	"\fconversation\x18\x01 \x01(\v2\x16.quick.v1.ConversationR\fconversation\"\x1a\n" +
 	"\x18ListConversationsRequest\"Y\n" +
 	"\x19ListConversationsResponse\x12<\n" +
-	"\rconversations\x18\x01 \x03(\v2\x16.quick.v1.ConversationR\rconversations\"q\n" +
+	"\rconversations\x18\x01 \x03(\v2\x16.quick.v1.ConversationR\rconversations\"\x8c\x01\n" +
 	"\x13ListMessagesRequest\x12'\n" +
 	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12\x1b\n" +
 	"\tbefore_id\x18\x02 \x01(\tR\bbeforeId\x12\x14\n" +
-	"\x05limit\x18\x03 \x01(\x05R\x05limit\"`\n" +
+	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12\x19\n" +
+	"\bafter_id\x18\x04 \x01(\tR\aafterId\"`\n" +
 	"\x14ListMessagesResponse\x12-\n" +
 	"\bmessages\x18\x01 \x03(\v2\x11.quick.v1.MessageR\bmessages\x12\x19\n" +
 	"\bhas_more\x18\x02 \x01(\bR\ahasMore\"Q\n" +

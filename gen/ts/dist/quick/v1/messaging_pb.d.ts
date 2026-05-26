@@ -138,6 +138,11 @@ export type ListConversationsResponse = Message$1<"quick.v1.ListConversationsRes
  */
 export declare const ListConversationsResponseSchema: GenMessage<ListConversationsResponse>;
 /**
+ * before_id and after_id are mutually exclusive cursor controls.
+ * before_id loads older messages (paging upward through history).
+ * after_id loads newer messages (catching up on missed messages).
+ * Both absent = newest page.
+ *
  * @generated from message quick.v1.ListMessagesRequest
  */
 export type ListMessagesRequest = Message$1<"quick.v1.ListMessagesRequest"> & {
@@ -153,6 +158,10 @@ export type ListMessagesRequest = Message$1<"quick.v1.ListMessagesRequest"> & {
      * @generated from field: int32 limit = 3;
      */
     limit: number;
+    /**
+     * @generated from field: string after_id = 4;
+     */
+    afterId: string;
 };
 /**
  * Describes the message quick.v1.ListMessagesRequest.
