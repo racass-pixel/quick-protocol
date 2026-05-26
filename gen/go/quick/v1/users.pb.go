@@ -29,6 +29,7 @@ type User struct {
 	DisplayName   string                 `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
 	AvatarColor   string                 `protobuf:"bytes,4,opt,name=avatar_color,json=avatarColor,proto3" json:"avatar_color,omitempty"`
 	LastSeenAt    *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=last_seen_at,json=lastSeenAt,proto3" json:"last_seen_at,omitempty"`
+	Bio           string                 `protobuf:"bytes,6,opt,name=bio,proto3" json:"bio,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -96,6 +97,13 @@ func (x *User) GetLastSeenAt() *timestamppb.Timestamp {
 		return x.LastSeenAt
 	}
 	return nil
+}
+
+func (x *User) GetBio() string {
+	if x != nil {
+		return x.Bio
+	}
+	return ""
 }
 
 type MeRequest struct {
@@ -182,6 +190,7 @@ type UpdateProfileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DisplayName   *string                `protobuf:"bytes,1,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
 	Handle        *string                `protobuf:"bytes,2,opt,name=handle,proto3,oneof" json:"handle,omitempty"`
+	Bio           *string                `protobuf:"bytes,3,opt,name=bio,proto3,oneof" json:"bio,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -226,6 +235,13 @@ func (x *UpdateProfileRequest) GetDisplayName() string {
 func (x *UpdateProfileRequest) GetHandle() string {
 	if x != nil && x.Handle != nil {
 		return *x.Handle
+	}
+	return ""
+}
+
+func (x *UpdateProfileRequest) GetBio() string {
+	if x != nil && x.Bio != nil {
+		return *x.Bio
 	}
 	return ""
 }
@@ -762,23 +778,26 @@ var File_quick_v1_users_proto protoreflect.FileDescriptor
 
 const file_quick_v1_users_proto_rawDesc = "" +
 	"\n" +
-	"\x14quick/v1/users.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb2\x01\n" +
+	"\x14quick/v1/users.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc4\x01\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06handle\x18\x02 \x01(\tR\x06handle\x12!\n" +
 	"\fdisplay_name\x18\x03 \x01(\tR\vdisplayName\x12!\n" +
 	"\favatar_color\x18\x04 \x01(\tR\vavatarColor\x12<\n" +
 	"\flast_seen_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"lastSeenAt\"\v\n" +
+	"lastSeenAt\x12\x10\n" +
+	"\x03bio\x18\x06 \x01(\tR\x03bio\"\v\n" +
 	"\tMeRequest\"0\n" +
 	"\n" +
 	"MeResponse\x12\"\n" +
-	"\x04user\x18\x01 \x01(\v2\x0e.quick.v1.UserR\x04user\"w\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.quick.v1.UserR\x04user\"\x96\x01\n" +
 	"\x14UpdateProfileRequest\x12&\n" +
 	"\fdisplay_name\x18\x01 \x01(\tH\x00R\vdisplayName\x88\x01\x01\x12\x1b\n" +
-	"\x06handle\x18\x02 \x01(\tH\x01R\x06handle\x88\x01\x01B\x0f\n" +
+	"\x06handle\x18\x02 \x01(\tH\x01R\x06handle\x88\x01\x01\x12\x15\n" +
+	"\x03bio\x18\x03 \x01(\tH\x02R\x03bio\x88\x01\x01B\x0f\n" +
 	"\r_display_nameB\t\n" +
-	"\a_handle\";\n" +
+	"\a_handleB\x06\n" +
+	"\x04_bio\";\n" +
 	"\x15UpdateProfileResponse\x12\"\n" +
 	"\x04user\x18\x01 \x01(\v2\x0e.quick.v1.UserR\x04user\"J\n" +
 	"\rSearchRequest\x12#\n" +
