@@ -41,14 +41,32 @@ const (
 	CallsDeclineCallProcedure = "/quick.v1.Calls/DeclineCall"
 	// CallsEndCallProcedure is the fully-qualified name of the Calls's EndCall RPC.
 	CallsEndCallProcedure = "/quick.v1.Calls/EndCall"
+	// CallsStartGroupCallProcedure is the fully-qualified name of the Calls's StartGroupCall RPC.
+	CallsStartGroupCallProcedure = "/quick.v1.Calls/StartGroupCall"
+	// CallsJoinGroupCallProcedure is the fully-qualified name of the Calls's JoinGroupCall RPC.
+	CallsJoinGroupCallProcedure = "/quick.v1.Calls/JoinGroupCall"
+	// CallsLeaveGroupCallProcedure is the fully-qualified name of the Calls's LeaveGroupCall RPC.
+	CallsLeaveGroupCallProcedure = "/quick.v1.Calls/LeaveGroupCall"
+	// CallsEndGroupCallProcedure is the fully-qualified name of the Calls's EndGroupCall RPC.
+	CallsEndGroupCallProcedure = "/quick.v1.Calls/EndGroupCall"
+	// CallsListActiveGroupCallsProcedure is the fully-qualified name of the Calls's
+	// ListActiveGroupCalls RPC.
+	CallsListActiveGroupCallsProcedure = "/quick.v1.Calls/ListActiveGroupCalls"
 )
 
 // CallsClient is a client for the quick.v1.Calls service.
 type CallsClient interface {
+	// 1:1 calls (S5-lite — caller rings callee, callee accepts/declines).
 	StartCall(context.Context, *connect.Request[v1.StartCallRequest]) (*connect.Response[v1.StartCallResponse], error)
 	AcceptCall(context.Context, *connect.Request[v1.AcceptCallRequest]) (*connect.Response[v1.AcceptCallResponse], error)
 	DeclineCall(context.Context, *connect.Request[v1.DeclineCallRequest]) (*connect.Response[v1.DeclineCallResponse], error)
 	EndCall(context.Context, *connect.Request[v1.EndCallRequest]) (*connect.Response[v1.EndCallResponse], error)
+	// Group calls (S9 — Telegram-style voice chat, no ring, free join).
+	StartGroupCall(context.Context, *connect.Request[v1.StartGroupCallRequest]) (*connect.Response[v1.StartGroupCallResponse], error)
+	JoinGroupCall(context.Context, *connect.Request[v1.JoinGroupCallRequest]) (*connect.Response[v1.JoinGroupCallResponse], error)
+	LeaveGroupCall(context.Context, *connect.Request[v1.LeaveGroupCallRequest]) (*connect.Response[v1.LeaveGroupCallResponse], error)
+	EndGroupCall(context.Context, *connect.Request[v1.EndGroupCallRequest]) (*connect.Response[v1.EndGroupCallResponse], error)
+	ListActiveGroupCalls(context.Context, *connect.Request[v1.ListActiveGroupCallsRequest]) (*connect.Response[v1.ListActiveGroupCallsResponse], error)
 }
 
 // NewCallsClient constructs a client for the quick.v1.Calls service. By default, it uses the
@@ -86,15 +104,50 @@ func NewCallsClient(httpClient connect.HTTPClient, baseURL string, opts ...conne
 			connect.WithSchema(callsMethods.ByName("EndCall")),
 			connect.WithClientOptions(opts...),
 		),
+		startGroupCall: connect.NewClient[v1.StartGroupCallRequest, v1.StartGroupCallResponse](
+			httpClient,
+			baseURL+CallsStartGroupCallProcedure,
+			connect.WithSchema(callsMethods.ByName("StartGroupCall")),
+			connect.WithClientOptions(opts...),
+		),
+		joinGroupCall: connect.NewClient[v1.JoinGroupCallRequest, v1.JoinGroupCallResponse](
+			httpClient,
+			baseURL+CallsJoinGroupCallProcedure,
+			connect.WithSchema(callsMethods.ByName("JoinGroupCall")),
+			connect.WithClientOptions(opts...),
+		),
+		leaveGroupCall: connect.NewClient[v1.LeaveGroupCallRequest, v1.LeaveGroupCallResponse](
+			httpClient,
+			baseURL+CallsLeaveGroupCallProcedure,
+			connect.WithSchema(callsMethods.ByName("LeaveGroupCall")),
+			connect.WithClientOptions(opts...),
+		),
+		endGroupCall: connect.NewClient[v1.EndGroupCallRequest, v1.EndGroupCallResponse](
+			httpClient,
+			baseURL+CallsEndGroupCallProcedure,
+			connect.WithSchema(callsMethods.ByName("EndGroupCall")),
+			connect.WithClientOptions(opts...),
+		),
+		listActiveGroupCalls: connect.NewClient[v1.ListActiveGroupCallsRequest, v1.ListActiveGroupCallsResponse](
+			httpClient,
+			baseURL+CallsListActiveGroupCallsProcedure,
+			connect.WithSchema(callsMethods.ByName("ListActiveGroupCalls")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // callsClient implements CallsClient.
 type callsClient struct {
-	startCall   *connect.Client[v1.StartCallRequest, v1.StartCallResponse]
-	acceptCall  *connect.Client[v1.AcceptCallRequest, v1.AcceptCallResponse]
-	declineCall *connect.Client[v1.DeclineCallRequest, v1.DeclineCallResponse]
-	endCall     *connect.Client[v1.EndCallRequest, v1.EndCallResponse]
+	startCall            *connect.Client[v1.StartCallRequest, v1.StartCallResponse]
+	acceptCall           *connect.Client[v1.AcceptCallRequest, v1.AcceptCallResponse]
+	declineCall          *connect.Client[v1.DeclineCallRequest, v1.DeclineCallResponse]
+	endCall              *connect.Client[v1.EndCallRequest, v1.EndCallResponse]
+	startGroupCall       *connect.Client[v1.StartGroupCallRequest, v1.StartGroupCallResponse]
+	joinGroupCall        *connect.Client[v1.JoinGroupCallRequest, v1.JoinGroupCallResponse]
+	leaveGroupCall       *connect.Client[v1.LeaveGroupCallRequest, v1.LeaveGroupCallResponse]
+	endGroupCall         *connect.Client[v1.EndGroupCallRequest, v1.EndGroupCallResponse]
+	listActiveGroupCalls *connect.Client[v1.ListActiveGroupCallsRequest, v1.ListActiveGroupCallsResponse]
 }
 
 // StartCall calls quick.v1.Calls.StartCall.
@@ -117,12 +170,44 @@ func (c *callsClient) EndCall(ctx context.Context, req *connect.Request[v1.EndCa
 	return c.endCall.CallUnary(ctx, req)
 }
 
+// StartGroupCall calls quick.v1.Calls.StartGroupCall.
+func (c *callsClient) StartGroupCall(ctx context.Context, req *connect.Request[v1.StartGroupCallRequest]) (*connect.Response[v1.StartGroupCallResponse], error) {
+	return c.startGroupCall.CallUnary(ctx, req)
+}
+
+// JoinGroupCall calls quick.v1.Calls.JoinGroupCall.
+func (c *callsClient) JoinGroupCall(ctx context.Context, req *connect.Request[v1.JoinGroupCallRequest]) (*connect.Response[v1.JoinGroupCallResponse], error) {
+	return c.joinGroupCall.CallUnary(ctx, req)
+}
+
+// LeaveGroupCall calls quick.v1.Calls.LeaveGroupCall.
+func (c *callsClient) LeaveGroupCall(ctx context.Context, req *connect.Request[v1.LeaveGroupCallRequest]) (*connect.Response[v1.LeaveGroupCallResponse], error) {
+	return c.leaveGroupCall.CallUnary(ctx, req)
+}
+
+// EndGroupCall calls quick.v1.Calls.EndGroupCall.
+func (c *callsClient) EndGroupCall(ctx context.Context, req *connect.Request[v1.EndGroupCallRequest]) (*connect.Response[v1.EndGroupCallResponse], error) {
+	return c.endGroupCall.CallUnary(ctx, req)
+}
+
+// ListActiveGroupCalls calls quick.v1.Calls.ListActiveGroupCalls.
+func (c *callsClient) ListActiveGroupCalls(ctx context.Context, req *connect.Request[v1.ListActiveGroupCallsRequest]) (*connect.Response[v1.ListActiveGroupCallsResponse], error) {
+	return c.listActiveGroupCalls.CallUnary(ctx, req)
+}
+
 // CallsHandler is an implementation of the quick.v1.Calls service.
 type CallsHandler interface {
+	// 1:1 calls (S5-lite — caller rings callee, callee accepts/declines).
 	StartCall(context.Context, *connect.Request[v1.StartCallRequest]) (*connect.Response[v1.StartCallResponse], error)
 	AcceptCall(context.Context, *connect.Request[v1.AcceptCallRequest]) (*connect.Response[v1.AcceptCallResponse], error)
 	DeclineCall(context.Context, *connect.Request[v1.DeclineCallRequest]) (*connect.Response[v1.DeclineCallResponse], error)
 	EndCall(context.Context, *connect.Request[v1.EndCallRequest]) (*connect.Response[v1.EndCallResponse], error)
+	// Group calls (S9 — Telegram-style voice chat, no ring, free join).
+	StartGroupCall(context.Context, *connect.Request[v1.StartGroupCallRequest]) (*connect.Response[v1.StartGroupCallResponse], error)
+	JoinGroupCall(context.Context, *connect.Request[v1.JoinGroupCallRequest]) (*connect.Response[v1.JoinGroupCallResponse], error)
+	LeaveGroupCall(context.Context, *connect.Request[v1.LeaveGroupCallRequest]) (*connect.Response[v1.LeaveGroupCallResponse], error)
+	EndGroupCall(context.Context, *connect.Request[v1.EndGroupCallRequest]) (*connect.Response[v1.EndGroupCallResponse], error)
+	ListActiveGroupCalls(context.Context, *connect.Request[v1.ListActiveGroupCallsRequest]) (*connect.Response[v1.ListActiveGroupCallsResponse], error)
 }
 
 // NewCallsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -156,6 +241,36 @@ func NewCallsHandler(svc CallsHandler, opts ...connect.HandlerOption) (string, h
 		connect.WithSchema(callsMethods.ByName("EndCall")),
 		connect.WithHandlerOptions(opts...),
 	)
+	callsStartGroupCallHandler := connect.NewUnaryHandler(
+		CallsStartGroupCallProcedure,
+		svc.StartGroupCall,
+		connect.WithSchema(callsMethods.ByName("StartGroupCall")),
+		connect.WithHandlerOptions(opts...),
+	)
+	callsJoinGroupCallHandler := connect.NewUnaryHandler(
+		CallsJoinGroupCallProcedure,
+		svc.JoinGroupCall,
+		connect.WithSchema(callsMethods.ByName("JoinGroupCall")),
+		connect.WithHandlerOptions(opts...),
+	)
+	callsLeaveGroupCallHandler := connect.NewUnaryHandler(
+		CallsLeaveGroupCallProcedure,
+		svc.LeaveGroupCall,
+		connect.WithSchema(callsMethods.ByName("LeaveGroupCall")),
+		connect.WithHandlerOptions(opts...),
+	)
+	callsEndGroupCallHandler := connect.NewUnaryHandler(
+		CallsEndGroupCallProcedure,
+		svc.EndGroupCall,
+		connect.WithSchema(callsMethods.ByName("EndGroupCall")),
+		connect.WithHandlerOptions(opts...),
+	)
+	callsListActiveGroupCallsHandler := connect.NewUnaryHandler(
+		CallsListActiveGroupCallsProcedure,
+		svc.ListActiveGroupCalls,
+		connect.WithSchema(callsMethods.ByName("ListActiveGroupCalls")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Calls/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case CallsStartCallProcedure:
@@ -166,6 +281,16 @@ func NewCallsHandler(svc CallsHandler, opts ...connect.HandlerOption) (string, h
 			callsDeclineCallHandler.ServeHTTP(w, r)
 		case CallsEndCallProcedure:
 			callsEndCallHandler.ServeHTTP(w, r)
+		case CallsStartGroupCallProcedure:
+			callsStartGroupCallHandler.ServeHTTP(w, r)
+		case CallsJoinGroupCallProcedure:
+			callsJoinGroupCallHandler.ServeHTTP(w, r)
+		case CallsLeaveGroupCallProcedure:
+			callsLeaveGroupCallHandler.ServeHTTP(w, r)
+		case CallsEndGroupCallProcedure:
+			callsEndGroupCallHandler.ServeHTTP(w, r)
+		case CallsListActiveGroupCallsProcedure:
+			callsListActiveGroupCallsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -189,4 +314,24 @@ func (UnimplementedCallsHandler) DeclineCall(context.Context, *connect.Request[v
 
 func (UnimplementedCallsHandler) EndCall(context.Context, *connect.Request[v1.EndCallRequest]) (*connect.Response[v1.EndCallResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Calls.EndCall is not implemented"))
+}
+
+func (UnimplementedCallsHandler) StartGroupCall(context.Context, *connect.Request[v1.StartGroupCallRequest]) (*connect.Response[v1.StartGroupCallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Calls.StartGroupCall is not implemented"))
+}
+
+func (UnimplementedCallsHandler) JoinGroupCall(context.Context, *connect.Request[v1.JoinGroupCallRequest]) (*connect.Response[v1.JoinGroupCallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Calls.JoinGroupCall is not implemented"))
+}
+
+func (UnimplementedCallsHandler) LeaveGroupCall(context.Context, *connect.Request[v1.LeaveGroupCallRequest]) (*connect.Response[v1.LeaveGroupCallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Calls.LeaveGroupCall is not implemented"))
+}
+
+func (UnimplementedCallsHandler) EndGroupCall(context.Context, *connect.Request[v1.EndGroupCallRequest]) (*connect.Response[v1.EndGroupCallResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Calls.EndGroupCall is not implemented"))
+}
+
+func (UnimplementedCallsHandler) ListActiveGroupCalls(context.Context, *connect.Request[v1.ListActiveGroupCallsRequest]) (*connect.Response[v1.ListActiveGroupCallsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Calls.ListActiveGroupCalls is not implemented"))
 }

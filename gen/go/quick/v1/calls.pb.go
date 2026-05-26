@@ -9,6 +9,7 @@ package quickv1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -433,11 +434,529 @@ func (*EndCallResponse) Descriptor() ([]byte, []int) {
 	return file_quick_v1_calls_proto_rawDescGZIP(), []int{8}
 }
 
+type GroupCall struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ConversationId   string                 `protobuf:"bytes,2,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	StartedBy        string                 `protobuf:"bytes,3,opt,name=started_by,json=startedBy,proto3" json:"started_by,omitempty"`
+	StartedAt        *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
+	RoomName         string                 `protobuf:"bytes,5,opt,name=room_name,json=roomName,proto3" json:"room_name,omitempty"`
+	ParticipantCount int32                  `protobuf:"varint,6,opt,name=participant_count,json=participantCount,proto3" json:"participant_count,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *GroupCall) Reset() {
+	*x = GroupCall{}
+	mi := &file_quick_v1_calls_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GroupCall) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GroupCall) ProtoMessage() {}
+
+func (x *GroupCall) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GroupCall.ProtoReflect.Descriptor instead.
+func (*GroupCall) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GroupCall) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GroupCall) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+func (x *GroupCall) GetStartedBy() string {
+	if x != nil {
+		return x.StartedBy
+	}
+	return ""
+}
+
+func (x *GroupCall) GetStartedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartedAt
+	}
+	return nil
+}
+
+func (x *GroupCall) GetRoomName() string {
+	if x != nil {
+		return x.RoomName
+	}
+	return ""
+}
+
+func (x *GroupCall) GetParticipantCount() int32 {
+	if x != nil {
+		return x.ParticipantCount
+	}
+	return 0
+}
+
+type StartGroupCallRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ConversationId string                 `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *StartGroupCallRequest) Reset() {
+	*x = StartGroupCallRequest{}
+	mi := &file_quick_v1_calls_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartGroupCallRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartGroupCallRequest) ProtoMessage() {}
+
+func (x *StartGroupCallRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartGroupCallRequest.ProtoReflect.Descriptor instead.
+func (*StartGroupCallRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *StartGroupCallRequest) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+type StartGroupCallResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Call          *GroupCall             `protobuf:"bytes,1,opt,name=call,proto3" json:"call,omitempty"`
+	Join          *CallJoin              `protobuf:"bytes,2,opt,name=join,proto3" json:"join,omitempty"` // caller is auto-joined
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StartGroupCallResponse) Reset() {
+	*x = StartGroupCallResponse{}
+	mi := &file_quick_v1_calls_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartGroupCallResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartGroupCallResponse) ProtoMessage() {}
+
+func (x *StartGroupCallResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartGroupCallResponse.ProtoReflect.Descriptor instead.
+func (*StartGroupCallResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *StartGroupCallResponse) GetCall() *GroupCall {
+	if x != nil {
+		return x.Call
+	}
+	return nil
+}
+
+func (x *StartGroupCallResponse) GetJoin() *CallJoin {
+	if x != nil {
+		return x.Join
+	}
+	return nil
+}
+
+type JoinGroupCallRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CallId        string                 `protobuf:"bytes,1,opt,name=call_id,json=callId,proto3" json:"call_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *JoinGroupCallRequest) Reset() {
+	*x = JoinGroupCallRequest{}
+	mi := &file_quick_v1_calls_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *JoinGroupCallRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*JoinGroupCallRequest) ProtoMessage() {}
+
+func (x *JoinGroupCallRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use JoinGroupCallRequest.ProtoReflect.Descriptor instead.
+func (*JoinGroupCallRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *JoinGroupCallRequest) GetCallId() string {
+	if x != nil {
+		return x.CallId
+	}
+	return ""
+}
+
+type JoinGroupCallResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Join          *CallJoin              `protobuf:"bytes,1,opt,name=join,proto3" json:"join,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *JoinGroupCallResponse) Reset() {
+	*x = JoinGroupCallResponse{}
+	mi := &file_quick_v1_calls_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *JoinGroupCallResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*JoinGroupCallResponse) ProtoMessage() {}
+
+func (x *JoinGroupCallResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use JoinGroupCallResponse.ProtoReflect.Descriptor instead.
+func (*JoinGroupCallResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *JoinGroupCallResponse) GetJoin() *CallJoin {
+	if x != nil {
+		return x.Join
+	}
+	return nil
+}
+
+type LeaveGroupCallRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CallId        string                 `protobuf:"bytes,1,opt,name=call_id,json=callId,proto3" json:"call_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeaveGroupCallRequest) Reset() {
+	*x = LeaveGroupCallRequest{}
+	mi := &file_quick_v1_calls_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeaveGroupCallRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeaveGroupCallRequest) ProtoMessage() {}
+
+func (x *LeaveGroupCallRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeaveGroupCallRequest.ProtoReflect.Descriptor instead.
+func (*LeaveGroupCallRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *LeaveGroupCallRequest) GetCallId() string {
+	if x != nil {
+		return x.CallId
+	}
+	return ""
+}
+
+type LeaveGroupCallResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeaveGroupCallResponse) Reset() {
+	*x = LeaveGroupCallResponse{}
+	mi := &file_quick_v1_calls_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeaveGroupCallResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeaveGroupCallResponse) ProtoMessage() {}
+
+func (x *LeaveGroupCallResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeaveGroupCallResponse.ProtoReflect.Descriptor instead.
+func (*LeaveGroupCallResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{15}
+}
+
+// Owner/admin only — force-ends the group call for everyone (e.g. cleanup
+// stuck rooms). Regular participants use LeaveGroupCall.
+type EndGroupCallRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CallId        string                 `protobuf:"bytes,1,opt,name=call_id,json=callId,proto3" json:"call_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EndGroupCallRequest) Reset() {
+	*x = EndGroupCallRequest{}
+	mi := &file_quick_v1_calls_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EndGroupCallRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EndGroupCallRequest) ProtoMessage() {}
+
+func (x *EndGroupCallRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EndGroupCallRequest.ProtoReflect.Descriptor instead.
+func (*EndGroupCallRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *EndGroupCallRequest) GetCallId() string {
+	if x != nil {
+		return x.CallId
+	}
+	return ""
+}
+
+type EndGroupCallResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EndGroupCallResponse) Reset() {
+	*x = EndGroupCallResponse{}
+	mi := &file_quick_v1_calls_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EndGroupCallResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EndGroupCallResponse) ProtoMessage() {}
+
+func (x *EndGroupCallResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EndGroupCallResponse.ProtoReflect.Descriptor instead.
+func (*EndGroupCallResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{17}
+}
+
+type ListActiveGroupCallsRequest struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	ConversationIds []string               `protobuf:"bytes,1,rep,name=conversation_ids,json=conversationIds,proto3" json:"conversation_ids,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *ListActiveGroupCallsRequest) Reset() {
+	*x = ListActiveGroupCallsRequest{}
+	mi := &file_quick_v1_calls_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListActiveGroupCallsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListActiveGroupCallsRequest) ProtoMessage() {}
+
+func (x *ListActiveGroupCallsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListActiveGroupCallsRequest.ProtoReflect.Descriptor instead.
+func (*ListActiveGroupCallsRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *ListActiveGroupCallsRequest) GetConversationIds() []string {
+	if x != nil {
+		return x.ConversationIds
+	}
+	return nil
+}
+
+type ListActiveGroupCallsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Calls         []*GroupCall           `protobuf:"bytes,1,rep,name=calls,proto3" json:"calls,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListActiveGroupCallsResponse) Reset() {
+	*x = ListActiveGroupCallsResponse{}
+	mi := &file_quick_v1_calls_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListActiveGroupCallsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListActiveGroupCallsResponse) ProtoMessage() {}
+
+func (x *ListActiveGroupCallsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_calls_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListActiveGroupCallsResponse.ProtoReflect.Descriptor instead.
+func (*ListActiveGroupCallsResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_calls_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ListActiveGroupCallsResponse) GetCalls() []*GroupCall {
+	if x != nil {
+		return x.Calls
+	}
+	return nil
+}
+
 var File_quick_v1_calls_proto protoreflect.FileDescriptor
 
 const file_quick_v1_calls_proto_rawDesc = "" +
 	"\n" +
-	"\x14quick/v1/calls.proto\x12\bquick.v1\"^\n" +
+	"\x14quick/v1/calls.proto\x12\bquick.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"^\n" +
 	"\bCallJoin\x12\x1b\n" +
 	"\troom_name\x18\x01 \x01(\tR\broomName\x12\x14\n" +
 	"\x05token\x18\x02 \x01(\tR\x05token\x12\x1f\n" +
@@ -458,13 +977,46 @@ const file_quick_v1_calls_proto_rawDesc = "" +
 	"\x13DeclineCallResponse\")\n" +
 	"\x0eEndCallRequest\x12\x17\n" +
 	"\acall_id\x18\x01 \x01(\tR\x06callId\"\x11\n" +
-	"\x0fEndCallResponse2\xaa\x02\n" +
+	"\x0fEndCallResponse\"\xe8\x01\n" +
+	"\tGroupCall\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
+	"\x0fconversation_id\x18\x02 \x01(\tR\x0econversationId\x12\x1d\n" +
+	"\n" +
+	"started_by\x18\x03 \x01(\tR\tstartedBy\x129\n" +
+	"\n" +
+	"started_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartedAt\x12\x1b\n" +
+	"\troom_name\x18\x05 \x01(\tR\broomName\x12+\n" +
+	"\x11participant_count\x18\x06 \x01(\x05R\x10participantCount\"@\n" +
+	"\x15StartGroupCallRequest\x12'\n" +
+	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\"i\n" +
+	"\x16StartGroupCallResponse\x12'\n" +
+	"\x04call\x18\x01 \x01(\v2\x13.quick.v1.GroupCallR\x04call\x12&\n" +
+	"\x04join\x18\x02 \x01(\v2\x12.quick.v1.CallJoinR\x04join\"/\n" +
+	"\x14JoinGroupCallRequest\x12\x17\n" +
+	"\acall_id\x18\x01 \x01(\tR\x06callId\"?\n" +
+	"\x15JoinGroupCallResponse\x12&\n" +
+	"\x04join\x18\x01 \x01(\v2\x12.quick.v1.CallJoinR\x04join\"0\n" +
+	"\x15LeaveGroupCallRequest\x12\x17\n" +
+	"\acall_id\x18\x01 \x01(\tR\x06callId\"\x18\n" +
+	"\x16LeaveGroupCallResponse\".\n" +
+	"\x13EndGroupCallRequest\x12\x17\n" +
+	"\acall_id\x18\x01 \x01(\tR\x06callId\"\x16\n" +
+	"\x14EndGroupCallResponse\"H\n" +
+	"\x1bListActiveGroupCallsRequest\x12)\n" +
+	"\x10conversation_ids\x18\x01 \x03(\tR\x0fconversationIds\"I\n" +
+	"\x1cListActiveGroupCallsResponse\x12)\n" +
+	"\x05calls\x18\x01 \x03(\v2\x13.quick.v1.GroupCallR\x05calls2\xe6\x05\n" +
 	"\x05Calls\x12F\n" +
 	"\tStartCall\x12\x1a.quick.v1.StartCallRequest\x1a\x1b.quick.v1.StartCallResponse\"\x00\x12I\n" +
 	"\n" +
 	"AcceptCall\x12\x1b.quick.v1.AcceptCallRequest\x1a\x1c.quick.v1.AcceptCallResponse\"\x00\x12L\n" +
 	"\vDeclineCall\x12\x1c.quick.v1.DeclineCallRequest\x1a\x1d.quick.v1.DeclineCallResponse\"\x00\x12@\n" +
-	"\aEndCall\x12\x18.quick.v1.EndCallRequest\x1a\x19.quick.v1.EndCallResponse\"\x00B\x9b\x01\n" +
+	"\aEndCall\x12\x18.quick.v1.EndCallRequest\x1a\x19.quick.v1.EndCallResponse\"\x00\x12U\n" +
+	"\x0eStartGroupCall\x12\x1f.quick.v1.StartGroupCallRequest\x1a .quick.v1.StartGroupCallResponse\"\x00\x12R\n" +
+	"\rJoinGroupCall\x12\x1e.quick.v1.JoinGroupCallRequest\x1a\x1f.quick.v1.JoinGroupCallResponse\"\x00\x12U\n" +
+	"\x0eLeaveGroupCall\x12\x1f.quick.v1.LeaveGroupCallRequest\x1a .quick.v1.LeaveGroupCallResponse\"\x00\x12O\n" +
+	"\fEndGroupCall\x12\x1d.quick.v1.EndGroupCallRequest\x1a\x1e.quick.v1.EndGroupCallResponse\"\x00\x12g\n" +
+	"\x14ListActiveGroupCalls\x12%.quick.v1.ListActiveGroupCallsRequest\x1a&.quick.v1.ListActiveGroupCallsResponse\"\x00B\x9b\x01\n" +
 	"\fcom.quick.v1B\n" +
 	"CallsProtoP\x01Z>github.com/racass-pixel/quick-protocol/gen/go/quick/v1;quickv1\xa2\x02\x03QXX\xaa\x02\bQuick.V1\xca\x02\bQuick\\V1\xe2\x02\x14Quick\\V1\\GPBMetadata\xea\x02\tQuick::V1b\x06proto3"
 
@@ -480,34 +1032,61 @@ func file_quick_v1_calls_proto_rawDescGZIP() []byte {
 	return file_quick_v1_calls_proto_rawDescData
 }
 
-var file_quick_v1_calls_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_quick_v1_calls_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_quick_v1_calls_proto_goTypes = []any{
-	(*CallJoin)(nil),            // 0: quick.v1.CallJoin
-	(*StartCallRequest)(nil),    // 1: quick.v1.StartCallRequest
-	(*StartCallResponse)(nil),   // 2: quick.v1.StartCallResponse
-	(*AcceptCallRequest)(nil),   // 3: quick.v1.AcceptCallRequest
-	(*AcceptCallResponse)(nil),  // 4: quick.v1.AcceptCallResponse
-	(*DeclineCallRequest)(nil),  // 5: quick.v1.DeclineCallRequest
-	(*DeclineCallResponse)(nil), // 6: quick.v1.DeclineCallResponse
-	(*EndCallRequest)(nil),      // 7: quick.v1.EndCallRequest
-	(*EndCallResponse)(nil),     // 8: quick.v1.EndCallResponse
+	(*CallJoin)(nil),                     // 0: quick.v1.CallJoin
+	(*StartCallRequest)(nil),             // 1: quick.v1.StartCallRequest
+	(*StartCallResponse)(nil),            // 2: quick.v1.StartCallResponse
+	(*AcceptCallRequest)(nil),            // 3: quick.v1.AcceptCallRequest
+	(*AcceptCallResponse)(nil),           // 4: quick.v1.AcceptCallResponse
+	(*DeclineCallRequest)(nil),           // 5: quick.v1.DeclineCallRequest
+	(*DeclineCallResponse)(nil),          // 6: quick.v1.DeclineCallResponse
+	(*EndCallRequest)(nil),               // 7: quick.v1.EndCallRequest
+	(*EndCallResponse)(nil),              // 8: quick.v1.EndCallResponse
+	(*GroupCall)(nil),                    // 9: quick.v1.GroupCall
+	(*StartGroupCallRequest)(nil),        // 10: quick.v1.StartGroupCallRequest
+	(*StartGroupCallResponse)(nil),       // 11: quick.v1.StartGroupCallResponse
+	(*JoinGroupCallRequest)(nil),         // 12: quick.v1.JoinGroupCallRequest
+	(*JoinGroupCallResponse)(nil),        // 13: quick.v1.JoinGroupCallResponse
+	(*LeaveGroupCallRequest)(nil),        // 14: quick.v1.LeaveGroupCallRequest
+	(*LeaveGroupCallResponse)(nil),       // 15: quick.v1.LeaveGroupCallResponse
+	(*EndGroupCallRequest)(nil),          // 16: quick.v1.EndGroupCallRequest
+	(*EndGroupCallResponse)(nil),         // 17: quick.v1.EndGroupCallResponse
+	(*ListActiveGroupCallsRequest)(nil),  // 18: quick.v1.ListActiveGroupCallsRequest
+	(*ListActiveGroupCallsResponse)(nil), // 19: quick.v1.ListActiveGroupCallsResponse
+	(*timestamppb.Timestamp)(nil),        // 20: google.protobuf.Timestamp
 }
 var file_quick_v1_calls_proto_depIdxs = []int32{
-	0, // 0: quick.v1.StartCallResponse.join:type_name -> quick.v1.CallJoin
-	0, // 1: quick.v1.AcceptCallResponse.join:type_name -> quick.v1.CallJoin
-	1, // 2: quick.v1.Calls.StartCall:input_type -> quick.v1.StartCallRequest
-	3, // 3: quick.v1.Calls.AcceptCall:input_type -> quick.v1.AcceptCallRequest
-	5, // 4: quick.v1.Calls.DeclineCall:input_type -> quick.v1.DeclineCallRequest
-	7, // 5: quick.v1.Calls.EndCall:input_type -> quick.v1.EndCallRequest
-	2, // 6: quick.v1.Calls.StartCall:output_type -> quick.v1.StartCallResponse
-	4, // 7: quick.v1.Calls.AcceptCall:output_type -> quick.v1.AcceptCallResponse
-	6, // 8: quick.v1.Calls.DeclineCall:output_type -> quick.v1.DeclineCallResponse
-	8, // 9: quick.v1.Calls.EndCall:output_type -> quick.v1.EndCallResponse
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0,  // 0: quick.v1.StartCallResponse.join:type_name -> quick.v1.CallJoin
+	0,  // 1: quick.v1.AcceptCallResponse.join:type_name -> quick.v1.CallJoin
+	20, // 2: quick.v1.GroupCall.started_at:type_name -> google.protobuf.Timestamp
+	9,  // 3: quick.v1.StartGroupCallResponse.call:type_name -> quick.v1.GroupCall
+	0,  // 4: quick.v1.StartGroupCallResponse.join:type_name -> quick.v1.CallJoin
+	0,  // 5: quick.v1.JoinGroupCallResponse.join:type_name -> quick.v1.CallJoin
+	9,  // 6: quick.v1.ListActiveGroupCallsResponse.calls:type_name -> quick.v1.GroupCall
+	1,  // 7: quick.v1.Calls.StartCall:input_type -> quick.v1.StartCallRequest
+	3,  // 8: quick.v1.Calls.AcceptCall:input_type -> quick.v1.AcceptCallRequest
+	5,  // 9: quick.v1.Calls.DeclineCall:input_type -> quick.v1.DeclineCallRequest
+	7,  // 10: quick.v1.Calls.EndCall:input_type -> quick.v1.EndCallRequest
+	10, // 11: quick.v1.Calls.StartGroupCall:input_type -> quick.v1.StartGroupCallRequest
+	12, // 12: quick.v1.Calls.JoinGroupCall:input_type -> quick.v1.JoinGroupCallRequest
+	14, // 13: quick.v1.Calls.LeaveGroupCall:input_type -> quick.v1.LeaveGroupCallRequest
+	16, // 14: quick.v1.Calls.EndGroupCall:input_type -> quick.v1.EndGroupCallRequest
+	18, // 15: quick.v1.Calls.ListActiveGroupCalls:input_type -> quick.v1.ListActiveGroupCallsRequest
+	2,  // 16: quick.v1.Calls.StartCall:output_type -> quick.v1.StartCallResponse
+	4,  // 17: quick.v1.Calls.AcceptCall:output_type -> quick.v1.AcceptCallResponse
+	6,  // 18: quick.v1.Calls.DeclineCall:output_type -> quick.v1.DeclineCallResponse
+	8,  // 19: quick.v1.Calls.EndCall:output_type -> quick.v1.EndCallResponse
+	11, // 20: quick.v1.Calls.StartGroupCall:output_type -> quick.v1.StartGroupCallResponse
+	13, // 21: quick.v1.Calls.JoinGroupCall:output_type -> quick.v1.JoinGroupCallResponse
+	15, // 22: quick.v1.Calls.LeaveGroupCall:output_type -> quick.v1.LeaveGroupCallResponse
+	17, // 23: quick.v1.Calls.EndGroupCall:output_type -> quick.v1.EndGroupCallResponse
+	19, // 24: quick.v1.Calls.ListActiveGroupCalls:output_type -> quick.v1.ListActiveGroupCallsResponse
+	16, // [16:25] is the sub-list for method output_type
+	7,  // [7:16] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_quick_v1_calls_proto_init() }
@@ -521,7 +1100,7 @@ func file_quick_v1_calls_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_quick_v1_calls_proto_rawDesc), len(file_quick_v1_calls_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

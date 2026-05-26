@@ -2,10 +2,11 @@
 // @generated from file quick/v1/calls.proto (package quick.v1, syntax proto3)
 /* eslint-disable */
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 /**
  * Describes the file quick/v1/calls.proto.
  */
-export const file_quick_v1_calls = /*@__PURE__*/ fileDesc("ChRxdWljay92MS9jYWxscy5wcm90bxIIcXVpY2sudjEiQQoIQ2FsbEpvaW4SEQoJcm9vbV9uYW1lGAEgASgJEg0KBXRva2VuGAIgASgJEhMKC2xpdmVraXRfdXJsGAMgASgJIjIKEFN0YXJ0Q2FsbFJlcXVlc3QSDwoHdXNlcl9pZBgBIAEoCRINCgV2aWRlbxgCIAEoCCJGChFTdGFydENhbGxSZXNwb25zZRIPCgdjYWxsX2lkGAEgASgJEiAKBGpvaW4YAiABKAsyEi5xdWljay52MS5DYWxsSm9pbiIkChFBY2NlcHRDYWxsUmVxdWVzdBIPCgdjYWxsX2lkGAEgASgJIjYKEkFjY2VwdENhbGxSZXNwb25zZRIgCgRqb2luGAEgASgLMhIucXVpY2sudjEuQ2FsbEpvaW4iJQoSRGVjbGluZUNhbGxSZXF1ZXN0Eg8KB2NhbGxfaWQYASABKAkiFQoTRGVjbGluZUNhbGxSZXNwb25zZSIhCg5FbmRDYWxsUmVxdWVzdBIPCgdjYWxsX2lkGAEgASgJIhEKD0VuZENhbGxSZXNwb25zZTKqAgoFQ2FsbHMSRgoJU3RhcnRDYWxsEhoucXVpY2sudjEuU3RhcnRDYWxsUmVxdWVzdBobLnF1aWNrLnYxLlN0YXJ0Q2FsbFJlc3BvbnNlIgASSQoKQWNjZXB0Q2FsbBIbLnF1aWNrLnYxLkFjY2VwdENhbGxSZXF1ZXN0GhwucXVpY2sudjEuQWNjZXB0Q2FsbFJlc3BvbnNlIgASTAoLRGVjbGluZUNhbGwSHC5xdWljay52MS5EZWNsaW5lQ2FsbFJlcXVlc3QaHS5xdWljay52MS5EZWNsaW5lQ2FsbFJlc3BvbnNlIgASQAoHRW5kQ2FsbBIYLnF1aWNrLnYxLkVuZENhbGxSZXF1ZXN0GhkucXVpY2sudjEuRW5kQ2FsbFJlc3BvbnNlIgBCmwEKDGNvbS5xdWljay52MUIKQ2FsbHNQcm90b1ABWj5naXRodWIuY29tL3JhY2Fzcy1waXhlbC9xdWljay1wcm90b2NvbC9nZW4vZ28vcXVpY2svdjE7cXVpY2t2MaICA1FYWKoCCFF1aWNrLlYxygIIUXVpY2tcVjHiAhRRdWlja1xWMVxHUEJNZXRhZGF0YeoCCVF1aWNrOjpWMWIGcHJvdG8z");
+export const file_quick_v1_calls = /*@__PURE__*/ fileDesc("ChRxdWljay92MS9jYWxscy5wcm90bxIIcXVpY2sudjEiQQoIQ2FsbEpvaW4SEQoJcm9vbV9uYW1lGAEgASgJEg0KBXRva2VuGAIgASgJEhMKC2xpdmVraXRfdXJsGAMgASgJIjIKEFN0YXJ0Q2FsbFJlcXVlc3QSDwoHdXNlcl9pZBgBIAEoCRINCgV2aWRlbxgCIAEoCCJGChFTdGFydENhbGxSZXNwb25zZRIPCgdjYWxsX2lkGAEgASgJEiAKBGpvaW4YAiABKAsyEi5xdWljay52MS5DYWxsSm9pbiIkChFBY2NlcHRDYWxsUmVxdWVzdBIPCgdjYWxsX2lkGAEgASgJIjYKEkFjY2VwdENhbGxSZXNwb25zZRIgCgRqb2luGAEgASgLMhIucXVpY2sudjEuQ2FsbEpvaW4iJQoSRGVjbGluZUNhbGxSZXF1ZXN0Eg8KB2NhbGxfaWQYASABKAkiFQoTRGVjbGluZUNhbGxSZXNwb25zZSIhCg5FbmRDYWxsUmVxdWVzdBIPCgdjYWxsX2lkGAEgASgJIhEKD0VuZENhbGxSZXNwb25zZSKiAQoJR3JvdXBDYWxsEgoKAmlkGAEgASgJEhcKD2NvbnZlcnNhdGlvbl9pZBgCIAEoCRISCgpzdGFydGVkX2J5GAMgASgJEi4KCnN0YXJ0ZWRfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhEKCXJvb21fbmFtZRgFIAEoCRIZChFwYXJ0aWNpcGFudF9jb3VudBgGIAEoBSIwChVTdGFydEdyb3VwQ2FsbFJlcXVlc3QSFwoPY29udmVyc2F0aW9uX2lkGAEgASgJIl0KFlN0YXJ0R3JvdXBDYWxsUmVzcG9uc2USIQoEY2FsbBgBIAEoCzITLnF1aWNrLnYxLkdyb3VwQ2FsbBIgCgRqb2luGAIgASgLMhIucXVpY2sudjEuQ2FsbEpvaW4iJwoUSm9pbkdyb3VwQ2FsbFJlcXVlc3QSDwoHY2FsbF9pZBgBIAEoCSI5ChVKb2luR3JvdXBDYWxsUmVzcG9uc2USIAoEam9pbhgBIAEoCzISLnF1aWNrLnYxLkNhbGxKb2luIigKFUxlYXZlR3JvdXBDYWxsUmVxdWVzdBIPCgdjYWxsX2lkGAEgASgJIhgKFkxlYXZlR3JvdXBDYWxsUmVzcG9uc2UiJgoTRW5kR3JvdXBDYWxsUmVxdWVzdBIPCgdjYWxsX2lkGAEgASgJIhYKFEVuZEdyb3VwQ2FsbFJlc3BvbnNlIjcKG0xpc3RBY3RpdmVHcm91cENhbGxzUmVxdWVzdBIYChBjb252ZXJzYXRpb25faWRzGAEgAygJIkIKHExpc3RBY3RpdmVHcm91cENhbGxzUmVzcG9uc2USIgoFY2FsbHMYASADKAsyEy5xdWljay52MS5Hcm91cENhbGwy5gUKBUNhbGxzEkYKCVN0YXJ0Q2FsbBIaLnF1aWNrLnYxLlN0YXJ0Q2FsbFJlcXVlc3QaGy5xdWljay52MS5TdGFydENhbGxSZXNwb25zZSIAEkkKCkFjY2VwdENhbGwSGy5xdWljay52MS5BY2NlcHRDYWxsUmVxdWVzdBocLnF1aWNrLnYxLkFjY2VwdENhbGxSZXNwb25zZSIAEkwKC0RlY2xpbmVDYWxsEhwucXVpY2sudjEuRGVjbGluZUNhbGxSZXF1ZXN0Gh0ucXVpY2sudjEuRGVjbGluZUNhbGxSZXNwb25zZSIAEkAKB0VuZENhbGwSGC5xdWljay52MS5FbmRDYWxsUmVxdWVzdBoZLnF1aWNrLnYxLkVuZENhbGxSZXNwb25zZSIAElUKDlN0YXJ0R3JvdXBDYWxsEh8ucXVpY2sudjEuU3RhcnRHcm91cENhbGxSZXF1ZXN0GiAucXVpY2sudjEuU3RhcnRHcm91cENhbGxSZXNwb25zZSIAElIKDUpvaW5Hcm91cENhbGwSHi5xdWljay52MS5Kb2luR3JvdXBDYWxsUmVxdWVzdBofLnF1aWNrLnYxLkpvaW5Hcm91cENhbGxSZXNwb25zZSIAElUKDkxlYXZlR3JvdXBDYWxsEh8ucXVpY2sudjEuTGVhdmVHcm91cENhbGxSZXF1ZXN0GiAucXVpY2sudjEuTGVhdmVHcm91cENhbGxSZXNwb25zZSIAEk8KDEVuZEdyb3VwQ2FsbBIdLnF1aWNrLnYxLkVuZEdyb3VwQ2FsbFJlcXVlc3QaHi5xdWljay52MS5FbmRHcm91cENhbGxSZXNwb25zZSIAEmcKFExpc3RBY3RpdmVHcm91cENhbGxzEiUucXVpY2sudjEuTGlzdEFjdGl2ZUdyb3VwQ2FsbHNSZXF1ZXN0GiYucXVpY2sudjEuTGlzdEFjdGl2ZUdyb3VwQ2FsbHNSZXNwb25zZSIAQpsBCgxjb20ucXVpY2sudjFCCkNhbGxzUHJvdG9QAVo+Z2l0aHViLmNvbS9yYWNhc3MtcGl4ZWwvcXVpY2stcHJvdG9jb2wvZ2VuL2dvL3F1aWNrL3YxO3F1aWNrdjGiAgNRWFiqAghRdWljay5WMcoCCFF1aWNrXFYx4gIUUXVpY2tcVjFcR1BCTWV0YWRhdGHqAglRdWljazo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp]);
 /**
  * Describes the message quick.v1.CallJoin.
  * Use `create(CallJoinSchema)` to create a new message.
@@ -51,6 +52,61 @@ export const EndCallRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_call
  * Use `create(EndCallResponseSchema)` to create a new message.
  */
 export const EndCallResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 8);
+/**
+ * Describes the message quick.v1.GroupCall.
+ * Use `create(GroupCallSchema)` to create a new message.
+ */
+export const GroupCallSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 9);
+/**
+ * Describes the message quick.v1.StartGroupCallRequest.
+ * Use `create(StartGroupCallRequestSchema)` to create a new message.
+ */
+export const StartGroupCallRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 10);
+/**
+ * Describes the message quick.v1.StartGroupCallResponse.
+ * Use `create(StartGroupCallResponseSchema)` to create a new message.
+ */
+export const StartGroupCallResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 11);
+/**
+ * Describes the message quick.v1.JoinGroupCallRequest.
+ * Use `create(JoinGroupCallRequestSchema)` to create a new message.
+ */
+export const JoinGroupCallRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 12);
+/**
+ * Describes the message quick.v1.JoinGroupCallResponse.
+ * Use `create(JoinGroupCallResponseSchema)` to create a new message.
+ */
+export const JoinGroupCallResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 13);
+/**
+ * Describes the message quick.v1.LeaveGroupCallRequest.
+ * Use `create(LeaveGroupCallRequestSchema)` to create a new message.
+ */
+export const LeaveGroupCallRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 14);
+/**
+ * Describes the message quick.v1.LeaveGroupCallResponse.
+ * Use `create(LeaveGroupCallResponseSchema)` to create a new message.
+ */
+export const LeaveGroupCallResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 15);
+/**
+ * Describes the message quick.v1.EndGroupCallRequest.
+ * Use `create(EndGroupCallRequestSchema)` to create a new message.
+ */
+export const EndGroupCallRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 16);
+/**
+ * Describes the message quick.v1.EndGroupCallResponse.
+ * Use `create(EndGroupCallResponseSchema)` to create a new message.
+ */
+export const EndGroupCallResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 17);
+/**
+ * Describes the message quick.v1.ListActiveGroupCallsRequest.
+ * Use `create(ListActiveGroupCallsRequestSchema)` to create a new message.
+ */
+export const ListActiveGroupCallsRequestSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 18);
+/**
+ * Describes the message quick.v1.ListActiveGroupCallsResponse.
+ * Use `create(ListActiveGroupCallsResponseSchema)` to create a new message.
+ */
+export const ListActiveGroupCallsResponseSchema = /*@__PURE__*/ messageDesc(file_quick_v1_calls, 19);
 /**
  * @generated from service quick.v1.Calls
  */

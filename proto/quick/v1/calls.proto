@@ -1,11 +1,21 @@
 syntax = "proto3";
 package quick.v1;
 
+import "google/protobuf/timestamp.proto";
+
 service Calls {
+  // 1:1 calls (S5-lite — caller rings callee, callee accepts/declines).
   rpc StartCall(StartCallRequest)     returns (StartCallResponse)   {}
   rpc AcceptCall(AcceptCallRequest)   returns (AcceptCallResponse)  {}
   rpc DeclineCall(DeclineCallRequest) returns (DeclineCallResponse) {}
   rpc EndCall(EndCallRequest)         returns (EndCallResponse)     {}
+
+  // Group calls (S9 — Telegram-style voice chat, no ring, free join).
+  rpc StartGroupCall(StartGroupCallRequest)       returns (StartGroupCallResponse)       {}
+  rpc JoinGroupCall(JoinGroupCallRequest)         returns (JoinGroupCallResponse)        {}
+  rpc LeaveGroupCall(LeaveGroupCallRequest)       returns (LeaveGroupCallResponse)       {}
+  rpc EndGroupCall(EndGroupCallRequest)           returns (EndGroupCallResponse)         {}
+  rpc ListActiveGroupCalls(ListActiveGroupCallsRequest) returns (ListActiveGroupCallsResponse) {}
 }
 
 message CallJoin {
@@ -25,3 +35,34 @@ message DeclineCallResponse {}
 
 message EndCallRequest  { string call_id = 1; }
 message EndCallResponse {}
+
+// --- Group calls ---
+
+message GroupCall {
+  string id              = 1;
+  string conversation_id = 2;
+  string started_by      = 3;
+  google.protobuf.Timestamp started_at = 4;
+  string room_name       = 5;
+  int32  participant_count = 6;
+}
+
+message StartGroupCallRequest  { string conversation_id = 1; }
+message StartGroupCallResponse {
+  GroupCall call = 1;
+  CallJoin  join = 2;   // caller is auto-joined
+}
+
+message JoinGroupCallRequest  { string call_id = 1; }
+message JoinGroupCallResponse { CallJoin join = 1; }
+
+message LeaveGroupCallRequest  { string call_id = 1; }
+message LeaveGroupCallResponse {}
+
+// Owner/admin only — force-ends the group call for everyone (e.g. cleanup
+// stuck rooms). Regular participants use LeaveGroupCall.
+message EndGroupCallRequest  { string call_id = 1; }
+message EndGroupCallResponse {}
+
+message ListActiveGroupCallsRequest  { repeated string conversation_ids = 1; }
+message ListActiveGroupCallsResponse { repeated GroupCall calls = 1; }
