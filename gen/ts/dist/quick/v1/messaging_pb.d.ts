@@ -437,6 +437,232 @@ export type Member = Message$1<"quick.v1.Member"> & {
  */
 export declare const MemberSchema: GenMessage<Member>;
 /**
+ * @generated from message quick.v1.DeleteConversationRequest
+ */
+export type DeleteConversationRequest = Message$1<"quick.v1.DeleteConversationRequest"> & {
+    /**
+     * @generated from field: string conversation_id = 1;
+     */
+    conversationId: string;
+    /**
+     * DM: also delete on peer's side; group/channel: owner-only full delete
+     *
+     * @generated from field: bool for_everyone = 2;
+     */
+    forEveryone: boolean;
+};
+/**
+ * Describes the message quick.v1.DeleteConversationRequest.
+ * Use `create(DeleteConversationRequestSchema)` to create a new message.
+ */
+export declare const DeleteConversationRequestSchema: GenMessage<DeleteConversationRequest>;
+/**
+ * @generated from message quick.v1.DeleteConversationResponse
+ */
+export type DeleteConversationResponse = Message$1<"quick.v1.DeleteConversationResponse"> & {};
+/**
+ * Describes the message quick.v1.DeleteConversationResponse.
+ * Use `create(DeleteConversationResponseSchema)` to create a new message.
+ */
+export declare const DeleteConversationResponseSchema: GenMessage<DeleteConversationResponse>;
+/**
+ * @generated from message quick.v1.EditMessageRequest
+ */
+export type EditMessageRequest = Message$1<"quick.v1.EditMessageRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+    /**
+     * @generated from field: string body = 2;
+     */
+    body: string;
+};
+/**
+ * Describes the message quick.v1.EditMessageRequest.
+ * Use `create(EditMessageRequestSchema)` to create a new message.
+ */
+export declare const EditMessageRequestSchema: GenMessage<EditMessageRequest>;
+/**
+ * @generated from message quick.v1.EditMessageResponse
+ */
+export type EditMessageResponse = Message$1<"quick.v1.EditMessageResponse"> & {
+    /**
+     * @generated from field: quick.v1.Message message = 1;
+     */
+    message?: Message | undefined;
+};
+/**
+ * Describes the message quick.v1.EditMessageResponse.
+ * Use `create(EditMessageResponseSchema)` to create a new message.
+ */
+export declare const EditMessageResponseSchema: GenMessage<EditMessageResponse>;
+/**
+ * @generated from message quick.v1.DeleteMessageRequest
+ */
+export type DeleteMessageRequest = Message$1<"quick.v1.DeleteMessageRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+    /**
+     * @generated from field: bool for_everyone = 2;
+     */
+    forEveryone: boolean;
+};
+/**
+ * Describes the message quick.v1.DeleteMessageRequest.
+ * Use `create(DeleteMessageRequestSchema)` to create a new message.
+ */
+export declare const DeleteMessageRequestSchema: GenMessage<DeleteMessageRequest>;
+/**
+ * @generated from message quick.v1.DeleteMessageResponse
+ */
+export type DeleteMessageResponse = Message$1<"quick.v1.DeleteMessageResponse"> & {};
+/**
+ * Describes the message quick.v1.DeleteMessageResponse.
+ * Use `create(DeleteMessageResponseSchema)` to create a new message.
+ */
+export declare const DeleteMessageResponseSchema: GenMessage<DeleteMessageResponse>;
+/**
+ * @generated from message quick.v1.PinMessageRequest
+ */
+export type PinMessageRequest = Message$1<"quick.v1.PinMessageRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+};
+/**
+ * Describes the message quick.v1.PinMessageRequest.
+ * Use `create(PinMessageRequestSchema)` to create a new message.
+ */
+export declare const PinMessageRequestSchema: GenMessage<PinMessageRequest>;
+/**
+ * @generated from message quick.v1.PinMessageResponse
+ */
+export type PinMessageResponse = Message$1<"quick.v1.PinMessageResponse"> & {};
+/**
+ * Describes the message quick.v1.PinMessageResponse.
+ * Use `create(PinMessageResponseSchema)` to create a new message.
+ */
+export declare const PinMessageResponseSchema: GenMessage<PinMessageResponse>;
+/**
+ * @generated from message quick.v1.UnpinMessageRequest
+ */
+export type UnpinMessageRequest = Message$1<"quick.v1.UnpinMessageRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+};
+/**
+ * Describes the message quick.v1.UnpinMessageRequest.
+ * Use `create(UnpinMessageRequestSchema)` to create a new message.
+ */
+export declare const UnpinMessageRequestSchema: GenMessage<UnpinMessageRequest>;
+/**
+ * @generated from message quick.v1.UnpinMessageResponse
+ */
+export type UnpinMessageResponse = Message$1<"quick.v1.UnpinMessageResponse"> & {};
+/**
+ * Describes the message quick.v1.UnpinMessageResponse.
+ * Use `create(UnpinMessageResponseSchema)` to create a new message.
+ */
+export declare const UnpinMessageResponseSchema: GenMessage<UnpinMessageResponse>;
+/**
+ * @generated from message quick.v1.MessageReader
+ */
+export type MessageReader = Message$1<"quick.v1.MessageReader"> & {
+    /**
+     * @generated from field: quick.v1.User user = 1;
+     */
+    user?: User | undefined;
+    /**
+     * @generated from field: google.protobuf.Timestamp read_at = 2;
+     */
+    readAt?: Timestamp | undefined;
+};
+/**
+ * Describes the message quick.v1.MessageReader.
+ * Use `create(MessageReaderSchema)` to create a new message.
+ */
+export declare const MessageReaderSchema: GenMessage<MessageReader>;
+/**
+ * @generated from message quick.v1.GetMessageReadersRequest
+ */
+export type GetMessageReadersRequest = Message$1<"quick.v1.GetMessageReadersRequest"> & {
+    /**
+     * @generated from field: string message_id = 1;
+     */
+    messageId: string;
+};
+/**
+ * Describes the message quick.v1.GetMessageReadersRequest.
+ * Use `create(GetMessageReadersRequestSchema)` to create a new message.
+ */
+export declare const GetMessageReadersRequestSchema: GenMessage<GetMessageReadersRequest>;
+/**
+ * @generated from message quick.v1.GetMessageReadersResponse
+ */
+export type GetMessageReadersResponse = Message$1<"quick.v1.GetMessageReadersResponse"> & {
+    /**
+     * @generated from field: repeated quick.v1.MessageReader readers = 1;
+     */
+    readers: MessageReader[];
+};
+/**
+ * Describes the message quick.v1.GetMessageReadersResponse.
+ * Use `create(GetMessageReadersResponseSchema)` to create a new message.
+ */
+export declare const GetMessageReadersResponseSchema: GenMessage<GetMessageReadersResponse>;
+/**
+ * @generated from message quick.v1.PinConversationRequest
+ */
+export type PinConversationRequest = Message$1<"quick.v1.PinConversationRequest"> & {
+    /**
+     * @generated from field: string conversation_id = 1;
+     */
+    conversationId: string;
+};
+/**
+ * Describes the message quick.v1.PinConversationRequest.
+ * Use `create(PinConversationRequestSchema)` to create a new message.
+ */
+export declare const PinConversationRequestSchema: GenMessage<PinConversationRequest>;
+/**
+ * @generated from message quick.v1.PinConversationResponse
+ */
+export type PinConversationResponse = Message$1<"quick.v1.PinConversationResponse"> & {};
+/**
+ * Describes the message quick.v1.PinConversationResponse.
+ * Use `create(PinConversationResponseSchema)` to create a new message.
+ */
+export declare const PinConversationResponseSchema: GenMessage<PinConversationResponse>;
+/**
+ * @generated from message quick.v1.UnpinConversationRequest
+ */
+export type UnpinConversationRequest = Message$1<"quick.v1.UnpinConversationRequest"> & {
+    /**
+     * @generated from field: string conversation_id = 1;
+     */
+    conversationId: string;
+};
+/**
+ * Describes the message quick.v1.UnpinConversationRequest.
+ * Use `create(UnpinConversationRequestSchema)` to create a new message.
+ */
+export declare const UnpinConversationRequestSchema: GenMessage<UnpinConversationRequest>;
+/**
+ * @generated from message quick.v1.UnpinConversationResponse
+ */
+export type UnpinConversationResponse = Message$1<"quick.v1.UnpinConversationResponse"> & {};
+/**
+ * Describes the message quick.v1.UnpinConversationResponse.
+ * Use `create(UnpinConversationResponseSchema)` to create a new message.
+ */
+export declare const UnpinConversationResponseSchema: GenMessage<UnpinConversationResponse>;
+/**
  * @generated from service quick.v1.Messaging
  */
 export declare const Messaging: GenService<{
@@ -527,5 +753,71 @@ export declare const Messaging: GenService<{
         methodKind: "unary";
         input: typeof ListMembersRequestSchema;
         output: typeof ListMembersResponseSchema;
+    };
+    /**
+     * S10 — TG parity additions.
+     *
+     * @generated from rpc quick.v1.Messaging.DeleteConversation
+     */
+    deleteConversation: {
+        methodKind: "unary";
+        input: typeof DeleteConversationRequestSchema;
+        output: typeof DeleteConversationResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.EditMessage
+     */
+    editMessage: {
+        methodKind: "unary";
+        input: typeof EditMessageRequestSchema;
+        output: typeof EditMessageResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.DeleteMessage
+     */
+    deleteMessage: {
+        methodKind: "unary";
+        input: typeof DeleteMessageRequestSchema;
+        output: typeof DeleteMessageResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.PinMessage
+     */
+    pinMessage: {
+        methodKind: "unary";
+        input: typeof PinMessageRequestSchema;
+        output: typeof PinMessageResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.UnpinMessage
+     */
+    unpinMessage: {
+        methodKind: "unary";
+        input: typeof UnpinMessageRequestSchema;
+        output: typeof UnpinMessageResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.GetMessageReaders
+     */
+    getMessageReaders: {
+        methodKind: "unary";
+        input: typeof GetMessageReadersRequestSchema;
+        output: typeof GetMessageReadersResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.PinConversation
+     */
+    pinConversation: {
+        methodKind: "unary";
+        input: typeof PinConversationRequestSchema;
+        output: typeof PinConversationResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Messaging.UnpinConversation
+     */
+    unpinConversation: {
+        methodKind: "unary";
+        input: typeof UnpinConversationRequestSchema;
+        output: typeof UnpinConversationResponseSchema;
     };
 }>;

@@ -57,6 +57,26 @@ const (
 	MessagingLeaveConversationProcedure = "/quick.v1.Messaging/LeaveConversation"
 	// MessagingListMembersProcedure is the fully-qualified name of the Messaging's ListMembers RPC.
 	MessagingListMembersProcedure = "/quick.v1.Messaging/ListMembers"
+	// MessagingDeleteConversationProcedure is the fully-qualified name of the Messaging's
+	// DeleteConversation RPC.
+	MessagingDeleteConversationProcedure = "/quick.v1.Messaging/DeleteConversation"
+	// MessagingEditMessageProcedure is the fully-qualified name of the Messaging's EditMessage RPC.
+	MessagingEditMessageProcedure = "/quick.v1.Messaging/EditMessage"
+	// MessagingDeleteMessageProcedure is the fully-qualified name of the Messaging's DeleteMessage RPC.
+	MessagingDeleteMessageProcedure = "/quick.v1.Messaging/DeleteMessage"
+	// MessagingPinMessageProcedure is the fully-qualified name of the Messaging's PinMessage RPC.
+	MessagingPinMessageProcedure = "/quick.v1.Messaging/PinMessage"
+	// MessagingUnpinMessageProcedure is the fully-qualified name of the Messaging's UnpinMessage RPC.
+	MessagingUnpinMessageProcedure = "/quick.v1.Messaging/UnpinMessage"
+	// MessagingGetMessageReadersProcedure is the fully-qualified name of the Messaging's
+	// GetMessageReaders RPC.
+	MessagingGetMessageReadersProcedure = "/quick.v1.Messaging/GetMessageReaders"
+	// MessagingPinConversationProcedure is the fully-qualified name of the Messaging's PinConversation
+	// RPC.
+	MessagingPinConversationProcedure = "/quick.v1.Messaging/PinConversation"
+	// MessagingUnpinConversationProcedure is the fully-qualified name of the Messaging's
+	// UnpinConversation RPC.
+	MessagingUnpinConversationProcedure = "/quick.v1.Messaging/UnpinConversation"
 )
 
 // MessagingClient is a client for the quick.v1.Messaging service.
@@ -72,6 +92,15 @@ type MessagingClient interface {
 	RemoveMember(context.Context, *connect.Request[v1.RemoveMemberRequest]) (*connect.Response[v1.RemoveMemberResponse], error)
 	LeaveConversation(context.Context, *connect.Request[v1.LeaveConversationRequest]) (*connect.Response[v1.LeaveConversationResponse], error)
 	ListMembers(context.Context, *connect.Request[v1.ListMembersRequest]) (*connect.Response[v1.ListMembersResponse], error)
+	// S10 — TG parity additions.
+	DeleteConversation(context.Context, *connect.Request[v1.DeleteConversationRequest]) (*connect.Response[v1.DeleteConversationResponse], error)
+	EditMessage(context.Context, *connect.Request[v1.EditMessageRequest]) (*connect.Response[v1.EditMessageResponse], error)
+	DeleteMessage(context.Context, *connect.Request[v1.DeleteMessageRequest]) (*connect.Response[v1.DeleteMessageResponse], error)
+	PinMessage(context.Context, *connect.Request[v1.PinMessageRequest]) (*connect.Response[v1.PinMessageResponse], error)
+	UnpinMessage(context.Context, *connect.Request[v1.UnpinMessageRequest]) (*connect.Response[v1.UnpinMessageResponse], error)
+	GetMessageReaders(context.Context, *connect.Request[v1.GetMessageReadersRequest]) (*connect.Response[v1.GetMessageReadersResponse], error)
+	PinConversation(context.Context, *connect.Request[v1.PinConversationRequest]) (*connect.Response[v1.PinConversationResponse], error)
+	UnpinConversation(context.Context, *connect.Request[v1.UnpinConversationRequest]) (*connect.Response[v1.UnpinConversationResponse], error)
 }
 
 // NewMessagingClient constructs a client for the quick.v1.Messaging service. By default, it uses
@@ -151,22 +180,78 @@ func NewMessagingClient(httpClient connect.HTTPClient, baseURL string, opts ...c
 			connect.WithSchema(messagingMethods.ByName("ListMembers")),
 			connect.WithClientOptions(opts...),
 		),
+		deleteConversation: connect.NewClient[v1.DeleteConversationRequest, v1.DeleteConversationResponse](
+			httpClient,
+			baseURL+MessagingDeleteConversationProcedure,
+			connect.WithSchema(messagingMethods.ByName("DeleteConversation")),
+			connect.WithClientOptions(opts...),
+		),
+		editMessage: connect.NewClient[v1.EditMessageRequest, v1.EditMessageResponse](
+			httpClient,
+			baseURL+MessagingEditMessageProcedure,
+			connect.WithSchema(messagingMethods.ByName("EditMessage")),
+			connect.WithClientOptions(opts...),
+		),
+		deleteMessage: connect.NewClient[v1.DeleteMessageRequest, v1.DeleteMessageResponse](
+			httpClient,
+			baseURL+MessagingDeleteMessageProcedure,
+			connect.WithSchema(messagingMethods.ByName("DeleteMessage")),
+			connect.WithClientOptions(opts...),
+		),
+		pinMessage: connect.NewClient[v1.PinMessageRequest, v1.PinMessageResponse](
+			httpClient,
+			baseURL+MessagingPinMessageProcedure,
+			connect.WithSchema(messagingMethods.ByName("PinMessage")),
+			connect.WithClientOptions(opts...),
+		),
+		unpinMessage: connect.NewClient[v1.UnpinMessageRequest, v1.UnpinMessageResponse](
+			httpClient,
+			baseURL+MessagingUnpinMessageProcedure,
+			connect.WithSchema(messagingMethods.ByName("UnpinMessage")),
+			connect.WithClientOptions(opts...),
+		),
+		getMessageReaders: connect.NewClient[v1.GetMessageReadersRequest, v1.GetMessageReadersResponse](
+			httpClient,
+			baseURL+MessagingGetMessageReadersProcedure,
+			connect.WithSchema(messagingMethods.ByName("GetMessageReaders")),
+			connect.WithClientOptions(opts...),
+		),
+		pinConversation: connect.NewClient[v1.PinConversationRequest, v1.PinConversationResponse](
+			httpClient,
+			baseURL+MessagingPinConversationProcedure,
+			connect.WithSchema(messagingMethods.ByName("PinConversation")),
+			connect.WithClientOptions(opts...),
+		),
+		unpinConversation: connect.NewClient[v1.UnpinConversationRequest, v1.UnpinConversationResponse](
+			httpClient,
+			baseURL+MessagingUnpinConversationProcedure,
+			connect.WithSchema(messagingMethods.ByName("UnpinConversation")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // messagingClient implements MessagingClient.
 type messagingClient struct {
-	listConversations *connect.Client[v1.ListConversationsRequest, v1.ListConversationsResponse]
-	openDM            *connect.Client[v1.OpenDMRequest, v1.OpenDMResponse]
-	listMessages      *connect.Client[v1.ListMessagesRequest, v1.ListMessagesResponse]
-	sendMessage       *connect.Client[v1.SendMessageRequest, v1.SendMessageResponse]
-	markRead          *connect.Client[v1.MarkReadRequest, v1.MarkReadResponse]
-	createGroup       *connect.Client[v1.CreateGroupRequest, v1.CreateGroupResponse]
-	createChannel     *connect.Client[v1.CreateChannelRequest, v1.CreateChannelResponse]
-	addMembers        *connect.Client[v1.AddMembersRequest, v1.AddMembersResponse]
-	removeMember      *connect.Client[v1.RemoveMemberRequest, v1.RemoveMemberResponse]
-	leaveConversation *connect.Client[v1.LeaveConversationRequest, v1.LeaveConversationResponse]
-	listMembers       *connect.Client[v1.ListMembersRequest, v1.ListMembersResponse]
+	listConversations  *connect.Client[v1.ListConversationsRequest, v1.ListConversationsResponse]
+	openDM             *connect.Client[v1.OpenDMRequest, v1.OpenDMResponse]
+	listMessages       *connect.Client[v1.ListMessagesRequest, v1.ListMessagesResponse]
+	sendMessage        *connect.Client[v1.SendMessageRequest, v1.SendMessageResponse]
+	markRead           *connect.Client[v1.MarkReadRequest, v1.MarkReadResponse]
+	createGroup        *connect.Client[v1.CreateGroupRequest, v1.CreateGroupResponse]
+	createChannel      *connect.Client[v1.CreateChannelRequest, v1.CreateChannelResponse]
+	addMembers         *connect.Client[v1.AddMembersRequest, v1.AddMembersResponse]
+	removeMember       *connect.Client[v1.RemoveMemberRequest, v1.RemoveMemberResponse]
+	leaveConversation  *connect.Client[v1.LeaveConversationRequest, v1.LeaveConversationResponse]
+	listMembers        *connect.Client[v1.ListMembersRequest, v1.ListMembersResponse]
+	deleteConversation *connect.Client[v1.DeleteConversationRequest, v1.DeleteConversationResponse]
+	editMessage        *connect.Client[v1.EditMessageRequest, v1.EditMessageResponse]
+	deleteMessage      *connect.Client[v1.DeleteMessageRequest, v1.DeleteMessageResponse]
+	pinMessage         *connect.Client[v1.PinMessageRequest, v1.PinMessageResponse]
+	unpinMessage       *connect.Client[v1.UnpinMessageRequest, v1.UnpinMessageResponse]
+	getMessageReaders  *connect.Client[v1.GetMessageReadersRequest, v1.GetMessageReadersResponse]
+	pinConversation    *connect.Client[v1.PinConversationRequest, v1.PinConversationResponse]
+	unpinConversation  *connect.Client[v1.UnpinConversationRequest, v1.UnpinConversationResponse]
 }
 
 // ListConversations calls quick.v1.Messaging.ListConversations.
@@ -224,6 +309,46 @@ func (c *messagingClient) ListMembers(ctx context.Context, req *connect.Request[
 	return c.listMembers.CallUnary(ctx, req)
 }
 
+// DeleteConversation calls quick.v1.Messaging.DeleteConversation.
+func (c *messagingClient) DeleteConversation(ctx context.Context, req *connect.Request[v1.DeleteConversationRequest]) (*connect.Response[v1.DeleteConversationResponse], error) {
+	return c.deleteConversation.CallUnary(ctx, req)
+}
+
+// EditMessage calls quick.v1.Messaging.EditMessage.
+func (c *messagingClient) EditMessage(ctx context.Context, req *connect.Request[v1.EditMessageRequest]) (*connect.Response[v1.EditMessageResponse], error) {
+	return c.editMessage.CallUnary(ctx, req)
+}
+
+// DeleteMessage calls quick.v1.Messaging.DeleteMessage.
+func (c *messagingClient) DeleteMessage(ctx context.Context, req *connect.Request[v1.DeleteMessageRequest]) (*connect.Response[v1.DeleteMessageResponse], error) {
+	return c.deleteMessage.CallUnary(ctx, req)
+}
+
+// PinMessage calls quick.v1.Messaging.PinMessage.
+func (c *messagingClient) PinMessage(ctx context.Context, req *connect.Request[v1.PinMessageRequest]) (*connect.Response[v1.PinMessageResponse], error) {
+	return c.pinMessage.CallUnary(ctx, req)
+}
+
+// UnpinMessage calls quick.v1.Messaging.UnpinMessage.
+func (c *messagingClient) UnpinMessage(ctx context.Context, req *connect.Request[v1.UnpinMessageRequest]) (*connect.Response[v1.UnpinMessageResponse], error) {
+	return c.unpinMessage.CallUnary(ctx, req)
+}
+
+// GetMessageReaders calls quick.v1.Messaging.GetMessageReaders.
+func (c *messagingClient) GetMessageReaders(ctx context.Context, req *connect.Request[v1.GetMessageReadersRequest]) (*connect.Response[v1.GetMessageReadersResponse], error) {
+	return c.getMessageReaders.CallUnary(ctx, req)
+}
+
+// PinConversation calls quick.v1.Messaging.PinConversation.
+func (c *messagingClient) PinConversation(ctx context.Context, req *connect.Request[v1.PinConversationRequest]) (*connect.Response[v1.PinConversationResponse], error) {
+	return c.pinConversation.CallUnary(ctx, req)
+}
+
+// UnpinConversation calls quick.v1.Messaging.UnpinConversation.
+func (c *messagingClient) UnpinConversation(ctx context.Context, req *connect.Request[v1.UnpinConversationRequest]) (*connect.Response[v1.UnpinConversationResponse], error) {
+	return c.unpinConversation.CallUnary(ctx, req)
+}
+
 // MessagingHandler is an implementation of the quick.v1.Messaging service.
 type MessagingHandler interface {
 	ListConversations(context.Context, *connect.Request[v1.ListConversationsRequest]) (*connect.Response[v1.ListConversationsResponse], error)
@@ -237,6 +362,15 @@ type MessagingHandler interface {
 	RemoveMember(context.Context, *connect.Request[v1.RemoveMemberRequest]) (*connect.Response[v1.RemoveMemberResponse], error)
 	LeaveConversation(context.Context, *connect.Request[v1.LeaveConversationRequest]) (*connect.Response[v1.LeaveConversationResponse], error)
 	ListMembers(context.Context, *connect.Request[v1.ListMembersRequest]) (*connect.Response[v1.ListMembersResponse], error)
+	// S10 — TG parity additions.
+	DeleteConversation(context.Context, *connect.Request[v1.DeleteConversationRequest]) (*connect.Response[v1.DeleteConversationResponse], error)
+	EditMessage(context.Context, *connect.Request[v1.EditMessageRequest]) (*connect.Response[v1.EditMessageResponse], error)
+	DeleteMessage(context.Context, *connect.Request[v1.DeleteMessageRequest]) (*connect.Response[v1.DeleteMessageResponse], error)
+	PinMessage(context.Context, *connect.Request[v1.PinMessageRequest]) (*connect.Response[v1.PinMessageResponse], error)
+	UnpinMessage(context.Context, *connect.Request[v1.UnpinMessageRequest]) (*connect.Response[v1.UnpinMessageResponse], error)
+	GetMessageReaders(context.Context, *connect.Request[v1.GetMessageReadersRequest]) (*connect.Response[v1.GetMessageReadersResponse], error)
+	PinConversation(context.Context, *connect.Request[v1.PinConversationRequest]) (*connect.Response[v1.PinConversationResponse], error)
+	UnpinConversation(context.Context, *connect.Request[v1.UnpinConversationRequest]) (*connect.Response[v1.UnpinConversationResponse], error)
 }
 
 // NewMessagingHandler builds an HTTP handler from the service implementation. It returns the path
@@ -312,6 +446,54 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 		connect.WithSchema(messagingMethods.ByName("ListMembers")),
 		connect.WithHandlerOptions(opts...),
 	)
+	messagingDeleteConversationHandler := connect.NewUnaryHandler(
+		MessagingDeleteConversationProcedure,
+		svc.DeleteConversation,
+		connect.WithSchema(messagingMethods.ByName("DeleteConversation")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingEditMessageHandler := connect.NewUnaryHandler(
+		MessagingEditMessageProcedure,
+		svc.EditMessage,
+		connect.WithSchema(messagingMethods.ByName("EditMessage")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingDeleteMessageHandler := connect.NewUnaryHandler(
+		MessagingDeleteMessageProcedure,
+		svc.DeleteMessage,
+		connect.WithSchema(messagingMethods.ByName("DeleteMessage")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingPinMessageHandler := connect.NewUnaryHandler(
+		MessagingPinMessageProcedure,
+		svc.PinMessage,
+		connect.WithSchema(messagingMethods.ByName("PinMessage")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingUnpinMessageHandler := connect.NewUnaryHandler(
+		MessagingUnpinMessageProcedure,
+		svc.UnpinMessage,
+		connect.WithSchema(messagingMethods.ByName("UnpinMessage")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingGetMessageReadersHandler := connect.NewUnaryHandler(
+		MessagingGetMessageReadersProcedure,
+		svc.GetMessageReaders,
+		connect.WithSchema(messagingMethods.ByName("GetMessageReaders")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingPinConversationHandler := connect.NewUnaryHandler(
+		MessagingPinConversationProcedure,
+		svc.PinConversation,
+		connect.WithSchema(messagingMethods.ByName("PinConversation")),
+		connect.WithHandlerOptions(opts...),
+	)
+	messagingUnpinConversationHandler := connect.NewUnaryHandler(
+		MessagingUnpinConversationProcedure,
+		svc.UnpinConversation,
+		connect.WithSchema(messagingMethods.ByName("UnpinConversation")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Messaging/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case MessagingListConversationsProcedure:
@@ -336,6 +518,22 @@ func NewMessagingHandler(svc MessagingHandler, opts ...connect.HandlerOption) (s
 			messagingLeaveConversationHandler.ServeHTTP(w, r)
 		case MessagingListMembersProcedure:
 			messagingListMembersHandler.ServeHTTP(w, r)
+		case MessagingDeleteConversationProcedure:
+			messagingDeleteConversationHandler.ServeHTTP(w, r)
+		case MessagingEditMessageProcedure:
+			messagingEditMessageHandler.ServeHTTP(w, r)
+		case MessagingDeleteMessageProcedure:
+			messagingDeleteMessageHandler.ServeHTTP(w, r)
+		case MessagingPinMessageProcedure:
+			messagingPinMessageHandler.ServeHTTP(w, r)
+		case MessagingUnpinMessageProcedure:
+			messagingUnpinMessageHandler.ServeHTTP(w, r)
+		case MessagingGetMessageReadersProcedure:
+			messagingGetMessageReadersHandler.ServeHTTP(w, r)
+		case MessagingPinConversationProcedure:
+			messagingPinConversationHandler.ServeHTTP(w, r)
+		case MessagingUnpinConversationProcedure:
+			messagingUnpinConversationHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -387,4 +585,36 @@ func (UnimplementedMessagingHandler) LeaveConversation(context.Context, *connect
 
 func (UnimplementedMessagingHandler) ListMembers(context.Context, *connect.Request[v1.ListMembersRequest]) (*connect.Response[v1.ListMembersResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.ListMembers is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) DeleteConversation(context.Context, *connect.Request[v1.DeleteConversationRequest]) (*connect.Response[v1.DeleteConversationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.DeleteConversation is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) EditMessage(context.Context, *connect.Request[v1.EditMessageRequest]) (*connect.Response[v1.EditMessageResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.EditMessage is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) DeleteMessage(context.Context, *connect.Request[v1.DeleteMessageRequest]) (*connect.Response[v1.DeleteMessageResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.DeleteMessage is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) PinMessage(context.Context, *connect.Request[v1.PinMessageRequest]) (*connect.Response[v1.PinMessageResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.PinMessage is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) UnpinMessage(context.Context, *connect.Request[v1.UnpinMessageRequest]) (*connect.Response[v1.UnpinMessageResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.UnpinMessage is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) GetMessageReaders(context.Context, *connect.Request[v1.GetMessageReadersRequest]) (*connect.Response[v1.GetMessageReadersResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.GetMessageReaders is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) PinConversation(context.Context, *connect.Request[v1.PinConversationRequest]) (*connect.Response[v1.PinConversationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.PinConversation is not implemented"))
+}
+
+func (UnimplementedMessagingHandler) UnpinConversation(context.Context, *connect.Request[v1.UnpinConversationRequest]) (*connect.Response[v1.UnpinConversationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Messaging.UnpinConversation is not implemented"))
 }

@@ -4,17 +4,27 @@ import "google/protobuf/timestamp.proto";
 import "quick/v1/users.proto";
 
 service Messaging {
-  rpc ListConversations(ListConversationsRequest) returns (ListConversationsResponse) {}
-  rpc OpenDM(OpenDMRequest)                       returns (OpenDMResponse)            {}
-  rpc ListMessages(ListMessagesRequest)           returns (ListMessagesResponse)      {}
-  rpc SendMessage(SendMessageRequest)             returns (SendMessageResponse)       {}
-  rpc MarkRead(MarkReadRequest)                   returns (MarkReadResponse)          {}
-  rpc CreateGroup(CreateGroupRequest)             returns (CreateGroupResponse)       {}
-  rpc CreateChannel(CreateChannelRequest)         returns (CreateChannelResponse)     {}
-  rpc AddMembers(AddMembersRequest)               returns (AddMembersResponse)        {}
-  rpc RemoveMember(RemoveMemberRequest)           returns (RemoveMemberResponse)      {}
-  rpc LeaveConversation(LeaveConversationRequest) returns (LeaveConversationResponse) {}
-  rpc ListMembers(ListMembersRequest)             returns (ListMembersResponse)       {}
+  rpc ListConversations(ListConversationsRequest)     returns (ListConversationsResponse)     {}
+  rpc OpenDM(OpenDMRequest)                           returns (OpenDMResponse)                {}
+  rpc ListMessages(ListMessagesRequest)               returns (ListMessagesResponse)          {}
+  rpc SendMessage(SendMessageRequest)                 returns (SendMessageResponse)           {}
+  rpc MarkRead(MarkReadRequest)                       returns (MarkReadResponse)              {}
+  rpc CreateGroup(CreateGroupRequest)                 returns (CreateGroupResponse)           {}
+  rpc CreateChannel(CreateChannelRequest)             returns (CreateChannelResponse)         {}
+  rpc AddMembers(AddMembersRequest)                   returns (AddMembersResponse)            {}
+  rpc RemoveMember(RemoveMemberRequest)               returns (RemoveMemberResponse)          {}
+  rpc LeaveConversation(LeaveConversationRequest)     returns (LeaveConversationResponse)     {}
+  rpc ListMembers(ListMembersRequest)                 returns (ListMembersResponse)           {}
+
+  // S10 — TG parity additions.
+  rpc DeleteConversation(DeleteConversationRequest)   returns (DeleteConversationResponse)    {}
+  rpc EditMessage(EditMessageRequest)                 returns (EditMessageResponse)           {}
+  rpc DeleteMessage(DeleteMessageRequest)             returns (DeleteMessageResponse)         {}
+  rpc PinMessage(PinMessageRequest)                   returns (PinMessageResponse)            {}
+  rpc UnpinMessage(UnpinMessageRequest)               returns (UnpinMessageResponse)          {}
+  rpc GetMessageReaders(GetMessageReadersRequest)     returns (GetMessageReadersResponse)     {}
+  rpc PinConversation(PinConversationRequest)         returns (PinConversationResponse)       {}
+  rpc UnpinConversation(UnpinConversationRequest)     returns (UnpinConversationResponse)     {}
 }
 
 message Conversation {
@@ -85,3 +95,47 @@ message Member {
   string role = 2;
   google.protobuf.Timestamp joined_at = 3;
 }
+
+// --- S10 — TG parity additions ---
+
+// Extra fields on Message for edited/deleted/pinned/service status.
+// We do NOT modify the Message struct (field numbers already used) — instead
+// the WS envelopes carry the diff via dedicated kinds (message_edited,
+// message_deleted, message_pinned, service_message).
+
+message DeleteConversationRequest {
+  string conversation_id = 1;
+  bool   for_everyone    = 2;     // DM: also delete on peer's side; group/channel: owner-only full delete
+}
+message DeleteConversationResponse {}
+
+message EditMessageRequest  {
+  string message_id = 1;
+  string body       = 2;
+}
+message EditMessageResponse { Message message = 1; }
+
+message DeleteMessageRequest  {
+  string message_id   = 1;
+  bool   for_everyone = 2;
+}
+message DeleteMessageResponse {}
+
+message PinMessageRequest  { string message_id = 1; }
+message PinMessageResponse {}
+
+message UnpinMessageRequest  { string message_id = 1; }
+message UnpinMessageResponse {}
+
+message MessageReader {
+  User user = 1;
+  google.protobuf.Timestamp read_at = 2;
+}
+message GetMessageReadersRequest  { string message_id = 1; }
+message GetMessageReadersResponse { repeated MessageReader readers = 1; }
+
+message PinConversationRequest  { string conversation_id = 1; }
+message PinConversationResponse {}
+
+message UnpinConversationRequest  { string conversation_id = 1; }
+message UnpinConversationResponse {}
