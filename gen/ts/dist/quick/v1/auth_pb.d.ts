@@ -97,6 +97,80 @@ export type LogoutResponse = Message<"quick.v1.LogoutResponse"> & {};
  */
 export declare const LogoutResponseSchema: GenMessage<LogoutResponse>;
 /**
+ * @generated from message quick.v1.SignupWithPasskeyRequest
+ */
+export type SignupWithPasskeyRequest = Message<"quick.v1.SignupWithPasskeyRequest"> & {
+    /**
+     * @generated from field: string email = 1;
+     */
+    email: string;
+};
+/**
+ * Describes the message quick.v1.SignupWithPasskeyRequest.
+ * Use `create(SignupWithPasskeyRequestSchema)` to create a new message.
+ */
+export declare const SignupWithPasskeyRequestSchema: GenMessage<SignupWithPasskeyRequest>;
+/**
+ * @generated from message quick.v1.SignupWithPasskeyResponse
+ */
+export type SignupWithPasskeyResponse = Message<"quick.v1.SignupWithPasskeyResponse"> & {
+    /**
+     * @generated from field: string session_token = 1;
+     */
+    sessionToken: string;
+    /**
+     * @generated from field: quick.v1.User user = 2;
+     */
+    user?: User | undefined;
+    /**
+     * shown ONCE to the user
+     *
+     * @generated from field: string passkey = 3;
+     */
+    passkey: string;
+};
+/**
+ * Describes the message quick.v1.SignupWithPasskeyResponse.
+ * Use `create(SignupWithPasskeyResponseSchema)` to create a new message.
+ */
+export declare const SignupWithPasskeyResponseSchema: GenMessage<SignupWithPasskeyResponse>;
+/**
+ * @generated from message quick.v1.LoginWithPasskeyRequest
+ */
+export type LoginWithPasskeyRequest = Message<"quick.v1.LoginWithPasskeyRequest"> & {
+    /**
+     * @generated from field: string email = 1;
+     */
+    email: string;
+    /**
+     * @generated from field: string passkey = 2;
+     */
+    passkey: string;
+};
+/**
+ * Describes the message quick.v1.LoginWithPasskeyRequest.
+ * Use `create(LoginWithPasskeyRequestSchema)` to create a new message.
+ */
+export declare const LoginWithPasskeyRequestSchema: GenMessage<LoginWithPasskeyRequest>;
+/**
+ * @generated from message quick.v1.LoginWithPasskeyResponse
+ */
+export type LoginWithPasskeyResponse = Message<"quick.v1.LoginWithPasskeyResponse"> & {
+    /**
+     * @generated from field: string session_token = 1;
+     */
+    sessionToken: string;
+    /**
+     * @generated from field: quick.v1.User user = 2;
+     */
+    user?: User | undefined;
+};
+/**
+ * Describes the message quick.v1.LoginWithPasskeyResponse.
+ * Use `create(LoginWithPasskeyResponseSchema)` to create a new message.
+ */
+export declare const LoginWithPasskeyResponseSchema: GenMessage<LoginWithPasskeyResponse>;
+/**
  * @generated from service quick.v1.Auth
  */
 export declare const Auth: GenService<{
@@ -123,5 +197,21 @@ export declare const Auth: GenService<{
         methodKind: "unary";
         input: typeof LogoutRequestSchema;
         output: typeof LogoutResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Auth.SignupWithPasskey
+     */
+    signupWithPasskey: {
+        methodKind: "unary";
+        input: typeof SignupWithPasskeyRequestSchema;
+        output: typeof SignupWithPasskeyResponseSchema;
+    };
+    /**
+     * @generated from rpc quick.v1.Auth.LoginWithPasskey
+     */
+    loginWithPasskey: {
+        methodKind: "unary";
+        input: typeof LoginWithPasskeyRequestSchema;
+        output: typeof LoginWithPasskeyResponseSchema;
     };
 }>;

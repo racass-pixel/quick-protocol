@@ -302,6 +302,214 @@ func (*LogoutResponse) Descriptor() ([]byte, []int) {
 	return file_quick_v1_auth_proto_rawDescGZIP(), []int{5}
 }
 
+type SignupWithPasskeyRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SignupWithPasskeyRequest) Reset() {
+	*x = SignupWithPasskeyRequest{}
+	mi := &file_quick_v1_auth_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SignupWithPasskeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignupWithPasskeyRequest) ProtoMessage() {}
+
+func (x *SignupWithPasskeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_auth_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignupWithPasskeyRequest.ProtoReflect.Descriptor instead.
+func (*SignupWithPasskeyRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_auth_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SignupWithPasskeyRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+type SignupWithPasskeyResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionToken  string                 `protobuf:"bytes,1,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	User          *User                  `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
+	Passkey       string                 `protobuf:"bytes,3,opt,name=passkey,proto3" json:"passkey,omitempty"` // shown ONCE to the user
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SignupWithPasskeyResponse) Reset() {
+	*x = SignupWithPasskeyResponse{}
+	mi := &file_quick_v1_auth_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SignupWithPasskeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignupWithPasskeyResponse) ProtoMessage() {}
+
+func (x *SignupWithPasskeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_auth_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignupWithPasskeyResponse.ProtoReflect.Descriptor instead.
+func (*SignupWithPasskeyResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_auth_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *SignupWithPasskeyResponse) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *SignupWithPasskeyResponse) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+func (x *SignupWithPasskeyResponse) GetPasskey() string {
+	if x != nil {
+		return x.Passkey
+	}
+	return ""
+}
+
+type LoginWithPasskeyRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Passkey       string                 `protobuf:"bytes,2,opt,name=passkey,proto3" json:"passkey,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginWithPasskeyRequest) Reset() {
+	*x = LoginWithPasskeyRequest{}
+	mi := &file_quick_v1_auth_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginWithPasskeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginWithPasskeyRequest) ProtoMessage() {}
+
+func (x *LoginWithPasskeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_auth_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginWithPasskeyRequest.ProtoReflect.Descriptor instead.
+func (*LoginWithPasskeyRequest) Descriptor() ([]byte, []int) {
+	return file_quick_v1_auth_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *LoginWithPasskeyRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *LoginWithPasskeyRequest) GetPasskey() string {
+	if x != nil {
+		return x.Passkey
+	}
+	return ""
+}
+
+type LoginWithPasskeyResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionToken  string                 `protobuf:"bytes,1,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	User          *User                  `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginWithPasskeyResponse) Reset() {
+	*x = LoginWithPasskeyResponse{}
+	mi := &file_quick_v1_auth_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginWithPasskeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginWithPasskeyResponse) ProtoMessage() {}
+
+func (x *LoginWithPasskeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_quick_v1_auth_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginWithPasskeyResponse.ProtoReflect.Descriptor instead.
+func (*LoginWithPasskeyResponse) Descriptor() ([]byte, []int) {
+	return file_quick_v1_auth_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *LoginWithPasskeyResponse) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *LoginWithPasskeyResponse) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
 var File_quick_v1_auth_proto protoreflect.FileDescriptor
 
 const file_quick_v1_auth_proto_rawDesc = "" +
@@ -322,12 +530,26 @@ const file_quick_v1_auth_proto_rawDesc = "" +
 	"\x04user\x18\x02 \x01(\v2\x0e.quick.v1.UserR\x04user\x12$\n" +
 	"\x0eis_new_account\x18\x03 \x01(\bR\fisNewAccount\"\x0f\n" +
 	"\rLogoutRequest\"\x10\n" +
-	"\x0eLogoutResponse2\xde\x01\n" +
+	"\x0eLogoutResponse\"0\n" +
+	"\x18SignupWithPasskeyRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\"~\n" +
+	"\x19SignupWithPasskeyResponse\x12#\n" +
+	"\rsession_token\x18\x01 \x01(\tR\fsessionToken\x12\"\n" +
+	"\x04user\x18\x02 \x01(\v2\x0e.quick.v1.UserR\x04user\x12\x18\n" +
+	"\apasskey\x18\x03 \x01(\tR\apasskey\"I\n" +
+	"\x17LoginWithPasskeyRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x18\n" +
+	"\apasskey\x18\x02 \x01(\tR\apasskey\"c\n" +
+	"\x18LoginWithPasskeyResponse\x12#\n" +
+	"\rsession_token\x18\x01 \x01(\tR\fsessionToken\x12\"\n" +
+	"\x04user\x18\x02 \x01(\v2\x0e.quick.v1.UserR\x04user2\x9b\x03\n" +
 	"\x04Auth\x12L\n" +
 	"\vRequestCode\x12\x1c.quick.v1.RequestCodeRequest\x1a\x1d.quick.v1.RequestCodeResponse\"\x00\x12I\n" +
 	"\n" +
 	"VerifyCode\x12\x1b.quick.v1.VerifyCodeRequest\x1a\x1c.quick.v1.VerifyCodeResponse\"\x00\x12=\n" +
-	"\x06Logout\x12\x17.quick.v1.LogoutRequest\x1a\x18.quick.v1.LogoutResponse\"\x00B\x9a\x01\n" +
+	"\x06Logout\x12\x17.quick.v1.LogoutRequest\x1a\x18.quick.v1.LogoutResponse\"\x00\x12^\n" +
+	"\x11SignupWithPasskey\x12\".quick.v1.SignupWithPasskeyRequest\x1a#.quick.v1.SignupWithPasskeyResponse\"\x00\x12[\n" +
+	"\x10LoginWithPasskey\x12!.quick.v1.LoginWithPasskeyRequest\x1a\".quick.v1.LoginWithPasskeyResponse\"\x00B\x9a\x01\n" +
 	"\fcom.quick.v1B\tAuthProtoP\x01Z>github.com/racass-pixel/quick-protocol/gen/go/quick/v1;quickv1\xa2\x02\x03QXX\xaa\x02\bQuick.V1\xca\x02\bQuick\\V1\xe2\x02\x14Quick\\V1\\GPBMetadata\xea\x02\tQuick::V1b\x06proto3"
 
 var (
@@ -342,32 +564,42 @@ func file_quick_v1_auth_proto_rawDescGZIP() []byte {
 	return file_quick_v1_auth_proto_rawDescData
 }
 
-var file_quick_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_quick_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_quick_v1_auth_proto_goTypes = []any{
-	(*RequestCodeRequest)(nil),    // 0: quick.v1.RequestCodeRequest
-	(*RequestCodeResponse)(nil),   // 1: quick.v1.RequestCodeResponse
-	(*VerifyCodeRequest)(nil),     // 2: quick.v1.VerifyCodeRequest
-	(*VerifyCodeResponse)(nil),    // 3: quick.v1.VerifyCodeResponse
-	(*LogoutRequest)(nil),         // 4: quick.v1.LogoutRequest
-	(*LogoutResponse)(nil),        // 5: quick.v1.LogoutResponse
-	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
-	(*User)(nil),                  // 7: quick.v1.User
+	(*RequestCodeRequest)(nil),        // 0: quick.v1.RequestCodeRequest
+	(*RequestCodeResponse)(nil),       // 1: quick.v1.RequestCodeResponse
+	(*VerifyCodeRequest)(nil),         // 2: quick.v1.VerifyCodeRequest
+	(*VerifyCodeResponse)(nil),        // 3: quick.v1.VerifyCodeResponse
+	(*LogoutRequest)(nil),             // 4: quick.v1.LogoutRequest
+	(*LogoutResponse)(nil),            // 5: quick.v1.LogoutResponse
+	(*SignupWithPasskeyRequest)(nil),  // 6: quick.v1.SignupWithPasskeyRequest
+	(*SignupWithPasskeyResponse)(nil), // 7: quick.v1.SignupWithPasskeyResponse
+	(*LoginWithPasskeyRequest)(nil),   // 8: quick.v1.LoginWithPasskeyRequest
+	(*LoginWithPasskeyResponse)(nil),  // 9: quick.v1.LoginWithPasskeyResponse
+	(*timestamppb.Timestamp)(nil),     // 10: google.protobuf.Timestamp
+	(*User)(nil),                      // 11: quick.v1.User
 }
 var file_quick_v1_auth_proto_depIdxs = []int32{
-	6, // 0: quick.v1.RequestCodeResponse.expires_at:type_name -> google.protobuf.Timestamp
-	6, // 1: quick.v1.RequestCodeResponse.retry_after:type_name -> google.protobuf.Timestamp
-	7, // 2: quick.v1.VerifyCodeResponse.user:type_name -> quick.v1.User
-	0, // 3: quick.v1.Auth.RequestCode:input_type -> quick.v1.RequestCodeRequest
-	2, // 4: quick.v1.Auth.VerifyCode:input_type -> quick.v1.VerifyCodeRequest
-	4, // 5: quick.v1.Auth.Logout:input_type -> quick.v1.LogoutRequest
-	1, // 6: quick.v1.Auth.RequestCode:output_type -> quick.v1.RequestCodeResponse
-	3, // 7: quick.v1.Auth.VerifyCode:output_type -> quick.v1.VerifyCodeResponse
-	5, // 8: quick.v1.Auth.Logout:output_type -> quick.v1.LogoutResponse
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	10, // 0: quick.v1.RequestCodeResponse.expires_at:type_name -> google.protobuf.Timestamp
+	10, // 1: quick.v1.RequestCodeResponse.retry_after:type_name -> google.protobuf.Timestamp
+	11, // 2: quick.v1.VerifyCodeResponse.user:type_name -> quick.v1.User
+	11, // 3: quick.v1.SignupWithPasskeyResponse.user:type_name -> quick.v1.User
+	11, // 4: quick.v1.LoginWithPasskeyResponse.user:type_name -> quick.v1.User
+	0,  // 5: quick.v1.Auth.RequestCode:input_type -> quick.v1.RequestCodeRequest
+	2,  // 6: quick.v1.Auth.VerifyCode:input_type -> quick.v1.VerifyCodeRequest
+	4,  // 7: quick.v1.Auth.Logout:input_type -> quick.v1.LogoutRequest
+	6,  // 8: quick.v1.Auth.SignupWithPasskey:input_type -> quick.v1.SignupWithPasskeyRequest
+	8,  // 9: quick.v1.Auth.LoginWithPasskey:input_type -> quick.v1.LoginWithPasskeyRequest
+	1,  // 10: quick.v1.Auth.RequestCode:output_type -> quick.v1.RequestCodeResponse
+	3,  // 11: quick.v1.Auth.VerifyCode:output_type -> quick.v1.VerifyCodeResponse
+	5,  // 12: quick.v1.Auth.Logout:output_type -> quick.v1.LogoutResponse
+	7,  // 13: quick.v1.Auth.SignupWithPasskey:output_type -> quick.v1.SignupWithPasskeyResponse
+	9,  // 14: quick.v1.Auth.LoginWithPasskey:output_type -> quick.v1.LoginWithPasskeyResponse
+	10, // [10:15] is the sub-list for method output_type
+	5,  // [5:10] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_quick_v1_auth_proto_init() }
@@ -382,7 +614,7 @@ func file_quick_v1_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_quick_v1_auth_proto_rawDesc), len(file_quick_v1_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

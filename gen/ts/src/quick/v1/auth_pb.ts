@@ -14,7 +14,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file quick/v1/auth.proto.
  */
 export const file_quick_v1_auth: GenFile = /*@__PURE__*/
-  fileDesc("ChNxdWljay92MS9hdXRoLnByb3RvEghxdWljay52MSIjChJSZXF1ZXN0Q29kZVJlcXVlc3QSDQoFZW1haWwYASABKAkidgoTUmVxdWVzdENvZGVSZXNwb25zZRIuCgpleHBpcmVzX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIvCgtyZXRyeV9hZnRlchgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiMAoRVmVyaWZ5Q29kZVJlcXVlc3QSDQoFZW1haWwYASABKAkSDAoEY29kZRgCIAEoCSJZChJWZXJpZnlDb2RlUmVzcG9uc2USDQoFdG9rZW4YASABKAkSHAoEdXNlchgCIAEoCzIOLnF1aWNrLnYxLlVzZXISFgoOaXNfbmV3X2FjY291bnQYAyABKAgiDwoNTG9nb3V0UmVxdWVzdCIQCg5Mb2dvdXRSZXNwb25zZTLeAQoEQXV0aBJMCgtSZXF1ZXN0Q29kZRIcLnF1aWNrLnYxLlJlcXVlc3RDb2RlUmVxdWVzdBodLnF1aWNrLnYxLlJlcXVlc3RDb2RlUmVzcG9uc2UiABJJCgpWZXJpZnlDb2RlEhsucXVpY2sudjEuVmVyaWZ5Q29kZVJlcXVlc3QaHC5xdWljay52MS5WZXJpZnlDb2RlUmVzcG9uc2UiABI9CgZMb2dvdXQSFy5xdWljay52MS5Mb2dvdXRSZXF1ZXN0GhgucXVpY2sudjEuTG9nb3V0UmVzcG9uc2UiAEKaAQoMY29tLnF1aWNrLnYxQglBdXRoUHJvdG9QAVo+Z2l0aHViLmNvbS9yYWNhc3MtcGl4ZWwvcXVpY2stcHJvdG9jb2wvZ2VuL2dvL3F1aWNrL3YxO3F1aWNrdjGiAgNRWFiqAghRdWljay5WMcoCCFF1aWNrXFYx4gIUUXVpY2tcVjFcR1BCTWV0YWRhdGHqAglRdWljazo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp, file_quick_v1_users]);
+  fileDesc("ChNxdWljay92MS9hdXRoLnByb3RvEghxdWljay52MSIjChJSZXF1ZXN0Q29kZVJlcXVlc3QSDQoFZW1haWwYASABKAkidgoTUmVxdWVzdENvZGVSZXNwb25zZRIuCgpleHBpcmVzX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIvCgtyZXRyeV9hZnRlchgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiMAoRVmVyaWZ5Q29kZVJlcXVlc3QSDQoFZW1haWwYASABKAkSDAoEY29kZRgCIAEoCSJZChJWZXJpZnlDb2RlUmVzcG9uc2USDQoFdG9rZW4YASABKAkSHAoEdXNlchgCIAEoCzIOLnF1aWNrLnYxLlVzZXISFgoOaXNfbmV3X2FjY291bnQYAyABKAgiDwoNTG9nb3V0UmVxdWVzdCIQCg5Mb2dvdXRSZXNwb25zZSIpChhTaWdudXBXaXRoUGFzc2tleVJlcXVlc3QSDQoFZW1haWwYASABKAkiYQoZU2lnbnVwV2l0aFBhc3NrZXlSZXNwb25zZRIVCg1zZXNzaW9uX3Rva2VuGAEgASgJEhwKBHVzZXIYAiABKAsyDi5xdWljay52MS5Vc2VyEg8KB3Bhc3NrZXkYAyABKAkiOQoXTG9naW5XaXRoUGFzc2tleVJlcXVlc3QSDQoFZW1haWwYASABKAkSDwoHcGFzc2tleRgCIAEoCSJPChhMb2dpbldpdGhQYXNza2V5UmVzcG9uc2USFQoNc2Vzc2lvbl90b2tlbhgBIAEoCRIcCgR1c2VyGAIgASgLMg4ucXVpY2sudjEuVXNlcjKbAwoEQXV0aBJMCgtSZXF1ZXN0Q29kZRIcLnF1aWNrLnYxLlJlcXVlc3RDb2RlUmVxdWVzdBodLnF1aWNrLnYxLlJlcXVlc3RDb2RlUmVzcG9uc2UiABJJCgpWZXJpZnlDb2RlEhsucXVpY2sudjEuVmVyaWZ5Q29kZVJlcXVlc3QaHC5xdWljay52MS5WZXJpZnlDb2RlUmVzcG9uc2UiABI9CgZMb2dvdXQSFy5xdWljay52MS5Mb2dvdXRSZXF1ZXN0GhgucXVpY2sudjEuTG9nb3V0UmVzcG9uc2UiABJeChFTaWdudXBXaXRoUGFzc2tleRIiLnF1aWNrLnYxLlNpZ251cFdpdGhQYXNza2V5UmVxdWVzdBojLnF1aWNrLnYxLlNpZ251cFdpdGhQYXNza2V5UmVzcG9uc2UiABJbChBMb2dpbldpdGhQYXNza2V5EiEucXVpY2sudjEuTG9naW5XaXRoUGFzc2tleVJlcXVlc3QaIi5xdWljay52MS5Mb2dpbldpdGhQYXNza2V5UmVzcG9uc2UiAEKaAQoMY29tLnF1aWNrLnYxQglBdXRoUHJvdG9QAVo+Z2l0aHViLmNvbS9yYWNhc3MtcGl4ZWwvcXVpY2stcHJvdG9jb2wvZ2VuL2dvL3F1aWNrL3YxO3F1aWNrdjGiAgNRWFiqAghRdWljay5WMcoCCFF1aWNrXFYx4gIUUXVpY2tcVjFcR1BCTWV0YWRhdGHqAglRdWljazo6VjFiBnByb3RvMw", [file_google_protobuf_timestamp, file_quick_v1_users]);
 
 /**
  * @generated from message quick.v1.RequestCodeRequest
@@ -131,6 +131,96 @@ export const LogoutResponseSchema: GenMessage<LogoutResponse> = /*@__PURE__*/
   messageDesc(file_quick_v1_auth, 5);
 
 /**
+ * @generated from message quick.v1.SignupWithPasskeyRequest
+ */
+export type SignupWithPasskeyRequest = Message<"quick.v1.SignupWithPasskeyRequest"> & {
+  /**
+   * @generated from field: string email = 1;
+   */
+  email: string;
+};
+
+/**
+ * Describes the message quick.v1.SignupWithPasskeyRequest.
+ * Use `create(SignupWithPasskeyRequestSchema)` to create a new message.
+ */
+export const SignupWithPasskeyRequestSchema: GenMessage<SignupWithPasskeyRequest> = /*@__PURE__*/
+  messageDesc(file_quick_v1_auth, 6);
+
+/**
+ * @generated from message quick.v1.SignupWithPasskeyResponse
+ */
+export type SignupWithPasskeyResponse = Message<"quick.v1.SignupWithPasskeyResponse"> & {
+  /**
+   * @generated from field: string session_token = 1;
+   */
+  sessionToken: string;
+
+  /**
+   * @generated from field: quick.v1.User user = 2;
+   */
+  user?: User | undefined;
+
+  /**
+   * shown ONCE to the user
+   *
+   * @generated from field: string passkey = 3;
+   */
+  passkey: string;
+};
+
+/**
+ * Describes the message quick.v1.SignupWithPasskeyResponse.
+ * Use `create(SignupWithPasskeyResponseSchema)` to create a new message.
+ */
+export const SignupWithPasskeyResponseSchema: GenMessage<SignupWithPasskeyResponse> = /*@__PURE__*/
+  messageDesc(file_quick_v1_auth, 7);
+
+/**
+ * @generated from message quick.v1.LoginWithPasskeyRequest
+ */
+export type LoginWithPasskeyRequest = Message<"quick.v1.LoginWithPasskeyRequest"> & {
+  /**
+   * @generated from field: string email = 1;
+   */
+  email: string;
+
+  /**
+   * @generated from field: string passkey = 2;
+   */
+  passkey: string;
+};
+
+/**
+ * Describes the message quick.v1.LoginWithPasskeyRequest.
+ * Use `create(LoginWithPasskeyRequestSchema)` to create a new message.
+ */
+export const LoginWithPasskeyRequestSchema: GenMessage<LoginWithPasskeyRequest> = /*@__PURE__*/
+  messageDesc(file_quick_v1_auth, 8);
+
+/**
+ * @generated from message quick.v1.LoginWithPasskeyResponse
+ */
+export type LoginWithPasskeyResponse = Message<"quick.v1.LoginWithPasskeyResponse"> & {
+  /**
+   * @generated from field: string session_token = 1;
+   */
+  sessionToken: string;
+
+  /**
+   * @generated from field: quick.v1.User user = 2;
+   */
+  user?: User | undefined;
+};
+
+/**
+ * Describes the message quick.v1.LoginWithPasskeyResponse.
+ * Use `create(LoginWithPasskeyResponseSchema)` to create a new message.
+ */
+export const LoginWithPasskeyResponseSchema: GenMessage<LoginWithPasskeyResponse> = /*@__PURE__*/
+  messageDesc(file_quick_v1_auth, 9);
+
+/**
  * @generated from service quick.v1.Auth
  */
 export const Auth: GenService<{
@@ -157,6 +247,22 @@ export const Auth: GenService<{
     methodKind: "unary";
     input: typeof LogoutRequestSchema;
     output: typeof LogoutResponseSchema;
+  },
+  /**
+   * @generated from rpc quick.v1.Auth.SignupWithPasskey
+   */
+  signupWithPasskey: {
+    methodKind: "unary";
+    input: typeof SignupWithPasskeyRequestSchema;
+    output: typeof SignupWithPasskeyResponseSchema;
+  },
+  /**
+   * @generated from rpc quick.v1.Auth.LoginWithPasskey
+   */
+  loginWithPasskey: {
+    methodKind: "unary";
+    input: typeof LoginWithPasskeyRequestSchema;
+    output: typeof LoginWithPasskeyResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_quick_v1_auth, 0);

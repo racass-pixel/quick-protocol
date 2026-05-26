@@ -39,6 +39,10 @@ const (
 	AuthVerifyCodeProcedure = "/quick.v1.Auth/VerifyCode"
 	// AuthLogoutProcedure is the fully-qualified name of the Auth's Logout RPC.
 	AuthLogoutProcedure = "/quick.v1.Auth/Logout"
+	// AuthSignupWithPasskeyProcedure is the fully-qualified name of the Auth's SignupWithPasskey RPC.
+	AuthSignupWithPasskeyProcedure = "/quick.v1.Auth/SignupWithPasskey"
+	// AuthLoginWithPasskeyProcedure is the fully-qualified name of the Auth's LoginWithPasskey RPC.
+	AuthLoginWithPasskeyProcedure = "/quick.v1.Auth/LoginWithPasskey"
 )
 
 // AuthClient is a client for the quick.v1.Auth service.
@@ -46,6 +50,8 @@ type AuthClient interface {
 	RequestCode(context.Context, *connect.Request[v1.RequestCodeRequest]) (*connect.Response[v1.RequestCodeResponse], error)
 	VerifyCode(context.Context, *connect.Request[v1.VerifyCodeRequest]) (*connect.Response[v1.VerifyCodeResponse], error)
 	Logout(context.Context, *connect.Request[v1.LogoutRequest]) (*connect.Response[v1.LogoutResponse], error)
+	SignupWithPasskey(context.Context, *connect.Request[v1.SignupWithPasskeyRequest]) (*connect.Response[v1.SignupWithPasskeyResponse], error)
+	LoginWithPasskey(context.Context, *connect.Request[v1.LoginWithPasskeyRequest]) (*connect.Response[v1.LoginWithPasskeyResponse], error)
 }
 
 // NewAuthClient constructs a client for the quick.v1.Auth service. By default, it uses the Connect
@@ -77,14 +83,28 @@ func NewAuthClient(httpClient connect.HTTPClient, baseURL string, opts ...connec
 			connect.WithSchema(authMethods.ByName("Logout")),
 			connect.WithClientOptions(opts...),
 		),
+		signupWithPasskey: connect.NewClient[v1.SignupWithPasskeyRequest, v1.SignupWithPasskeyResponse](
+			httpClient,
+			baseURL+AuthSignupWithPasskeyProcedure,
+			connect.WithSchema(authMethods.ByName("SignupWithPasskey")),
+			connect.WithClientOptions(opts...),
+		),
+		loginWithPasskey: connect.NewClient[v1.LoginWithPasskeyRequest, v1.LoginWithPasskeyResponse](
+			httpClient,
+			baseURL+AuthLoginWithPasskeyProcedure,
+			connect.WithSchema(authMethods.ByName("LoginWithPasskey")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // authClient implements AuthClient.
 type authClient struct {
-	requestCode *connect.Client[v1.RequestCodeRequest, v1.RequestCodeResponse]
-	verifyCode  *connect.Client[v1.VerifyCodeRequest, v1.VerifyCodeResponse]
-	logout      *connect.Client[v1.LogoutRequest, v1.LogoutResponse]
+	requestCode       *connect.Client[v1.RequestCodeRequest, v1.RequestCodeResponse]
+	verifyCode        *connect.Client[v1.VerifyCodeRequest, v1.VerifyCodeResponse]
+	logout            *connect.Client[v1.LogoutRequest, v1.LogoutResponse]
+	signupWithPasskey *connect.Client[v1.SignupWithPasskeyRequest, v1.SignupWithPasskeyResponse]
+	loginWithPasskey  *connect.Client[v1.LoginWithPasskeyRequest, v1.LoginWithPasskeyResponse]
 }
 
 // RequestCode calls quick.v1.Auth.RequestCode.
@@ -102,11 +122,23 @@ func (c *authClient) Logout(ctx context.Context, req *connect.Request[v1.LogoutR
 	return c.logout.CallUnary(ctx, req)
 }
 
+// SignupWithPasskey calls quick.v1.Auth.SignupWithPasskey.
+func (c *authClient) SignupWithPasskey(ctx context.Context, req *connect.Request[v1.SignupWithPasskeyRequest]) (*connect.Response[v1.SignupWithPasskeyResponse], error) {
+	return c.signupWithPasskey.CallUnary(ctx, req)
+}
+
+// LoginWithPasskey calls quick.v1.Auth.LoginWithPasskey.
+func (c *authClient) LoginWithPasskey(ctx context.Context, req *connect.Request[v1.LoginWithPasskeyRequest]) (*connect.Response[v1.LoginWithPasskeyResponse], error) {
+	return c.loginWithPasskey.CallUnary(ctx, req)
+}
+
 // AuthHandler is an implementation of the quick.v1.Auth service.
 type AuthHandler interface {
 	RequestCode(context.Context, *connect.Request[v1.RequestCodeRequest]) (*connect.Response[v1.RequestCodeResponse], error)
 	VerifyCode(context.Context, *connect.Request[v1.VerifyCodeRequest]) (*connect.Response[v1.VerifyCodeResponse], error)
 	Logout(context.Context, *connect.Request[v1.LogoutRequest]) (*connect.Response[v1.LogoutResponse], error)
+	SignupWithPasskey(context.Context, *connect.Request[v1.SignupWithPasskeyRequest]) (*connect.Response[v1.SignupWithPasskeyResponse], error)
+	LoginWithPasskey(context.Context, *connect.Request[v1.LoginWithPasskeyRequest]) (*connect.Response[v1.LoginWithPasskeyResponse], error)
 }
 
 // NewAuthHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -134,6 +166,18 @@ func NewAuthHandler(svc AuthHandler, opts ...connect.HandlerOption) (string, htt
 		connect.WithSchema(authMethods.ByName("Logout")),
 		connect.WithHandlerOptions(opts...),
 	)
+	authSignupWithPasskeyHandler := connect.NewUnaryHandler(
+		AuthSignupWithPasskeyProcedure,
+		svc.SignupWithPasskey,
+		connect.WithSchema(authMethods.ByName("SignupWithPasskey")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authLoginWithPasskeyHandler := connect.NewUnaryHandler(
+		AuthLoginWithPasskeyProcedure,
+		svc.LoginWithPasskey,
+		connect.WithSchema(authMethods.ByName("LoginWithPasskey")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/quick.v1.Auth/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AuthRequestCodeProcedure:
@@ -142,6 +186,10 @@ func NewAuthHandler(svc AuthHandler, opts ...connect.HandlerOption) (string, htt
 			authVerifyCodeHandler.ServeHTTP(w, r)
 		case AuthLogoutProcedure:
 			authLogoutHandler.ServeHTTP(w, r)
+		case AuthSignupWithPasskeyProcedure:
+			authSignupWithPasskeyHandler.ServeHTTP(w, r)
+		case AuthLoginWithPasskeyProcedure:
+			authLoginWithPasskeyHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -161,4 +209,12 @@ func (UnimplementedAuthHandler) VerifyCode(context.Context, *connect.Request[v1.
 
 func (UnimplementedAuthHandler) Logout(context.Context, *connect.Request[v1.LogoutRequest]) (*connect.Response[v1.LogoutResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Auth.Logout is not implemented"))
+}
+
+func (UnimplementedAuthHandler) SignupWithPasskey(context.Context, *connect.Request[v1.SignupWithPasskeyRequest]) (*connect.Response[v1.SignupWithPasskeyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Auth.SignupWithPasskey is not implemented"))
+}
+
+func (UnimplementedAuthHandler) LoginWithPasskey(context.Context, *connect.Request[v1.LoginWithPasskeyRequest]) (*connect.Response[v1.LoginWithPasskeyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("quick.v1.Auth.LoginWithPasskey is not implemented"))
 }
